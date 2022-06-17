@@ -227,7 +227,7 @@
 <p>每件物品的体积是 $v_{i,j}$ ，价值是 $w_{i,j} $，其中 $i$ 是组号，$j$ 是组内编号。求解将哪些物品装入背包，可使物品总体积不超过背包容量，且总价值最大。输出最大价值。</p>
 <br>
 
-<p>将同一组的物品打包，额外进行 0&#x2F;1 背包式的决策，剩下部分用普通的背包问题解决。</p>
+<p>将同一组的物品打包，额外进行内部决策，决策出每一组的最优子结构。剩下部分用普通的背包问题解决，时间复杂度为 $O(n^3)$。</p>
 <h3 id="有依赖的背包问题"><a href="#有依赖的背包问题" class="headerlink" title="有依赖的背包问题"></a>有依赖的背包问题</h3><p>见树形动态规划。</p>
 <h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>背包问题的模型都万变不离其宗，很容易可以转化出背包问题的一般模型——在限制中进行取与不取的策略组合，尽量拿到最大价值。</p>
 <p>背包问题中，基本上都用线性动态规划解决，只有有依赖的背包问题用了树状动态规划<del>（其实只是顶个名头）</del>。物品的的两个属性——费用与价值的对立，人生的两个属性——现实与欲望的对立，让我们不得不在物品中做出取舍，在背包承受的范围内，尽量满足人性的欲望。</p>
@@ -245,41 +245,96 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 主题 NexT 扩展版 byJR 使用方法</title>
-    <url>/others/Technology/Hexo-theme-NexT-exbyJR/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>以下介绍基于 NexT 主题修改过后的部分用法。</p>
+    <title>动态规划 - 树形动态规划</title>
+    <url>/Informatics/Notes/DYNAMIC-PROGRAMMING-Tree-Dynamic-Programming/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>天生的子问题递归——父与子</p>
 <span id="more"></span>
 
-<h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th align="left">描述</th>
-<th align="left">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>unshow</code></td>
-<td align="left">文章不在主页显示</td>
-<td align="left">false</td>
-</tr>
-</tbody></table>
-<h2 id="站点配置文件"><a href="#站点配置文件" class="headerlink" title="站点配置文件"></a>站点配置文件</h2><p>&#x2F;_config.yml</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置博客单词统计</span></span><br><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="comment"># 文章字数统计</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 文章阅读时间统计</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 站点总字数统计</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># 站点总阅读时间统计</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">exclude_codeblock:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>在区间动态规划一节中看了这么多冒充树形 DP 的 <strong>Y 货</strong>，是时候该见证一下真正的树形动态规划了。我们先从一道简单题开始（洛谷难度评级 <font style="color:green">普及+&#x2F;提高</font> ）。</p>
+<h2 id="T1-二叉苹果树"><a href="#T1-二叉苹果树" class="headerlink" title="T1 二叉苹果树"></a>T1 二叉苹果树</h2><p>评测链接：<a href="https://www.luogu.com.cn/problem/P2015">https://www.luogu.com.cn/problem/P2015</a></p>
+<p>有一棵苹果树，如果树枝有分叉，一定是分二叉（就是说没有只有一个儿子的结点）</p>
+<p>这棵树共有 $N$ 个结点（叶子点或者树枝分叉点），编号为 $1 \sim N$，树根编号一定是 $1$。</p>
+<p>我们用一根树枝两端连接的结点的编号来描述一根树枝的位置。下面是一颗有 $4$ 个树枝的树：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2   5</span><br><span class="line"> \ / </span><br><span class="line">  3   4</span><br><span class="line">   \ /</span><br><span class="line">    1</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Security 文章加密，需要插件 hexo-blog-encrypt</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="comment">#abstract: 有东西被加密了, 请输入密码查看. # 设置文章摘要显示内容</span></span><br><span class="line">  <span class="comment">#message: 您好, 这里需要密码. # 设置密码框提示信息</span></span><br><span class="line">  <span class="comment">#tags: # 设置标签，包含以下标签的文章全部被加密</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码A&#125;</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码B&#125;</span></span><br><span class="line">  <span class="attr">theme:</span> <span class="string">shrink</span></span><br><span class="line">  <span class="comment">#wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试. # 设置错误密码提示</span></span><br><span class="line">  <span class="comment">#wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容. # 设置错误哈希提示</span></span><br></pre></td></tr></table></figure>
+<p>现在这颗树枝条太多了，需要剪枝。但是一些树枝上长有苹果。</p>
+<p>给定需要保留的树枝数量，求出最多能留住多少苹果。</p>
+<br>
 
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># APlayer 音乐播放器</span></span><br><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span> <span class="comment"># 开启 Meting 功能</span></span><br></pre></td></tr></table></figure>
+<p>这可是一道货真价实的树形 DP 。概括问题，给出一棵结点带权的二叉树，在保留一定数量的枝条的情况下求能保留的结点权值的最大值。</p>
+<p>由于树形结构自身就是递归结构，因此对于每一棵子树都可以适用于上述问题，并且，可以将限制（保留枝条数量）传递给子问题，再从子问题递归回来答案并合并成当前问题的答案——即，DP 思想。</p>
+<p>在一般的树形 DP 中，由于结构的特殊，转移方程要求先求解子树再求出本树，安排一种具体的求解顺序比较麻烦。又因为，树形结构上 DFS 最多只会遍历每个点 1 遍，时间复杂度为 $O(n)$ ，而我们在每个结点上都必定要求解一遍，因此不会提高时间复杂度。树形结构这样不同于一般 DP 搜索产生的拓扑图那样可能出度 &gt; 1 ，就决定了树形结构可以递归的模板来写。而一般来说，树形 DP 都是以递归形式写出的。</p>
+<p>具体在本题中，首先 DFS 一遍整棵树，统计出每棵子树的枝条数 $b_i$ 。然后再 DFS 一遍，这次 DFS 就是 DP 的过程。</p>
+<p>定义 $f_{i,j}$ 表示在以 $i$ 为根的子树上保留 $j$ 根枝条所得到的最大权值和，那么就有</p>
+<p>$$<br>f_{i,j}&#x3D;max{a_i,f_{l_i,j-1}+a_i,f_{r_i,j-1}+a_i,f_{l_i,k}+f_{r_i,j-2-k}+a_i|k\in[j-2-b_{r_i},b_{l_i}]}<br>$$</p>
+<p>(无非也就是不保留子树、保留一棵子树、保留两棵子树)</p>
+<p>边界条件：对于每个叶子结点 $i$ ，$f_{i,x}&#x3D;a_i(x\in \mathbb{N})$ 。</p>
+<p>代码如下。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, q, x;</span><br><span class="line"><span class="type">int</span> c1[<span class="number">101</span>], c2[<span class="number">101</span>], a1[<span class="number">101</span>], a2[<span class="number">101</span>];</span><br><span class="line"><span class="type">int</span> f[<span class="number">101</span>][<span class="number">101</span>], p[<span class="number">101</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">max</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt; b ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!c1[x]) p[x] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">set</span>(c1[x]);</span><br><span class="line">        <span class="built_in">set</span>(c2[x]);</span><br><span class="line">        p[x] = p[c1[x]] + p[c2[x]] + <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">function</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f[x][k]) <span class="keyword">return</span> f[x][k];</span><br><span class="line">    <span class="keyword">if</span> (k &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (p[c1[x]] + <span class="number">1</span> &gt;= k) ans = <span class="built_in">max</span>(ans, <span class="built_in">function</span>(c1[x], k - <span class="number">1</span>) + a1[x]);</span><br><span class="line">    <span class="keyword">if</span> (p[c2[x]] + <span class="number">1</span> &gt;= k) ans = <span class="built_in">max</span>(ans, <span class="built_in">function</span>(c2[x], k - <span class="number">1</span>) + a2[x]);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="built_in">max</span>(<span class="number">1</span>, k - p[c2[x]] - <span class="number">1</span>); i &lt; k &amp;&amp; p[c1[x]] + <span class="number">1</span> &gt;= i; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        ans = <span class="built_in">max</span>(ans,</span><br><span class="line">                  <span class="built_in">function</span>(c1[x], i - <span class="number">1</span>) + <span class="built_in">function</span>(c2[x], k - i - <span class="number">1</span>)</span><br><span class="line">                  + a1[x] + a2[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    f[x][k] = ans;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;q);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;x);</span><br><span class="line">        <span class="keyword">if</span> (c1[x]) <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, c2 + x, a2 + x);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, c1 + x, a1 + x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">set</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">function</span>(<span class="number">1</span>, q));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="主题配置文件"><a href="#主题配置文件" class="headerlink" title="主题配置文件"></a>主题配置文件</h2><p>&#x2F;themes&#x2F;next&#x2F;_config.yml</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="comment"># Website running time 在页面脚部显示的本站已安全运行……天……小时……分钟……秒</span></span><br><span class="line">  <span class="attr">running:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启功能</span></span><br><span class="line">    <span class="attr">set_up_time:</span> <span class="number">02</span><span class="string">/11/2022</span> <span class="number">13</span><span class="string">:14:21</span> <span class="comment"># 设置建站时间</span></span><br></pre></td></tr></table></figure>
+<h2 id="T2-有依赖的背包问题"><a href="#T2-有依赖的背包问题" class="headerlink" title="T2 有依赖的背包问题"></a>T2 有依赖的背包问题</h2><p>评测链接：<a href="https://www.acwing.com/problem/content/10/">https://www.acwing.com/problem/content/10/</a></p>
+<p>有 N 个物品和一个容量是 V 的背包。</p>
+<p>物品之间具有依赖关系，且依赖关系组成一棵树的形状。如果选择一个物品，则必须选择它的父节点。</p>
+<p>如下图所示：</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Tree-Dynamic-Programming/dependenceknapsack.png" class="" title="有依赖的背包问题 题图" alt="有依赖的背包问题 题图">
 
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Read more button 主页文章的“阅读更多”按钮</span></span><br><span class="line"><span class="attr">read_more_btn:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># If true, the read more button will be displayed in excerpt section. 设置是否加入该按钮</span></span><br><span class="line">  <span class="attr">scroll_to_more:</span> <span class="literal">false</span> <span class="comment"># 默认为 true ，如果为 true 则点击按钮会滑到文章 #more 标签以下。</span></span><br></pre></td></tr></table></figure>
+<p>如果选择物品 $5$，则必须选择物品 $1$ 和 $2$。这是因为 $2$ 是 $5$ 的父节点，$1$ 是 $2$ 的父节点。</p>
+<p>每件物品的编号是 $i$，体积是 $v_i$，价值是 $w_i$，依赖的父节点编号是 $p_i$。物品的下标范围是 $1…N$。</p>
+<p>求解将哪些物品装入背包，可使物品总体积不超过背包容量，且总价值最大。</p>
+<p>输出最大价值。</p>
+<br>
+
+<p>有依赖的背包问题，亦或树上背包，就是根据依赖关系作为父子关系建立一棵树，然后树上 DP。<del>（说清楚了吧）</del></p>
+<p>因为物品有依赖关系，因此不方便确定线性的 DP 顺序，并且这样做反而会产生后效性。我们就可以把后效性放在递归结构里暗中处理，也就是具象化为树枝，即建树，消除不合法的转移。</p>
+<p>于是就可以用树形 DP 的一般性套路和背包问题的一般性套路结合解答。</p>
+<p>本题的难点在于多儿子的管理。我们可以借鉴分组背包的思路，因为分组背包同样也是同一组在不同的体积限制之下获得不同的收益，也就是同一组不是简单的一样物品。我们处理分组背包的问题时，将每一组的物品打包，内部决策过后再进行背包决策；同样的，我们对于一个父结点和多个子结点，可以将每个子结点打包，内部决策（由于 树形 DP 的递归性质，内部决策又是一个外部决策的子问题），再通过 0&#x2F;1 背包决策出父结点。时间复杂度为 $O(n^2V^2)$ 。</p>
+<p>事实上，树上背包退化成只有一级依赖关系后，就成为了变形的分组背包。这也与树上背包与分组背包解决方法本质上一致相符合。</p>
+<p>代码如下，以下代码在由子问题推导的时候采取了 0&#x2F;1 背包的<strong>滚动数组</strong>空间压缩技巧。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T x, T y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &gt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N, V, v[<span class="number">101</span>], w[<span class="number">101</span>], p[<span class="number">101</span>];</span><br><span class="line"><span class="type">int</span> h[<span class="number">101</span>], to[<span class="number">101</span>], nxt[<span class="number">101</span>], t = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> f[<span class="number">101</span>][<span class="number">101</span>], rt;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++t;</span><br><span class="line">	to[t] = y;</span><br><span class="line">	nxt[t] = h[x];</span><br><span class="line">	h[x] = t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dp</span><span class="params">(<span class="type">int</span> x)</span>         <span class="comment">// DP 核心，采用 DFS 模式递归到叶子结点</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = v[x]; i &lt;= V; ++i)      <span class="comment">// 该子树的根节点一定要选</span></span><br><span class="line">		f[x][i] = w[x];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = h[x]; i; i = nxt[i])    <span class="comment">// 遍历子结点，之所以把它安排到外层循环是因为 0/1 背包的要求</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="meta">#<span class="keyword">define</span> y to[i]</span></span><br><span class="line">		<span class="built_in">dp</span>(y);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = V; j &gt;= v[x]; --j)  <span class="comment">// 这一层是滚动数组优化技巧要求要特别注意遍历顺序的一层</span></span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> k = v[y]; k &lt;= j - v[x]; ++k)     <span class="comment">// 这一层是寻找当前最优决策</span></span><br><span class="line">				f[x][j] = <span class="built_in">max</span>(f[x][j], f[x][j - k] + f[y][k]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	以上三层循环均结束过后，f[x][y]|y∈N 才同时最终确定，循环过程中均为过程量。</span></span><br><span class="line"><span class="comment">	外两层循环为 0/1 背包的模板结构。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;N, &amp;V);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, v + i, w + i, p + i);</span><br><span class="line">		<span class="built_in">build</span>(p[i], i);</span><br><span class="line">		<span class="keyword">if</span> (p[i] == <span class="number">-1</span>) rt = i; </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">dp</span>(rt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, f[rt][V]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="换根-DP"><a href="#换根-DP" class="headerlink" title="换根 DP"></a>换根 DP</h2><p>换根 DP，又叫换根法，是适用于树形 DP 的一种辅助技巧。</p>
+<p>需要用到换根法的树形 DP 问题一般有以下特点：</p>
+<ol>
+<li>无根树。</li>
+<li>枝条只代表结点之间相连，不具备严格父子关系。</li>
+</ol>
+<p>由此可见，这样的树形 DP 问题并不是一般形式上的子问题递归，而通常需要指定根进行 DP 后根据 DP 结果再做处理（一般是树上统计）。如下题。</p>
+<h3 id="T3-积蓄程度"><a href="#T3-积蓄程度" class="headerlink" title="T3 积蓄程度"></a>T3 积蓄程度</h3><p>题目来源：《算法竞赛进阶指南》<br>评测链接：<a href="https://www.acwing.com/problem/content/289/">https://www.acwing.com/problem/content/289/</a></p>
+<p>有一个树形的水系，由 $N−1$ 条河道和 $N$ 个交叉点组成。</p>
+<p>我们可以把交叉点看作树中的节点，编号为 $1∼N$，河道则看作树中的无向边。</p>
+<p>每条河道都有一个容量，连接 $x$ 与 $y$ 的河道的容量记为 $c(x,y)$。</p>
+<p>河道中单位时间流过的水量不能超过河道的容量。</p>
+<p>有一个节点是整个水系的发源地，可以源源不断地流出水，我们称之为源点。</p>
+<p>除了源点之外，树中所有度数为 $1$ 的节点都是入海口，可以吸收无限多的水，我们称之为汇点。</p>
+<p>也就是说，水系中的水从源点出发，沿着每条河道，最终流向各个汇点。</p>
+<p>在整个水系稳定时，每条河道中的水都以单位时间固定的水量流向固定的方向。</p>
+<p>除源点和汇点之外，其余各点不贮存水，也就是流入该点的河道水量之和等于从该点流出的河道水量之和。</p>
+<p>整个水系的流量就定义为源点单位时间发出的水量。</p>
+<p>在流量不超过河道容量的前提下，求哪个点作为源点时，整个水系的流量最大，输出这个最大值。</p>
+<br>
+
+<p>这道题就给我们描绘了一棵无根树，那么就要用换根 DP。</p>
+<p>大概思路就是首先 DFS 一遍整棵树（DP），接着再遍历每个结点，通过先前的 DP 结果在 $O(1)$ 的时间内计算出以该结点为根的情况下问题的答案，通过比较得出最优解。</p>
+<p>假设我们指定一个结点为根，构建了一棵有根树，如下图。</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Tree-Dynamic-Programming/accumulationdegree.jpg" class="" title="积蓄程度 解图" alt="积蓄程度 解图">
+
+<p>当前我们要对红色结点进行统计，一部分流量来自于以它为根的子树，可以直接统计；而另一部分流量来自于它的父结点，显然可以在第二次 DFS 的时候根据 DP 结果计算出来，就是将非该路径*上的子树流量统计传递下去。</p>
+<p>*该路径指的是当前节点到根节点的路径。</p>
+<p>总之，第 1 次 DFS 进行 DP 并明确父子关系，第 2 次 DFS 进行计算统计。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">min</span><span class="params">(T x, T y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &lt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T x, T y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &gt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> T;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, x, y, z;</span><br><span class="line"><span class="type">int</span> h[<span class="number">400005</span>], to[<span class="number">400005</span>], nxt[<span class="number">400005</span>], we[<span class="number">400005</span>], fa[<span class="number">400005</span>], t;</span><br><span class="line"><span class="type">int</span> f[<span class="number">400005</span>], Ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++t;</span><br><span class="line">	to[t] = y;</span><br><span class="line">	nxt[t] = h[x];</span><br><span class="line">	we[t] = z;</span><br><span class="line">	h[x] = t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dp</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!nxt[h[x]] &amp;&amp; to[h[x]] == fa[x]) <span class="keyword">return</span> f[x] = <span class="number">0</span>, <span class="number">0x7fffffff</span>;</span><br><span class="line">        	<span class="comment">// f[x] = 0是为了避免源点在海边而出现结果无穷大的情况，返回 0x7fffffff 是因为大海能吸收无限水。</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = h[x]; i; i = nxt[i])</span><br><span class="line">		<span class="keyword">if</span> (to[i] != fa[x])</span><br><span class="line">		&#123;</span><br><span class="line">			fa[to[i]] = x;</span><br><span class="line">			f[x] += <span class="built_in">min</span>(<span class="built_in">dp</span>(to[i]), we[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">return</span> f[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">cnt</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> up)</span>          <span class="comment">// up 表示水倒流回父结点的最大流量</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Ans = <span class="built_in">max</span>(Ans, up + f[x]);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = h[x]; i; i = nxt[i])</span><br><span class="line">		<span class="keyword">if</span> (to[i] != fa[x])</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nxt[h[x]]) <span class="built_in">cnt</span>(to[i], <span class="built_in">min</span>(up + f[x] - <span class="built_in">min</span>(f[to[i]], we[i]), we[i]));</span><br><span class="line">			<span class="keyword">else</span> <span class="built_in">cnt</span>(to[i], we[i]);     <span class="comment">// 若根节点恰好就在海边，应下传的最大流量为该边容量。</span></span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;T);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> test = <span class="number">0</span>; test &lt; T; ++test)</span><br><span class="line">	&#123;</span><br><span class="line">		t = <span class="number">0</span>;                            <span class="comment">//</span></span><br><span class="line">		<span class="built_in">memset</span>(h, <span class="number">0</span>, <span class="keyword">sizeof</span> h);           <span class="comment">// 多组数据，清空操作</span></span><br><span class="line">		<span class="built_in">memset</span>(f, <span class="number">0</span>, <span class="keyword">sizeof</span> f);           <span class="comment">//</span></span><br><span class="line">		Ans = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;x, &amp;y, &amp;z);</span><br><span class="line">			<span class="built_in">build</span>(x, y, z);</span><br><span class="line">			<span class="built_in">build</span>(y, x, z);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">dp</span>(<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">cnt</span>(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, Ans);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>树形 DP 在有根树上，体现为子树的子问题递归。</p>
+<p>树形 DP 在无根树上，体现为 DP 结果的树上统计。</p>
+<p>这就是父与子的对话，父对子的传递统计。</p>
 ]]></content>
       <categories>
-        <category>others</category>
-        <category>Technology</category>
+        <category>Informatics</category>
+        <category>Notes</category>
       </categories>
+      <tags>
+        <tag>[I] 动态规划</tag>
+        <tag>[I] 树形动态规划</tag>
+      </tags>
   </entry>
   <entry>
     <title>中考——记百日、忆地生</title>
@@ -388,12 +443,12 @@
 <p>考完第四节课开始观看物理实验操作考试的视频教学。</p>
 <p>这是经典的实验操作教学视频开头音乐。</p>
 
-        <div id="aplayer-mmrRLUGb" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-HMKwuODt" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-mmrRLUGb"),
+            element: document.getElementById("aplayer-HMKwuODt"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -499,7 +554,7 @@
 <p>于是只有脚下有路 自 · 己 · 走 了。</p>
 <p>考试的时候满脑子单曲循环出征的音乐，唉~</p>
 
-        <div id="aplayer-hpAIegtg" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-HBlcTtly" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content">[ti:]
 [00:08.93]带着叮咛
 [00:10.89]带着希望
@@ -535,7 +590,7 @@
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-hpAIegtg"),
+            element: document.getElementById("aplayer-HBlcTtly"),
             narrow: false,
             autoplay: false,
             showlrc: 2,
@@ -558,6 +613,43 @@
       <categories>
         <category>others</category>
         <category>Memories</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Hexo 主题 NexT 扩展版 byJR 使用方法</title>
+    <url>/others/Technology/Hexo-theme-NexT-exbyJR/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>以下介绍基于 NexT 主题修改过后的部分用法。</p>
+<span id="more"></span>
+
+<h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>unshow</code></td>
+<td align="left">文章不在主页显示</td>
+<td align="left">false</td>
+</tr>
+</tbody></table>
+<h2 id="站点配置文件"><a href="#站点配置文件" class="headerlink" title="站点配置文件"></a>站点配置文件</h2><p>&#x2F;_config.yml</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置博客单词统计</span></span><br><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="comment"># 文章字数统计</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 文章阅读时间统计</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 站点总字数统计</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># 站点总阅读时间统计</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">exclude_codeblock:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Security 文章加密，需要插件 hexo-blog-encrypt</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="comment">#abstract: 有东西被加密了, 请输入密码查看. # 设置文章摘要显示内容</span></span><br><span class="line">  <span class="comment">#message: 您好, 这里需要密码. # 设置密码框提示信息</span></span><br><span class="line">  <span class="comment">#tags: # 设置标签，包含以下标签的文章全部被加密</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码A&#125;</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码B&#125;</span></span><br><span class="line">  <span class="attr">theme:</span> <span class="string">shrink</span></span><br><span class="line">  <span class="comment">#wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试. # 设置错误密码提示</span></span><br><span class="line">  <span class="comment">#wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容. # 设置错误哈希提示</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># APlayer 音乐播放器</span></span><br><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span> <span class="comment"># 开启 Meting 功能</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="主题配置文件"><a href="#主题配置文件" class="headerlink" title="主题配置文件"></a>主题配置文件</h2><p>&#x2F;themes&#x2F;next&#x2F;_config.yml</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="comment"># Website running time 在页面脚部显示的本站已安全运行……天……小时……分钟……秒</span></span><br><span class="line">  <span class="attr">running:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启功能</span></span><br><span class="line">    <span class="attr">set_up_time:</span> <span class="number">02</span><span class="string">/11/2022</span> <span class="number">13</span><span class="string">:14:21</span> <span class="comment"># 设置建站时间</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Read more button 主页文章的“阅读更多”按钮</span></span><br><span class="line"><span class="attr">read_more_btn:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># If true, the read more button will be displayed in excerpt section. 设置是否加入该按钮</span></span><br><span class="line">  <span class="attr">scroll_to_more:</span> <span class="literal">false</span> <span class="comment"># 默认为 true ，如果为 true 则点击按钮会滑到文章 #more 标签以下。</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>others</category>
+        <category>Technology</category>
       </categories>
   </entry>
 </search>
