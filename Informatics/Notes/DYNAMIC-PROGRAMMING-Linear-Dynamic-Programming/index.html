@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="梦开始的地方——初识 DP 之路">
 <meta property="og:type" content="article">
@@ -88,6 +88,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -95,12 +96,38 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-course"><a href="/course/" rel="section"><i class="fas fa-road fa-fw"></i>历路</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友链</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-journey"><a href="/journey/" rel="section"><i class="fas fa-road fa-fw"></i>征途</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友人</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -141,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -152,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -316,7 +343,7 @@
         <p>梦开始的地方——初识 DP 之路</p>
 <span id="more"></span>
 
-<h2 id="从递归递推到动态规划"><a href="#从递归递推到动态规划" class="headerlink" title="从递归递推到动态规划"></a>从递归递推到动态规划</h2><h3 id="T1-菲波那契数列"><a href="#T1-菲波那契数列" class="headerlink" title="T1 菲波那契数列"></a>T1 菲波那契数列</h3><p>测评链接：<a target="_blank" rel="noopener" href="http://ybt.ssoier.cn:8088/problem_show.php?pid=1201">http://ybt.ssoier.cn:8088/problem_show.php?pid&#x3D;1201</a></p>
+<h2 id="从递归递推到动态规划"><a href="#从递归递推到动态规划" class="headerlink" title="从递归递推到动态规划"></a>从递归递推到动态规划</h2><h3 id="T1-菲波那契数列"><a href="#T1-菲波那契数列" class="headerlink" title="T1 菲波那契数列"></a>T1 菲波那契数列</h3><p>评测链接：<a target="_blank" rel="noopener" href="http://ybt.ssoier.cn:8088/problem_show.php?pid=1201">http://ybt.ssoier.cn:8088/problem_show.php?pid&#x3D;1201</a></p>
 <p>菲波那契数列是指这样的数列: 数列的第一个和第二个数都为 $1$ ，接下来每个数都等于前面 $2$ 个数之和。</p>
 <p>给出一个正整数 $a(1\leq a\leq 20)$ ，要求菲波那契数列中第 $a$ 个数是多少。</p>
 <br>
@@ -326,13 +353,14 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">f</span>(x - <span class="number">2</span>) + <span class="built_in">f</span>(x - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, a;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">f</span>(a));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在下面这道题目中，我们可以看出上面这段代码有着不可避免的缺陷。</p>
-<h3 id="T2-菲波那契数列-2"><a href="#T2-菲波那契数列-2" class="headerlink" title="T2 菲波那契数列 (2)"></a>T2 菲波那契数列 (2)</h3><p>菲波那契数列是指这样的数列：数列的第一个和第二个数都为 $1$ ，接下来每个数都等于前面 $2$ 个数之和。</p>
+<h3 id="T2-菲波那契数列-2"><a href="#T2-菲波那契数列-2" class="headerlink" title="T2 菲波那契数列 (2)"></a>T2 菲波那契数列 (2)</h3><p>评测链接：<a target="_blank" rel="noopener" href="http://ybt.ssoier.cn:8088/problem_show.php?pid=1188">http://ybt.ssoier.cn:8088/problem_show.php?pid&#x3D;1188</a></p>
+<p>菲波那契数列是指这样的数列：数列的第一个和第二个数都为 $1$ ，接下来每个数都等于前面 $2$ 个数之和。</p>
 <p>给出一个正整数 $a(1 &lt;&#x3D; a &lt;&#x3D; 1000000)$ ，要求菲波那契数列中第 $a$ 个数对 $1000$ 取模的结果是多少。</p>
 <br>
 
 <p>这道题与上一题差别似乎仅仅在数据范围，但仅仅用上一题的算法是会超时的，而我们只能仅仅得到 0 分的优秀成绩。</p>
 <p>至于为什么会超时，其实不难发现，在我们每次计算 $f(x)$ 的时候，我们都会递归调用 $f(x-2)$ 和 $f(x-1)$ ，直到调用到 $f(1)$ 或 $f(2)$ 为止。而我们每次计算出 $f(x)$ 返回过后直接舍弃，导致每一次调用的时候都要重新计算。比如说计算 $f(5)$ 时要计算 $f(3)$ 和 $f(4)$ ，而计算 $f(4)$ 时要计算 $f(2)$ 和 $f(3)$ ，这样 $f(3)$ 就会重复计算。数字大了，重复计算的次数会更多，自然会浪费时间。</p>
-<p>我们处理这样的问题，有两种思路，一是记忆化搜索，即计算完 $f(x)$ 后将其存下来；而是变递归为递推，通过已知量主动推出待求量，而不是递归式的层层询问。</p>
+<p>我们处理这样的问题，有两种思路，一是记忆化搜索，即计算完 $f(x)$ 后将其存下来；二是变递归为递推，通过已知量主动推出待求量，而不是递归式的层层询问。</p>
 <p>这里是记忆化搜索的代码， 跟上一题相差无几。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> F[<span class="number">10000005</span>]=&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!F[x]) F[x] = (<span class="built_in">f</span>(x - <span class="number">2</span>) + <span class="built_in">f</span>(x - <span class="number">1</span>)) % <span class="number">1000</span>;</span><br><span class="line">    <span class="keyword">return</span> F[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, a;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">f</span>(a));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -448,6 +476,8 @@
 <p>而在 OIer 看来，对于各个物品的分阶段决策，我们只需要保留对下一阶段决策有意义的数据，在本该有的决策集合中做出取舍，避免无效的时间浪费，这是否也是一种背包思维呢？</p>
 <p>人生远不是功利与代价所支配的一场闹剧，切勿为身外之物困扰。生活远不是背包问题所代表的费用与价值二者对立，或许存在更有意义的事物值得我们去追求。</p>
 <h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h2><p>线性动态规划是建立对动态规划认识的第一步，这里我们掌握动态规划的主要思想，为将来的区间动态规划、树形动态规划等打基础。</p>
+<p>线性是时间的永恒主题，在茫然与徘徊中心灵最终也会有历史的归属，阶段的转移，我们会当迈向不远的未来。</p>
+<p>让历史告诉未来，让时间见证青春。</p>
 
     </div>
 
@@ -544,6 +574,8 @@
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 

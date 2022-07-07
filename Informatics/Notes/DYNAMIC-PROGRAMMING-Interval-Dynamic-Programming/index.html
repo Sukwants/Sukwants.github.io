@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="区间上的抉择与合并">
 <meta property="og:type" content="article">
@@ -90,6 +90,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -97,12 +98,38 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-course"><a href="/course/" rel="section"><i class="fas fa-road fa-fw"></i>历路</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友链</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-journey"><a href="/journey/" rel="section"><i class="fas fa-road fa-fw"></i>征途</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友人</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -143,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -154,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -297,7 +324,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.6k</span>
+      <span>5.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -363,7 +390,7 @@
 <p>至于第 2 个问题，相信熟练于线性动态规划的你一定知道如何由最优解还原出最优解的情况吧。代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> n, sc[<span class="number">31</span>];</span><br><span class="line"><span class="type">unsigned</span> f[<span class="number">31</span>][<span class="number">31</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">unsigned</span> <span class="title">max</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &gt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">unsigned</span> <span class="title">function</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f[x][y]) <span class="keyword">return</span> f[x][y];</span><br><span class="line">    <span class="keyword">if</span> (x &gt; y) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (x == y) <span class="keyword">return</span> sc[x];</span><br><span class="line">    <span class="keyword">if</span> (x == y - <span class="number">1</span>) <span class="keyword">return</span> sc[x] + sc[y];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> i = x; i &lt;= y; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        f[x][y] = <span class="built_in">max</span>(f[x][y], <span class="built_in">function</span>(x, i - <span class="number">1</span>) * <span class="built_in">function</span>(i + <span class="number">1</span>, y) + sc[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[x][y];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">output</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &gt; y) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (x == y) <span class="built_in">printf</span>(<span class="string">&quot;%u &quot;</span>, x);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> i = x; i &lt;= y; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">function</span>(x, y) == <span class="built_in">function</span>(x, i - <span class="number">1</span>) * <span class="built_in">function</span>(i + <span class="number">1</span>, y) + sc[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%u &quot;</span>, i);</span><br><span class="line">            <span class="built_in">output</span>(x, i - <span class="number">1</span>);</span><br><span class="line">            <span class="built_in">output</span>(i + <span class="number">1</span>, y);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%u&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%u&quot;</span>, sc + i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, <span class="built_in">function</span>(<span class="number">1</span>, n));</span><br><span class="line">    <span class="built_in">output</span>(<span class="number">1</span>, n);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="T3-金字塔"><a href="#T3-金字塔" class="headerlink" title="T3 金字塔"></a>T3 金字塔</h2><p>题目来源：《算法竞赛进阶指南》<br>评测链接： <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/286/">https://www.acwing.com/problem/content/286/</a></p>
+<h2 id="T3-金字塔"><a href="#T3-金字塔" class="headerlink" title="T3 金字塔"></a>T3 金字塔</h2><p>评测链接： <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/286/">https://www.acwing.com/problem/content/286/</a></p>
 <p>虽然探索金字塔是极其老套的剧情，但是有一队探险家还是到了某金字塔脚下。</p>
 <p>经过多年的研究，科学家对这座金字塔的内部结构已经有所了解。</p>
 <p>首先，金字塔由若干房间组成，房间之间连有通道。</p>
@@ -398,6 +425,8 @@
 <p>总之，这道题也就是简简单单的区间 DP 问题。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>区间 DP 就是在区间上进行的 DP 操作<del>（废话）</del>。它通过 DP 的等效子问题思想、基于区间划分，将问题递归成子区间上的子问题求解。这也是一类比较简单的 DP 。</p>
 <p>有时会出现形似树形 DP 的区间 DP 问题，比如说本文 T2 、 T3 。</p>
+<p>一场区间合并的视觉盛宴，你是否确信问题分解的选择中会有迷茫，有权衡，有统一？</p>
+<p>试着在跋涉的长途中找到合适的驿站，收拾好心情，再整装上阵。</p>
 
     </div>
 
@@ -437,7 +466,7 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/others/Technology/Hexo-theme-NexT-exbyJR/" rel="next" title="Hexo 主题 NexT 扩展版 byJR 使用方法">
+                <a href="/others/Computer/Hexo-theme-NexT-exbyJR/" rel="next" title="Hexo 主题 NexT 扩展版 byJR 使用方法">
                   Hexo 主题 NexT 扩展版 byJR 使用方法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -494,6 +523,8 @@
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="gboRIElEqH-3VpaXcOULRktwDpCoAvWGQmqX2RwYqnU">
+  <meta name="msvalidate.01" content="94748806EA0C50CFA5F4171232C6BDF7">
+  <meta name="yandex-verification" content="ef0d538c97988ac2">
+  <meta name="baidu-site-verification" content="code-dhKcvO3f5o">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="几近搜索量级的巨大状态转移">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划 - 状态压缩动态规划">
+<meta property="og:url" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/index.html">
+<meta property="og:site_name" content="Sukwog">
+<meta property="og:description" content="几近搜索量级的巨大状态转移">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/seriesparallel.png">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/5principles.jpg">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/apm.png">
+<meta property="article:published_time" content="2022-07-01T12:27:55.000Z">
+<meta property="article:modified_time" content="2022-07-01T12:27:55.000Z">
+<meta property="article:author" content="Sukwants">
+<meta property="article:tag" content="[I] 动态规划">
+<meta property="article:tag" content="[I] 状态压缩动态规划">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/seriesparallel.png">
+
+
+<link rel="canonical" href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/","path":"Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/","title":"动态规划 - 状态压缩动态规划"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>动态规划 - 状态压缩动态规划 | Sukwog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Sukwog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Sukwog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Sukwants's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-journey"><a href="/journey/" rel="section"><i class="fas fa-road fa-fw"></i>征途</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友人</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E4%B8%8E%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">逻辑运算与位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.</span> <span class="nav-text">状态压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-%E4%BA%92%E4%B8%8D%E4%BE%B5%E7%8A%AF"><span class="nav-number">3.</span> <span class="nav-text">T1 互不侵犯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">T2 覆盖问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T3-%E5%B9%B3%E6%9D%BF%E6%B6%82%E8%89%B2"><span class="nav-number">5.</span> <span class="nav-text">T3 平板涂色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B3%E6%9D%BF%E6%B6%82%E8%89%B2"><span class="nav-number"></span> <span class="nav-text">平板涂色</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sukwants"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Sukwants</p>
+  <div class="site-description" itemprop="description">时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sukwants" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Sukwants" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/JarRoute" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;JarRoute" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Song_Gch@163.com" title="E-Mail → mailto:Song_Gch@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2906184585" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2906184585" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/SongGch" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;SongGch" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100077727567590" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100077727567590" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCo6U1HIHvCjBC5pKninTF1A" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCo6U1HIHvCjBC5pKninTF1A" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/guanchengsong" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;guanchengsong" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:live:.cid.dcf116a1be7ec392?chat" title="Skype → skype:live:.cid.dcf116a1be7ec392?chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=3102673123&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;3102673123&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.png" title="WeChat → &#x2F;images&#x2F;wechat.png"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/0owei-ni-bian-pi-o0" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;0owei-ni-bian-pi-o0" rel="noopener" target="_blank"><i class="fab fa-zhihusingle fa-fw"></i>Zhihu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.luogu.com.cn/user/193684" title="Luogu → https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;193684" rel="noopener" target="_blank"><i class="fab fa-luogu fa-fw"></i>Luogu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/Song_Gch" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;Song_Gch" rel="noopener" target="_blank"><i class="fab fa-codeforces fa-fw"></i>CodeForces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/1382869983?spm_id_from=333.1007.0.0" title="Bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;1382869983?spm_id_from&#x3D;333.1007.0.0" rel="noopener" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://loj.ac/u/SongGuancheng" title="LibreOJ → https:&#x2F;&#x2F;loj.ac&#x2F;u&#x2F;SongGuancheng" rel="noopener" target="_blank"><i class="fab fa-libreoj fa-fw"></i>LibreOJ</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sukwants">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sukwog">
+      <meta itemprop="description" content="时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="动态规划 - 状态压缩动态规划 | Sukwog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态规划 - 状态压缩动态规划
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-01 20:27:55" itemprop="dateCreated datePublished" datetime="2022-07-01T20:27:55+08:00">2022-07-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Informatics/" itemprop="url" rel="index"><span itemprop="name">Informatics</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Informatics/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>几近搜索量级的<strong>巨</strong>大状态转移</p>
+<span id="more"></span>
+
+<h2 id="逻辑运算与位运算"><a href="#逻辑运算与位运算" class="headerlink" title="逻辑运算与位运算"></a>逻辑运算与位运算</h2><p>以下属于漫无边际的大发议论，可以直接跳到<a href="#importantbegins">位运算</a>。</p>
+<p>众所周知，计算机的底层是逻辑电路。而根据初中知识，我们知道以下两种电路：</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/seriesparallel.png" class="" title="串联和并联" alt="串联和并联">
+
+<p>这里我们用 $1$ 表示开关闭合，用 $0$ 表示开关断开。记第一个开关的状态为 $f_1\in\{0,1\}$，第二个开关的状态为 $f_2\in\{0,1\}$，另外两个开关总的作用效果可以用一个开关替代（等效替代法），我们记它的状态为 $f\in\{0,1\}$。</p>
+<p>那么在串联电路中，当且仅当 $f_1&#x3D;1$ 且 $f_2&#x3D;1$ 时，有 $f&#x3D;1$，否则 $f&#x3D;0$；在并联电路中，当且仅当 $f_1&#x3D;0$ 且 $f_2&#x3D;0$ 时，有 $f&#x3D;0$，否则 $f&#x3D;1$。</p>
+<p>在数学上，我们将类似上述串联电路的运算称为<strong>逻辑与运算</strong>，符号为 $\land$；类似上述并联电路的运算称为<strong>逻辑或运算</strong>，符号为 $\lor$。二者均属于<strong>逻辑运算</strong>，又称布尔运算。逻辑运算的运算元和结果均为 $0$ 或 $1$。</p>
+<p>于是在串联电路中满足 $f&#x3D;f_1\land f_2$，在并联电路中满足 $f&#x3D;f_1\lor f_2$。</p>
+<p>同样属于逻辑运算的还有<strong>逻辑非</strong>（$\lnot$），<strong>逻辑异或</strong>（$\oplus$），<strong>逻辑同或</strong>（$\odot$）。$\lnot$ 是单元运算符，有 $x&#x3D;1\Rightarrow \lnot x&#x3D;0,x&#x3D;0\Rightarrow \lnot x&#x3D;1$；$\oplus$ 是双元运算符，对于两个运算元 $x\in\{0,1\},y\in\{0,1\}$，有 $x&#x3D;y\Rightarrow x\oplus y&#x3D;0,x\neq y\Rightarrow x\oplus y&#x3D;1$；$x\odot y&#x3D;\lnot(x\oplus y)$。</p>
+<p>在 C++ 里，$\land$ 可以用关键字 <strong><code>and</code></strong> 和运算符 <code>&amp;&amp;</code>，$\lor$ 可以用关键字 <strong><code>or</code></strong> 和运算符 <code>||</code>，$\lnot$ 可以用关键字 <strong><code>not</code></strong> 和运算符 <code>!</code>，$\oplus$ 可以用按位异或的 <strong><code>xor</code></strong> 和 <code>^</code>。</p>
+<p>在计算机里，$0$ 和 $1$ 只能表示 1 位二进制数，称为 1 位<del>（不是废话）</del>（$\mathrm{bit}$)。而我们将 8 位 $0$ 和 $1$ 打包，可以表示 8 位二进制数，称为 1 字节（$\mathrm{byte,B}$）。因此 $1\ \mathrm{byte}&#x3D;8\ \mathrm{bit}$。在 $\mathrm{byte}$ 之上还有 $\mathrm{kilobyte,kB}$、$\mathrm{million\ byte,MB}$、$\mathrm{billion\ byte,GB}$、$\mathrm{trillion\ byte,TB}$。</p>
+<p>而多个字节组合，就可以作为计算机的基本数据类型。如 $1\ \mathrm{B}$ 的 <code>char</code>、<code>bool</code>，$2\ \mathrm{B}$ 的 <code>(unsigned) short [int]</code> （无符号）短整型，$4\ \mathrm{B}$ 的 <code>(unsigned) long [int]</code> （无符号）长整型，$8\ \mathrm{B}$ 的 <code>(unsigned) long long [int]</code>。</p>
+<p><code>int</code> 类型在 C++ 标准中仅仅规定了位数不低于 16 位，因此将其与 32 位整型 <code>long int</code> 划等号是不严谨的，但在大多数现代计算机上 <code>int</code> 确实是 32 位整型，我们也经常这样用。</p>
+<p>无符号整数的存储方式很简单，就是将整数转换为二进制形式存储。对于有符号整数，我们把最高位作为符号位，0 表示正数，1 表示负数，剩下位为数值位，但这样不利于加减运算，于是智慧的前人创造了反码和补码。正数的反码、补码与原码相同。对于负数，在原码的基础上，除符号位不变，其余各位取反，就成了反码；给反码在抛开符号位特殊意义的基础上加 1，就成了补码。计算机中的有符号整数都是以补码的形式存储的，这样既能够解决加减法的不方便，又能够解决 +0 和 -0 在原码和反码下存在 2 种不同形式的问题。</p>
+<p>因此 32 位有符号整型的范围为 $-2^{31} \sim 2^{31}-1$，64 位有符号整型的范围为……</p>
+<p>视线回到逻辑运算，聪明的你可能已经发现</p>
+<p>$$<br>\begin{align}<br>  &amp; 0 \oplus 0 &#x3D; 0, &amp;&amp; 0 \oplus 1 &#x3D; 1, &amp;&amp; 1 \oplus 0 &#x3D; 1, &amp;&amp; 1 \oplus 1 &#x3D; \ \ 0 \\<br>  &amp; 0 + 0 &#x3D; 0, &amp;&amp; 0 + 1 &#x3D; 1, &amp;&amp; 1 + 0 &#x3D; 1, &amp;&amp; 1 + 1 &#x3D; 10_{(2)}<br>\end{align}<br>$$</p>
+<p>逻辑异或就是“不进位的加法”。事实上，逻辑异或也是“不进位的减法”。</p>
+<p>而再看</p>
+<p>$$<br>\begin{align}<br>  &amp; 0 \land 0 &#x3D; 0, &amp;&amp; 0 \land 1 &#x3D; 0, &amp;&amp; 1 \land 0 &#x3D; 0, &amp;&amp; 1 \land 1 &#x3D; 1\\<br>  &amp; 0 + 0 &#x3D; 00, &amp;&amp; 0 + 1 &#x3D; 01, &amp;&amp; 1 + 0 &#x3D; 01, &amp;&amp; 1 + 1 &#x3D; 10_{(2)}<br>\end{align}<br>$$</p>
+<p>逻辑与也可以看作是加法的进位。</p>
+<p>这样，计算机就学会了加法，进而学会了减法、乘法、除法……</p>
+<p><span id="importantbegins"></span></p>
+<p>接下来我们进入到了位运算<del>，真正对 OI 学习有帮助的部分</del>。</p>
+<p>位运算是一个非常底层的操作，是对数据的存储形式进行直接操作，由其名字就可以知道这是按位进行操作的一种运算。因为如此底层，所以如此快速。</p>
+<ul>
+<li>按位与（<code>&amp;</code>），对数据的每一位进行逻辑与运算，如 $01010101_{(2)} \ \&amp; \ 11110000_{(2)} &#x3D; 01010000_{(2)}$。</li>
+<li>按位或（<code>|</code>），对数据的每一位进行逻辑或运算，如 $01010101_{(2)} \ | \ 11110000_{(2)} &#x3D; 11110101_{(2)}$。</li>
+<li>按位取反（<code>~</code>），对数据的每一位取反，如 $\sim01010101_{(2)} &#x3D; 10101010_{(2)}$。</li>
+<li>按位异或（<code>^</code>），对数据的每一位进行逻辑异或运算，如 ${01010101_{(2)}}\ ^\wedge \ 11110000_{(2)} &#x3D; 10100101_{(2)}$。</li>
+<li>按位左移（<code>&lt;&lt;</code>），将数据的每一位向左移动，高位舍弃，低位用 0 补齐，如 $01010101_{(2)} &lt;&lt; 3 &#x3D; 10101000_{(2)}$，$11110000_{(2)} &lt;&lt; 3 &#x3D; 10000000_{(2)}$。</li>
+<li>按位右移（<code>&gt;&gt;</code>）（算术右移），将数据的每一位向右移动，低位舍弃，高位用符号位补齐，如 $01010101_{(2)} &gt;&gt; 3 &#x3D; 00001010_{(2)}$，$11110000_{(2)} &gt;&gt; 3 &#x3D; 11111110_{(2)}$。</li>
+</ul>
+<p>这里的每一位指的是数据类型存储的每一位，包含前导 0。还需要注意的是，位运算由于过于底层，是直接对二进制补码进行操作，并不考虑符号位和数值位的区别（按位右移除外）。</p>
+<p>由以上定义可以得出位运算的一些性质：</p>
+<ul>
+<li>$x \ \&amp; \ y &#x3D; y \ \&amp; \ x,x \ | \ y &#x3D; y \ | \ x,x \ ^\wedge \ y &#x3D; y \ ^\wedge \ x$</li>
+<li>$\forall x \in \mathbb{N}_+,-x&#x3D;\sim x-1$</li>
+<li>$x \ ^\wedge \ y &#x3D; z \Rightarrow z \ ^\wedge \ y &#x3D; x$</li>
+<li>$x &lt;&lt; 1 &#x3D; 2x$（在不超过数据类型存储范围的情况下）</li>
+<li>$x &gt;&gt; 1 &#x3D; \left \lfloor \frac{x}{2} \right \rfloor $</li>
+<li>……</li>
+</ul>
+<p>通常情况下，我们在 $[0,2^{n})$ 的范围内运算，其中 $n$ 不足 31，此时大可不必考虑溢出到符号位的情况。</p>
+<h2 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h2><p>试想，通过位运算的强大，我们可以干些什么？数据不再仅仅是一个数，它可以用作存储 $N$ 个一位二进制数。当一个数不再属于它自己，便诞生了状态压缩，数据的每一位都被赋予了新的使命，背负着新的时代责任。</p>
+<h2 id="T1-互不侵犯"><a href="#T1-互不侵犯" class="headerlink" title="T1 互不侵犯"></a>T1 互不侵犯</h2><p>题目来源：SCOI2005<br>评测链接：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1896">https://www.luogu.com.cn/problem/P1896</a></p>
+<p>在 N × N 的棋盘里面放 K 个国王，使他们互不攻击，共有多少种摆放方案。国王能攻击到它上下左右，以及左上左下右上右下八个方向上附近的各一个格子，共 8 个格子。</p>
+<br>
+
+<p>走过了战火纷飞，才会懂得和平的弥足珍贵。当今世界人类是一个命运共同体，又因何冲突不断，和平不续？</p>
+<p>为了走独立自主的和平外交道路，和平共处五项原则显得尤为重要，当然不是下面这个</p>
+<div style="width:50%;margin:auto">
+  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/5principles.jpg" class="" title="和平共处五项原则" alt="和平共处五项原则">
+</div>
+
+<center>图源：<a target="_blank" rel="noopener" href="https://song-gan.github.io/">@Ganshin</a></center>
+
+<p>为了倡导一带一路建设，推动构建人类命运共同体，弘扬 OIer 核心价值观，我们建立了区域全面最优子结构战略伙伴关系。由于 N &lt;&#x3D; 9，我们完全可以将一行内的国王的状态压缩到一个 int 里去，在互不侵犯领土的情况下抱团取暖，一致对外。这种情况下，行间和平共处也可以有位运算的强大保障来考验。</p>
+<p>具体来说，用 $1$ 表示有国王，用 $0$ 表示无国王，接下来用一个 int 的每一位代表一行内一个位置有无国王的状态。比如，我们在某一行（共 $8$ 格）的第 $1$ 格、第 $4$ 格和第 $8$ 格放置了国王，那么这一行的状态就可以表示为 $10010001$，作为二进制形式存到一个 int 里。</p>
+<p>你大概能够迅速反应过来，一行内“和平共处”，当且仅当这一行的状态表示为 $x$ 满足 $x \ \&amp; \ (x &lt;&lt; 1) &#x3D; 0$。</p>
+<p>那么行间“和平共处”，当且仅当这两行的状态表示为 $x,y$ 满足 $x \ \&amp; \ y &#x3D; 0 \land x \ \&amp; \ (y &lt;&lt; 1) \land x \ \&amp; \ (y &gt;&gt; 1)$。</p>
+<p>状态压缩的目的，就是为了能够用 1 个整型表示出状态，而“状态”在动态规划里的含义也十分明确，无非就是 <code>f</code> 数组的一个或几个下标。</p>
+<p>整型变量再怎么说也只是 32 位的，顶多能压缩 32 个 0&#x2F;1 值，但这足够了。我们将一行压缩，同时行间作为阶段进行转移。我们已经能够快速判断一行或行间是否合法，那么转移就只需要 $O(1)$ 的时间复杂度。</p>
+<p>具体在这道题里，我们用 $f_{i,j}$ 表示当第 $i$ 行的状态表示为 $j$ 时，前 $i$ 行的总方案数。那么转移条件为 $j$、$k$ 合法、并且 $j$、$k$ 之间能够“和平共处”，转移就是简简单单的加法。</p>
+<p>状态转移方程可以写成</p>
+<p>$$<br>f_{i,j}&#x3D;\sum_{k\ |\ p(k,j)}f_{i-1,k}<br>$$</p>
+<p>其中，$p(k,j)$ 为 $k$、$j$ 均合法且可相邻的条件。</p>
+<p>考虑边界条件，第 $1$ 行不用考虑行间冲突，只要是行内合法的方案均可。不与任何行冲突的状态取 $0$，因此可以让 $f_{0,0}&#x3D;1$，让第 $1$ 行的所有合法方案均有方案数 $1$。</p>
+<p>扫描状态的方法，只用将 $[0,1&lt;&lt;n)$ 的所有整数扫描一遍即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, k;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> f[<span class="number">10</span>][<span class="number">100</span>][<span class="number">600</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bits</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!x) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bits</span>(x - (x &amp; -x)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;k);</span><br><span class="line">    <span class="type">int</span> _2n = <span class="built_in">pow</span>(<span class="number">2</span>, n);</span><br><span class="line">    f[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= k; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> a = <span class="number">0</span>; a &lt; _2n; ++a)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">bits</span>(a) &lt;= j &amp;&amp; !(a &amp; (a &lt;&lt; <span class="number">1</span>)))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> b = <span class="number">0</span>; b &lt; _2n; ++b)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span> (!(a &amp; b) &amp;&amp; !(a &amp; (b &lt;&lt; <span class="number">1</span>)) &amp;&amp; !(a &amp; (b &gt;&gt; <span class="number">1</span>)) &amp;&amp; !(b &amp; (b &lt;&lt; <span class="number">1</span>)) &amp;&amp; <span class="built_in">bits</span>(a) + <span class="built_in">bits</span>(b) &lt;= j)</span><br><span class="line">                        &#123;</span><br><span class="line">                            f[i][j][a] += f[i - <span class="number">1</span>][j - <span class="built_in">bits</span>(a)][b];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> Ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; _2n; ++i)</span><br><span class="line">        Ans += f[n][k][i];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, Ans);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过一道题的做题经验我们就可以发现，状压 DP 需要扫描每一行的所有合法方案，虽然有的时候可以预处理，但是这种类似于排列组合的枚举方法都已经接近搜索了。</p>
+<p>更何况所有合法方案都是 <code>f</code> 数组的一个下标，所以 <code>f</code> 数组会开得很大。并且因为枚举过程的巨大贡献，时间复杂度为 $O(2^nn)$。因此状压 DP 的题 $n$ 不可能很大，一不小心不是 <font style="color:blue">TLE</font> 就会 <font style="color:blue">MLE</font>。一般来说， $n$ 在 $10$ 左右，只比搜索好一点。所以做状压 DP 题的时候得先看一下时空复杂度能不能承受再确定此题状压 DP 解法是否为真。</p>
+<p>如此庞大的状态转移，带来了沉重的时空消耗，但这只是状态压缩的缺点，DP 的优势仍然不时闪耀着光芒<del>（不信你用 DFS 切这道题试试）</del>。</p>
+<h2 id="T2-覆盖问题"><a href="#T2-覆盖问题" class="headerlink" title="T2 覆盖问题"></a>T2 覆盖问题</h2><p>题目来源：QZOJ<br>评测链接 1：<a target="_blank" rel="noopener" href="http://124.221.137.247/problem/383">http://124.221.137.247/problem/383</a><br>评测链接 2：<a target="_blank" rel="noopener" href="https://hydro.ac/d/sukwoj/p/QZ383">https://hydro.ac/d/sukwoj/p/QZ383</a><br>类题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/293/">https://www.acwing.com/problem/content/293/</a></p>
+<p>输出用 $1 \times 2$ 的骨牌完全覆盖 $M(\leq 10)$ 行 $N(\leq 1000)$ 列的棋盘的方案总数，答案对 $1234567$ 取模。</p>
+<br>
+
+<p>此题我们一看就知道是棋盘类的状压 DP，一看数据范围更加证实了我们的猜想。同上一道题一样的套路，我们需要将一行的状态压缩，然后行间转移，但是如何定义状态便成了难点。</p>
+<p>不难发现，放置的 $1 \times 2$ 的骨牌只有两种状态——横放与竖放。横放的骨牌在行内就可以解决，但竖放的骨牌却需要两行同时解决。我们要进行行间转移，势必要对竖放的骨牌进行分割，分成上半部分和下半部分，那我们就先这样定义状态，用 $0,1,2$ 三个数表示，但这样就会失去位运算的优秀表现。</p>
+<p>再细想，在行间转移的时候，在上一行放置的骨牌状态对下一行（同一位置）的影响只有两种——上一行放了上半部分决定下一行只能放下半部分，否则可以放上半部分或者横放骨牌。这样我们惊奇地发现，之前决策对当前决策的影响已经可以用最后一行的上半部分和非上半部分决定了，满足动态规划无后效性原则。</p>
+<p>既然这样，那么我们就可以按照其对下一行的影响，用 $1$ 表示此处放置了竖放骨牌上半部分，$0$ 表示此处放置了其他情况，压缩到整型变量里去。</p>
+<p>那么，行间转移的条件就要满足（两行状态为 $x,y$）</p>
+<ol>
+<li>令 $z &#x3D; x \  | \ y$，那么 $z$ 需要满足二进制形势下连续一段 $0$ 的个数为偶数个，因为 $z$ 中 $1$ 表示竖放骨牌，$0$ 表示横放骨牌。</li>
+<li>$x \ \&amp; \ y &#x3D; 0$，因为竖放骨牌的上半部分之下不能再是竖放骨牌的上半部分。</li>
+</ol>
+<p>那么就用 $f_{i,s}$ 表示转移到第 $i$ 行、状态标识为 $s$ 的方案数，转移自然就是简单的 <code>+=</code>。</p>
+<p>代码如下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MOD = <span class="number">1234567</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> m, n, f[<span class="number">1005</span>][<span class="number">1200</span>], _up;</span><br><span class="line"><span class="type">bool</span> ex[<span class="number">1200</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">exmn</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= _up; i &lt;&lt;= <span class="number">1</span>) <span class="keyword">if</span> (!(x &amp; i)) <span class="keyword">if</span> ((i &lt;&lt;= <span class="number">1</span>) &gt; _up || x &amp; i) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">preset</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= _up; ++i) ex[i] = <span class="built_in">exmn</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;m, &amp;n);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (m &amp; <span class="number">1</span> &amp;&amp; n &amp; <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;-1&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	_up = (<span class="number">1</span> &lt;&lt; m) - <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">preset</span>();</span><br><span class="line">	</span><br><span class="line">	f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= _up; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt;= _up; ++k)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (!(j &amp; k) &amp;&amp; ex[j | k]) f[i][j] = (f[i][j] + f[i - <span class="number">1</span>][k]) % MOD;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, f[n][<span class="number">0</span>]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这道题还可以用矩阵快速幂加速<del>，这里留给读者自己思考</del>。</p>
+<h2 id="T3-平板涂色"><a href="#T3-平板涂色" class="headerlink" title="T3 平板涂色"></a>T3 平板涂色</h2><p>评测链接：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1283">https://www.luogu.com.cn/problem/P1283</a></p>
+<h1 id="平板涂色"><a href="#平板涂色" class="headerlink" title="平板涂色"></a>平板涂色</h1><p>CE 数码公司开发了一种名为自动涂色机（APM）的产品。它能用预定的颜色给一块由不同尺寸且互不覆盖的矩形构成的平板涂色。</p>
+<p>为了涂色，APM 需要使用一组刷子。每个刷子涂一种不同的颜色 $C_i(1\le C_i \le 20)$ 。APM 拿起一把有颜色 $C_i$ 的刷子，并给所有颜色为 $C_i$ 且符合下面限制的矩形涂色：</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/apm.png" class="" title="平板涂色 题图">
+
+<p>为了避免颜料渗漏使颜色混合，一个矩形只能在所有紧靠它上方的矩形涂色后，才能涂色。例如图中矩形 $F$ 必须在 $C$ 和 $D$ 涂色后才能涂色。注意，每一个矩形必须立刻涂满，不能只涂一部分。</p>
+<p>输入矩形的个数 $N(1\le N \le 16)$，以及每个矩形的范围信息，用左上角的 $y$ 坐标和 $x$ 坐标、右下角的 $y$ 坐标和 $x$ 坐标表示，$0 \le x_i,y_i \le 99$。</p>
+<p>写一个程序求一个使 APM 拿起刷子次数最少的涂色方案。注意，如果一把刷子被拿起超过一次，则每一次都必须记入总数中。</p>
+<br>
+
+<p>本题中，刷子换一次颜色算拿起一次，而每次拿起刷子可以将这个颜色的当前可涂色的所有区域都涂上颜色。</p>
+<p>因为矩形区域覆盖在二维平面上，并未确定一定的涂色顺序，无法用一个数据概括已经涂过的区域。而已经涂过的区域又会对下一步操作产生影响，因此不得不保存涂色状态。$N$ 的范围在 $16$ 以内，因此考虑状压 DP。</p>
+<p>同样的套路，用二进制状压矩形区域是否已经被涂色。</p>
+<p>转移时，抓住本题的特点，拿起一次刷子可以涂完这个颜色当前所有可涂色的区域，想到“扩展”的思想，如果这次新涂色的区域与刚才涂色的区域颜色相同，不用再拿起刷子，即代价不 $+1$。</p>
+<p>因此用 $f_{s,i}$ 表示要达到 $s$ 的涂色状态，最后一步涂区域 $i$ 的最小代价。</p>
+<p>检验状态是否合法，需要预处理出要在 $i$ 涂色之前涂色的区域，确认这些区域是否在状态中即可。至于除 $i$ 以外的区域是否可以被合法涂色，不需要在当前考虑，因为当前状态需要从合法状态转移过来，而除 $i$ 以外的区域都会在前面某个合法状态中被检验。</p>
+<p>因此通过枚举上一次的最后涂色区域，比较后进行转移。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">min</span><span class="params">(T x, T y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &lt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, _n;</span><br><span class="line"><span class="type">int</span> f[<span class="number">65600</span>][<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> re[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> map[<span class="number">105</span>][<span class="number">105</span>];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">area</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> x1, y1, x2, y2, c;</span><br><span class="line">&#125; a[<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d%d&quot;</span>, &amp;a[i].y1, &amp;a[i].x1, &amp;a[i].y2, &amp;a[i].x2, &amp;a[i].c);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> y = a[i].y1 + <span class="number">1</span>; y &lt;= a[i].y2; ++y) <span class="keyword">for</span> (<span class="type">int</span> x = a[i].x1 + <span class="number">1</span>; x &lt;= a[i].x2; ++x) map[y][x] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i].y1 != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            re[i][++re[i][<span class="number">0</span>]] = map[a[i].y1][a[i].x1 + <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> x = a[i].x1 + <span class="number">2</span>; x &lt;= a[i].x2; ++x)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (map[a[i].y1][x] != map[a[i].y1][x - <span class="number">1</span>]) re[i][++re[i][<span class="number">0</span>]] = map[a[i].y1][x];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memset</span>(f, <span class="number">0x3f</span>, <span class="keyword">sizeof</span> f);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!re[i][<span class="number">0</span>]) f[<span class="number">1</span> &lt;&lt; i - <span class="number">1</span>][i] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _n = <span class="number">1</span> &lt;&lt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; _n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &amp; (<span class="number">1</span> &lt;&lt; j - <span class="number">1</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">1</span>; k &lt;= re[j][<span class="number">0</span>]; ++k) <span class="keyword">if</span> (!(i &amp; (<span class="number">1</span> &lt;&lt; re[j][k] - <span class="number">1</span>))) <span class="keyword">goto</span> Label;</span><br><span class="line">                <span class="comment">// if (i == 8703 &amp;&amp; j == 9) fprintf(stderr, &quot;ZYCAKIOI!\n&quot;);</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">1</span>; k &lt;= n; ++k)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i &amp; (<span class="number">1</span> &lt;&lt; k - <span class="number">1</span>) &amp;&amp; k != j)</span><br><span class="line">                    &#123;</span><br><span class="line">                        f[i][j] = <span class="built_in">min</span>(f[i][j], f[i ^ (<span class="number">1</span> &lt;&lt; j - <span class="number">1</span>)][k] + (a[k].c == a[j].c ? <span class="number">0</span> : <span class="number">1</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        Label:</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fprintf(stderr, &quot;%d\n&quot;, 8703 &amp; (1 &lt;&lt; 13));</span></span><br><span class="line">    <span class="comment">// fprintf(stderr, &quot;%d&quot;, f[8703][9]);</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> Ans = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) Ans = <span class="built_in">min</span>(Ans, f[_n - <span class="number">1</span>][i]);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, Ans);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一种思路，不用逐个区域转移，每次枚举涂色的颜色，将这个颜色的当前可以涂色的区域都涂色。这种思路会有一个坑，如果有两个相同颜色的区域上下相邻，则需要保证上面的区域先被扫描到，这样才能保证下面的区域被正确判断为可以涂色。因此需要事先排序。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>状态压缩是一类利用二进制和位运算压缩表示状态的技巧，当然有时也可以预处理出幂用于三进制等等。</p>
+<p>状压 DP 就是运用状态压缩技巧的典型，让庞大的状态得以成为最优子结构的一位。然而枚举的代价是巨大的，状态的种类也非常繁多，时空复杂度都会带指数，因此状压 DP 的题目中规模不会太大。</p>
+<p>人生旅途中，我们何尝不会面对许许多多影响决策的内外因素？与其强行压缩，确保每一个因素都被考虑进去，让时空的承受沉重无比，不如卸下包袱，轻装上阵，用感性的心情去沐浴每一秒阳光的美好。</p>
+<p>学着去放下，才能行走得更加轻快。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Sukwants
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/" title="动态规划 - 状态压缩动态规划">https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/I-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i> [I] 动态规划</a>
+              <a href="/tags/I-%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i> [I] 状态压缩动态规划</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Tree-Dynamic-Programming/" rel="prev" title="动态规划 - 树形动态规划">
+                  <i class="fa fa-chevron-left"></i> 动态规划 - 树形动态规划
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/others/Memories/Sky-in-Mianyang-Full-of-Stars/" rel="next" title="绵州城半山看星">
+                  绵州城半山看星 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sukwants</span>
+</div>
+<div class="running-time">
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("02/11/2022 13:14:21");//此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.1/es5/tex-mml-chtml.js","integrity":"sha256-hlC2uSQYTmPsrzGZTEQEg9PZ1a/+SV6VBCTclohf2og="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"3caf9463e1cf0c6bc12cab0473db09c7"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
