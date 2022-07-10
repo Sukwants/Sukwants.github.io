@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://sukwants.github.io/friends/index.html</loc>
+    
+    <lastmod>2022-07-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://sukwants.github.io/others/Memories/Sky-in-Mianyang-Full-of-Stars/</loc>
     
     <lastmod>2022-07-07</lastmod>
@@ -41,15 +50,6 @@
     <loc>https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/</loc>
     
     <lastmod>2022-07-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://sukwants.github.io/friends/index.html</loc>
-    
-    <lastmod>2022-06-26</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
