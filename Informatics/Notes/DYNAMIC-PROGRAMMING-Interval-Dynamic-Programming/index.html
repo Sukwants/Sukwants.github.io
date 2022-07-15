@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="区间上的抉择与合并">
 <meta property="og:type" content="article">
@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -323,7 +323,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.7k</span>
+      <span>5.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -390,27 +390,26 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> n, sc[<span class="number">31</span>];</span><br><span class="line"><span class="type">unsigned</span> f[<span class="number">31</span>][<span class="number">31</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">unsigned</span> <span class="title">max</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &gt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">unsigned</span> <span class="title">function</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f[x][y]) <span class="keyword">return</span> f[x][y];</span><br><span class="line">    <span class="keyword">if</span> (x &gt; y) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (x == y) <span class="keyword">return</span> sc[x];</span><br><span class="line">    <span class="keyword">if</span> (x == y - <span class="number">1</span>) <span class="keyword">return</span> sc[x] + sc[y];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> i = x; i &lt;= y; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        f[x][y] = <span class="built_in">max</span>(f[x][y], <span class="built_in">function</span>(x, i - <span class="number">1</span>) * <span class="built_in">function</span>(i + <span class="number">1</span>, y) + sc[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[x][y];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">output</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &gt; y) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (x == y) <span class="built_in">printf</span>(<span class="string">&quot;%u &quot;</span>, x);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> i = x; i &lt;= y; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">function</span>(x, y) == <span class="built_in">function</span>(x, i - <span class="number">1</span>) * <span class="built_in">function</span>(i + <span class="number">1</span>, y) + sc[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%u &quot;</span>, i);</span><br><span class="line">            <span class="built_in">output</span>(x, i - <span class="number">1</span>);</span><br><span class="line">            <span class="built_in">output</span>(i + <span class="number">1</span>, y);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%u&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%u&quot;</span>, sc + i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, <span class="built_in">function</span>(<span class="number">1</span>, n));</span><br><span class="line">    <span class="built_in">output</span>(<span class="number">1</span>, n);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="T3-金字塔"><a href="#T3-金字塔" class="headerlink" title="T3 金字塔"></a>T3 金字塔</h2><p>评测链接： <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/286/">https://www.acwing.com/problem/content/286/</a></p>
-<p>虽然探索金字塔是极其老套的剧情，但是有一队探险家还是到了某金字塔脚下。</p>
-<p>经过多年的研究，科学家对这座金字塔的内部结构已经有所了解。</p>
-<p>首先，金字塔由若干房间组成，房间之间连有通道。</p>
+<p>探险队来到金字塔，金字塔由若干房间组成，房间之间连有通道。</p>
 <p>如果把房间看作节点，通道看作边的话，整个金字塔呈现一个有根树结构，节点的子树之间有序，金字塔有唯一的一个入口通向树根。</p>
 <p>并且，每个房间的墙壁都涂有若干种颜色的一种。</p>
-<p>探险队员打算进一步了解金字塔的结构，为此，他们使用了一种特殊设计的机器人。</p>
-<p>这种机器人会从入口进入金字塔，之后对金字塔进行深度优先遍历。</p>
+<p>有一种机器人，会从入口进入金字塔，之后对金字塔进行深度优先遍历。</p>
 <p>机器人每进入一个房间（无论是第一次进入还是返回），都会记录这个房间的颜色。</p>
 <p>最后，机器人会从入口退出金字塔。</p>
-<p>显然，机器人会访问每个房间至少一次，并且穿越每条通道恰好两次（两个方向各一次）， 然后，机器人会得到一个颜色序列。</p>
+<p>显然，机器人会访问每个房间至少一次，并且穿越每条通道恰好两次（两个方向各一次），然后，机器人会得到一个颜色序列。</p>
 <p>但是，探险队员发现这个颜色序列并不能唯一确定金字塔的结构。</p>
 <p>现在他们想请你帮助他们计算，对于一个给定的颜色序列，有多少种可能的结构会得到这个序列。</p>
 <p>因为结果可能会非常大，你只需要输出答案对 $10^9$ 取模之后的值。</p>
 <br>
 
-<p>是不是感觉这道题神似 T2 ？猜得没错，这也是一个形似树形 DP 实则区间 DP 的 <strong>Y 货</strong>（语出长城爷爷）。</p>
+<p>是不是感觉这道题神似 T2 ？猜得没错，这也是一个形似树形 DP 实则区间 DP 的 <strong>Y 货</strong>。</p>
 <p>注意， DFS 序不同于前序、中序、后序遍历的任何一种，它是从每棵子树退回根都要重新输出一次根。</p>
 <p>再注意，题目中描述<strong>节</strong>（是否是题目写错了？）<strong>点的子树之间有序</strong>，有两层意思：1.节点的两棵子树交换位置视为不同的情况；2. DFS 序严格按照节点的子树顺序安排，因此不用考虑交换子树的排列组合问题。</p>
 <p>那么这道题就简单了，用 $f_{i,j}$ 表示区间 $[i,j]$ 为一棵子树的 DFS 序，那么树根的颜色就是 $S_i$ 和 $S_j$ 代表的颜色。根据区间内出现的树根颜色进行划分或者不划分，可以排列出这棵子树之下可能出现所有子树排列，但是这样时间复杂度就会承受不了。</p>
 <p>再想想，若对于区间 ABABABA，可以划分为 A 下 3 个 B 的形态（如下图），但是同样是这样的形态，不仅可以划分为 |AB|AB|AB|A 的形式，也可以将第一棵子树划分出来，将后面的 ABABA 再行划分为 |AB|AB|A 。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/pyramid.png" class="" title="金字塔 解图 1">
+<div style="width:50%;margin:auto">
+  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/pyramid.png" class="" title="金字塔 解图 1">
+</div>
 
 <p>总结一下，这样的优化方法实质上也是用动态规划思想的子问题递归代替了排列组合，本质也是用动态规划的转移代替搜索的盲目排列的做法。我们现在已经遇到了很多次这样的思想，譬如多重背包的二进制拆分法、本文 T2 和 T3，等等。</p>
 <p>这里状态转移方程不方便用数学公式表示，伪代码如下</p>
@@ -464,7 +463,7 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/others/Computer/Hexo-theme-NexT-exbyJR/" rel="next" title="Hexo 主题 NexT 扩展版 byJR 使用方法">
+                <a href="/others/Technology/Hexo-theme-NexT-exbyJR/" rel="next" title="Hexo 主题 NexT 扩展版 byJR 使用方法">
                   Hexo 主题 NexT 扩展版 byJR 使用方法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>

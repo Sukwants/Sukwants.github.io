@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="gboRIElEqH-3VpaXcOULRktwDpCoAvWGQmqX2RwYqnU">
+  <meta name="msvalidate.01" content="94748806EA0C50CFA5F4171232C6BDF7">
+  <meta name="yandex-verification" content="ef0d538c97988ac2">
+  <meta name="baidu-site-verification" content="code-r8xtrrlwFp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="古老的十进位制，新生的数位 DP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划 - 数位动态规划">
+<meta property="og:url" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/index.html">
+<meta property="og:site_name" content="Sukwog">
+<meta property="og:description" content="古老的十进位制，新生的数位 DP">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-12T13:30:24.000Z">
+<meta property="article:modified_time" content="2022-07-12T13:30:24.000Z">
+<meta property="article:author" content="Sukwants">
+<meta property="article:tag" content="[I] 动态规划">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/","path":"Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/","title":"动态规划 - 数位动态规划"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>动态规划 - 数位动态规划 | Sukwog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Sukwog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Sukwog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Sukwants's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-journey"><a href="/journey/" rel="section"><i class="fas fa-road fa-fw"></i>征途</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友人</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E4%BD%8D%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">进位制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E4%BD%8D-DP"><span class="nav-number">2.</span> <span class="nav-text">数位 DP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-%E6%95%B0%E5%AD%97%E8%AE%A1%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">T1 数字计数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-windy-%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">T2 windy 数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sukwants"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Sukwants</p>
+  <div class="site-description" itemprop="description">时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sukwants" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Sukwants" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/JarRoute" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;JarRoute" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Song_Gch@163.com" title="E-Mail → mailto:Song_Gch@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2906184585" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2906184585" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/SongGch" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;SongGch" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100077727567590" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100077727567590" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCo6U1HIHvCjBC5pKninTF1A" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCo6U1HIHvCjBC5pKninTF1A" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/guanchengsong" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;guanchengsong" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:live:.cid.dcf116a1be7ec392?chat" title="Skype → skype:live:.cid.dcf116a1be7ec392?chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=3102673123&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;3102673123&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.png" title="WeChat → &#x2F;images&#x2F;wechat.png"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/0owei-ni-bian-pi-o0" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;0owei-ni-bian-pi-o0" rel="noopener" target="_blank"><i class="fab fa-zhihusingle fa-fw"></i>Zhihu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.luogu.com.cn/user/193684" title="Luogu → https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;193684" rel="noopener" target="_blank"><i class="fab fa-luogu fa-fw"></i>Luogu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/Song_Gch" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;Song_Gch" rel="noopener" target="_blank"><i class="fab fa-codeforces fa-fw"></i>CodeForces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/1382869983?spm_id_from=333.1007.0.0" title="Bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;1382869983?spm_id_from&#x3D;333.1007.0.0" rel="noopener" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://loj.ac/u/SongGuancheng" title="LibreOJ → https:&#x2F;&#x2F;loj.ac&#x2F;u&#x2F;SongGuancheng" rel="noopener" target="_blank"><i class="fab fa-libreoj fa-fw"></i>LibreOJ</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sukwants">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sukwog">
+      <meta itemprop="description" content="时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="动态规划 - 数位动态规划 | Sukwog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态规划 - 数位动态规划
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-12 21:30:24" itemprop="dateCreated datePublished" datetime="2022-07-12T21:30:24+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Informatics/" itemprop="url" rel="index"><span itemprop="name">Informatics</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Informatics/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>古老的十进位制，新生的数位 DP</p>
+<span id="more"></span>
+
+<h2 id="进位制"><a href="#进位制" class="headerlink" title="进位制"></a>进位制</h2><p>进位制诞生于数学初生之时，为了用有限的数字组合表达出任何数，不重不漏，就是进位制的初心。</p>
+<p>常用的有十进制、二进制、八进制、十六进制、六十进制。人类选择了十进制，根据解剖学观点，这与人类拥有十根手指有关，这也证实了人类最原始的计数方法。当然也有如古代两河流域的苏美尔人，选择了六十进位制。</p>
+<p>进位制的选择影响了数的表现形式，也会导致一些数字的特殊性。</p>
+<p>比如 3 和 9 的倍数判断可以用各位数字相加，7、11、13 的倍数判断可以用奇段和减去偶段和，这些都是与十进位制相关的。</p>
+<p>因此，如果有一道题与进位制的选择有关，换言之，与数位的表现形式有关，那么就可以选择拆开各数位，作为一个数列来进行处理。</p>
+<p>其中，一个具有代表性的算法，数位 DP。</p>
+<h2 id="数位-DP"><a href="#数位-DP" class="headerlink" title="数位 DP"></a>数位 DP</h2><p>数位 DP 的基本原理是把一个十进制数拆成各数位进行处理。</p>
+<p>因此，数位 DP 的题目一般会与进位制的选择有关。并且，各个数位之间相对独立，又可以按照数位来进行阶段划分。</p>
+<p>再者，对于我们最开始要处理的对象也就是数，一般范围很大，暴力枚举会超时，用数位 DP 后时间复杂度会包含一个 $\lg$ 或者 $\log_x$（$x$ 由进位制的选择决定）。</p>
+<p>数位 DP 还有以下特征：</p>
+<p>我们运用数位 DP 的时候，往往会有预处理的过程，而这预处理的过程又可以看作一个数位 DP。</p>
+<p>一般对于区间 $[a,b]$ 的问题，会将它转换为 $[1,b]$ 和 $[1,a-1]$ 两个问题之差，只考虑上界，方便统计。</p>
+<p>数位 DP 过后往往会有一个统计或是其他操作。</p>
+<h2 id="T1-数字计数"><a href="#T1-数字计数" class="headerlink" title="T1 数字计数"></a>T1 数字计数</h2><p>题目来源：ZJOI2010<br>评测链接：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2602">https://www.luogu.com.cn/problem/P2602</a></p>
+<p>给定两个正整数 $a$ 和 $b$，求在 $[a,b]$ 中的所有整数中，每个数码(digit)各出现了多少次。$1 \le a,b \le 10^{12}$。</p>
+<br>
+
+<p>这道题提示的就过于明显了，就连标题都在拼命提醒你这道题与数位有关，再定睛一看，数位 DP 原形毕露。</p>
+<p>根据数位 DP 的一般套路，将问题化为关于 $[1,b]$ 和 $[1,a-1]$ 两个问题，那么就考虑关于 $[1,l]$ 的问题应该怎么处理。</p>
+<p>对于这种有上界的数位 DP，我们会发现从高位到低位取数字，如果取得的数字小于上界中这一位上的数字，那么接下来低位的数字无论怎么取都不会超过上界，因此这就是一个完美的子问题，不需要过多判断，预处理出 DP 数组即可。</p>
+<p>这样，我们就可以从高位到低位枚举，在每一位，选择小于上界的数字直接进行统计，选择等于上界的数字继续往低位枚举。</p>
+<p>具体来说，比如上界是 $12345$，目前已经取得的前 $2$ 位是 $12$，正在考虑第 $3$ 位的取值。如果第三位取 $0,1,2$，那么这三者接下来的数字选择都是一致的，不用搜索式地扫描；如果第 $3$ 位取 $3$，那么就看作前三位取定了 $123$，继续进行第 $4$ 位的统计。</p>
+<p>接着回归到这道题上来，先不考虑前导 $0$。</p>
+<p>本题要求统计数字出现的个数，首先考虑预处理的 DP 数组，可以发现对于所有 $k$ 位数字，$0-9$ 出现的次数是均等的，因此可以用 $f_i$ 表示 $k$ 位数字组成的所有数中，每个数字出现的次数。</p>
+<p>考虑递推式，对于已经取定 $k$ 位数字的所有数中，每个数字总共出现 $f_k$ 次，再取下一位，由于下一位有 $10$ 中选择，因此在 $k+1$ 位数字的所有数中，每个数字在前 $k$ 位总计出现 $10f_k$ 次。再来，前 $k$ 位数字一共有 $10^k$ 种组合，因此在 $k+1$ 位数字的所有数中，每个数字在第 $k+1$ 位总计出现 $10^k$ 次。</p>
+<p>于是就有 $f_{k+1}&#x3D;10f_k+10^k$，整理得</p>
+<p>$$<br>f_i&#x3D;10f_{i-1}+10^{i-1}<br>$$</p>
+<p>也可以由「对于所有 $k$ 位数字，$0-9$ 出现的次数是均等的」这一结论，得到 $f_i&#x3D;\frac{i \times 10^i}{10}&#x3D;10^{i-1}i$，这与递推式是一致的。</p>
+<p>预处理出 DP 数组，我们考虑如何统计答案。</p>
+<p>先来一个形象一点的定义，我们在按照上界从高位向低位枚举的过程中，大手一挥解决了上界以下的所有情况，然后又小心翼翼地处理高位与上界相等的情况。后者我们可以称为「贴着上界」。</p>
+<p>从高位到低位枚举的过程中，上界的第 $i$ 位为 $x$。</p>
+<p>不贴着上界的情况：第 $i$ 位有 $x$ 种取法，后 $len-i$ 位还有 $10^{len-i}$ 种组合，即第 $i$ 位为 $[0,x-1]$ 的每个数字贡献了 $10^{len-i}$；接下来 $len-i$ 位每个数字出现次数为 $f_{len-i}$，第 $i$ 位有 $x$ 种取值，因此后 $len-i$ 位为 $[0,9]$ 的每个数字贡献了 $f_{len-i}x$。至于还有前 $i-1$ 位，在贴着上界的情况讨论。</p>
+<p>贴着上界的情况：第 $i$ 位取值必定是 $x$，还要考虑后 $len-i$ 位的贴着上界和不贴着上界的第 $i$ 位部分贡献，而在前 $i$ 位确定与上界相等时，后 $len-i$ 位还会出现 $l \mod 10^{len-i}$ 次，因此第 $i$ 位为 $x$ 贡献了 $l \mod 10^{len-i}$。</p>
+<p>然后考虑前导 0，当我们的上界有 $len$ 位时，要统计有 $k$ 个前导 0 的情况，那么有 $k$ 个前导 0 的数有 $10^{len-k}$ 个，于是就有 $k \times 10^{len-k}$ 个前导 0 被错误地统计，从 $0$ 的答案中删去即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> a, b, c[<span class="number">15</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> f[<span class="number">15</span>], p[<span class="number">15</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans1[<span class="number">10</span>], ans2[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">preset</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    p[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">13</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        f[i] = f[i - <span class="number">1</span>] * <span class="number">10</span> + p[i - <span class="number">1</span>];</span><br><span class="line">        p[i] = p[i - <span class="number">1</span>] * <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">work</span><span class="params">(<span class="type">long</span> <span class="type">long</span> l, <span class="type">long</span> <span class="type">long</span> *ans)</span>    <span class="comment">// 计算区间 [1,l] 的答案</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> tmp = l;</span><br><span class="line">    <span class="type">int</span> len = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (tmp) tmp /= <span class="number">10</span>, ++len;    <span class="comment">// 统计 l 的位数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= len; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> x = l % p[len - i + <span class="number">1</span>] / p[len - i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; ++j) ans[j] += f[len - i] * x;    <span class="comment">// 不贴着上界，后 len - i 位的贡献</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; x; ++j) ans[j] += p[len - i];    <span class="comment">// 不贴着上界，第 i 位的贡献</span></span><br><span class="line">        ans[x] += l % p[len - i] + <span class="number">1</span>;    <span class="comment">// 贴着上界</span></span><br><span class="line">        ans[<span class="number">0</span>] -= p[len - i];    <span class="comment">// 去除错误计算的前导 0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld&quot;</span>, &amp;a, &amp;b);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">preset</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">work</span>(a - <span class="number">1</span>, ans1);</span><br><span class="line">    <span class="built_in">work</span>(b, ans2);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; ++i) <span class="built_in">printf</span>(<span class="string">&quot;%lld &quot;</span>, ans2[i] - ans1[i]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="T2-windy-数"><a href="#T2-windy-数" class="headerlink" title="T2 windy 数"></a>T2 windy 数</h2><p>题目来源：SCOI2009<br>评测链接：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2657">https://www.luogu.com.cn/problem/P2657</a></p>
+<p>不含前导零且相邻两个数字之差至少为 $2$ 的正整数被称为 windy 数。windy 想知道，在 $a$ 和 $b$ 之间，包括 $a$ 和 $b$ ，总共有多少个 windy 数？$1 \leq a \leq b \leq 2 \times 10^9$。</p>
+<br>
+
+<p>有对相邻两个数字进行限制，那么很明显要在数位上进行操作。</p>
+<p>由于对数位上的数字有要求，因此预处理 DP 数组加一位，用 $f_{i,j}$ 表示以 $j$ 打头的 $i$ 位数字组成的所有数中，有多少个 windy 数。</p>
+<p>很明显有</p>
+<p>$$f_{i,j} &#x3D; \sum_{k \in [0,9] \land |j-k|} f_{i-1,k}$$</p>
+<p>在从高位到低位扫描的过程中，如果出现上界数字的这一位与上一位相差超过了 $2$，那么接下来再贴着上界就是不合法的，此时就打一个 $flag$，标记是否继续统计。</p>
+<p>为了避免第一位不合法，因此将第一位的上一位设为 $-2$。</p>
+<p>然后依然是前导 $0$ 的问题，如果有多个前导 $0$，原本的程序就不能将其判断为 windy 数，此时就只需额外手动加上含前导 $0$ 的 windy 数。</p>
+<p>但还需注意，因为只含 $1$ 个前导 $0$ 是能被判断为 windy 数的，因此这一部分被重复统计，最后计算的时候减去即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a, b;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> p[<span class="number">12</span>];</span><br><span class="line"><span class="type">int</span> f[<span class="number">12</span>][<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">preset</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    p[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">11</span>; ++i) p[i] = p[i - <span class="number">1</span>] * <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; ++i) f[<span class="number">1</span>][i] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= <span class="number">11</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt;= j - <span class="number">2</span>; ++k) f[i][j] += f[i - <span class="number">1</span>][k];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = j + <span class="number">2</span>; k &lt;= <span class="number">9</span>; ++k) f[i][j] += f[i - <span class="number">1</span>][k];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">solve</span><span class="params">(<span class="type">int</span> l)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> tmp = l, len = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (tmp) tmp /= <span class="number">10</span>, ++len;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>, ls = <span class="number">-2</span>;</span><br><span class="line">    <span class="type">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= len; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> x = l % p[len - i + <span class="number">1</span>] / p[len - i];</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(x - ls) &lt; <span class="number">2</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= ls - <span class="number">2</span>; ++j) ans += f[len - i + <span class="number">1</span>][j];</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= ls - <span class="number">2</span> &amp;&amp; j &lt; x; ++j) ans += f[len - i + <span class="number">1</span>][j];</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = ls + <span class="number">2</span>; j &lt;= <span class="number">9</span> &amp;&amp; j &lt; x; ++j) ans += f[len - i + <span class="number">1</span>][j];</span><br><span class="line">                ls = x;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">9</span>; ++j) ans += f[len - i][j];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans - f[len][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);</span><br><span class="line">    <span class="built_in">preset</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">solve</span>(b + <span class="number">1</span>) - <span class="built_in">solve</span>(a));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数位 DP 似乎已经脱离了 DP 的「阶段性决策问题」，但它还是可以用动态规划的思想来解决，这也更加证明了动态规划实质是一种思想。</p>
+<p>在进位制的助力下，相关问题可以通过拆分数位进行解决，这就是数位 DP 的核心所在。</p>
+<p>我们常常会看过太多太多的人生百态，始终追求着这场游戏的上界。为了上界，却常常会在上界之下踌躇，机械般地重复着大体相同的工作，而上界却依然可望而不可即。</p>
+<p>其实看看，在追求梦想的征途上，花儿是一样的鲜艳，天气是一样的阴晴，春风是一样的和煦，草木是一样的芬芳。学会学习，将经验化作智慧，不再去劳碌地周而复始。</p>
+<p>这样，才会拥有带 $\lg$ 的效率，才会更快地触及上界，才会有机会破开上界的桎梏。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Sukwants
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/" title="动态规划 - 数位动态规划">https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/I-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i> [I] 动态规划</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/others/Memories/Sky-in-Mianyang-Full-of-Stars/" rel="prev" title="半山看星的日子里">
+                  <i class="fa fa-chevron-left"></i> 半山看星的日子里
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sukwants</span>
+</div>
+<div class="running-time">
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("02/11/2022 13:14:21");//此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.1/es5/tex-mml-chtml.js","integrity":"sha256-hlC2uSQYTmPsrzGZTEQEg9PZ1a/+SV6VBCTclohf2og="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"15b352ebe6eb2281444b3dca0dc40867"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
