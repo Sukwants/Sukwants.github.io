@@ -31,11 +31,13 @@
 <meta property="og:site_name" content="Sukwog">
 <meta property="og:description" content="古老的十进位制，新生的数位 DP">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/count.png">
 <meta property="article:published_time" content="2022-07-12T13:30:24.000Z">
 <meta property="article:modified_time" content="2022-07-12T13:30:24.000Z">
 <meta property="article:author" content="Sukwants">
 <meta property="article:tag" content="[I] 动态规划">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/count.png">
 
 
 <link rel="canonical" href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/">
@@ -149,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E4%BD%8D%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">进位制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E4%BD%8D-DP"><span class="nav-number">2.</span> <span class="nav-text">数位 DP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-%E6%95%B0%E5%AD%97%E8%AE%A1%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">T1 数字计数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-windy-%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">T2 windy 数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E4%BD%8D%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">进位制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E4%BD%8D-DP"><span class="nav-number">2.</span> <span class="nav-text">数位 DP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-%E6%95%B0%E5%AD%97%E8%AE%A1%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">T1 数字计数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-windy-%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">T2 windy 数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E7%AD%94%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text">统计答案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -318,14 +320,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4.8k</span>
+      <span>5.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -349,9 +351,12 @@
 <p>因此，数位 DP 的题目一般会与进位制的选择有关。并且，各个数位之间相对独立，又可以按照数位来进行阶段划分。</p>
 <p>再者，对于我们最开始要处理的对象也就是数，一般范围很大，暴力枚举会超时，用数位 DP 后时间复杂度会包含一个 $\lg$ 或者 $\log_x$（$x$ 由进位制的选择决定）。</p>
 <p>数位 DP 还有以下特征：</p>
-<p>我们运用数位 DP 的时候，往往会有预处理的过程，而这预处理的过程又可以看作一个数位 DP。</p>
-<p>一般对于区间 $[a,b]$ 的问题，会将它转换为 $[1,b]$ 和 $[1,a-1]$ 两个问题之差，只考虑上界，方便统计。</p>
-<p>数位 DP 过后往往会有一个统计或是其他操作。</p>
+<ol>
+<li><p>我们运用数位 DP 的时候，往往会有预处理的过程，然后是一个统计答案的过程。</p>
+</li>
+<li><p>一般对于区间 $[a,b]$ 的问题，会将它转换为 $[1,b]$ 和 $[1,a-1]$ 两个问题之差，只考虑上界，方便统计。</p>
+</li>
+</ol>
 <h2 id="T1-数字计数"><a href="#T1-数字计数" class="headerlink" title="T1 数字计数"></a>T1 数字计数</h2><p>题目来源：ZJOI2010<br>评测链接：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2602">https://www.luogu.com.cn/problem/P2602</a></p>
 <p>给定两个正整数 $a$ 和 $b$，求在 $[a,b]$ 中的所有整数中，每个数码(digit)各出现了多少次。$1 \le a,b \le 10^{12}$。</p>
 <br>
@@ -389,6 +394,14 @@
 <p>但还需注意，因为只含 $1$ 个前导 $0$ 是能被判断为 windy 数的，因此这一部分被重复统计，最后计算的时候减去即可。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a, b;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> p[<span class="number">12</span>];</span><br><span class="line"><span class="type">int</span> f[<span class="number">12</span>][<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">preset</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    p[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">11</span>; ++i) p[i] = p[i - <span class="number">1</span>] * <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; ++i) f[<span class="number">1</span>][i] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= <span class="number">11</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt;= j - <span class="number">2</span>; ++k) f[i][j] += f[i - <span class="number">1</span>][k];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = j + <span class="number">2</span>; k &lt;= <span class="number">9</span>; ++k) f[i][j] += f[i - <span class="number">1</span>][k];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">solve</span><span class="params">(<span class="type">int</span> l)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> tmp = l, len = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (tmp) tmp /= <span class="number">10</span>, ++len;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>, ls = <span class="number">-2</span>;</span><br><span class="line">    <span class="type">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= len; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> x = l % p[len - i + <span class="number">1</span>] / p[len - i];</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(x - ls) &lt; <span class="number">2</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= ls - <span class="number">2</span>; ++j) ans += f[len - i + <span class="number">1</span>][j];</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= ls - <span class="number">2</span> &amp;&amp; j &lt; x; ++j) ans += f[len - i + <span class="number">1</span>][j];</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = ls + <span class="number">2</span>; j &lt;= <span class="number">9</span> &amp;&amp; j &lt; x; ++j) ans += f[len - i + <span class="number">1</span>][j];</span><br><span class="line">                ls = x;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">9</span>; ++j) ans += f[len - i][j];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans - f[len][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);</span><br><span class="line">    <span class="built_in">preset</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">solve</span>(b + <span class="number">1</span>) - <span class="built_in">solve</span>(a));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="统计答案"><a href="#统计答案" class="headerlink" title="统计答案"></a>统计答案</h2><p>这里用图来解释一下数位 DP 统计答案的过程。</p>
+<p>我们能够用树形结构表示出指定位数的指定进制数，下图以二进制为例。</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/count.png" class="" title="数位 DP 统计答案" alt="数位 DP 统计答案">
+
+<p>红色部分就是我们的上界。</p>
+<p>显而易见，红色部分为一条路径，而紫色和绿色部分则均为一棵满（二叉）树。</p>
+<p>按照我们上面的思路，这几棵满树就是我们要 DP 预处理的地方。因为我们构造的数位树里，每个结点的子结点都是一样的，因此子树的形态只与树的深度、根的权值有关。所以我们才能够用 DP 的方式递推求出预处理数组。</p>
+<p>然后，我们统计答案。贴着上界，也就是顺着红色路径走，我们以路径左侧所有结点中与红色路径距离为 $1$ 的点作为根节点，找出一些满树，也就是紫色和绿色部分，然后将这些满树的 DP 预处理结构进行整合（不一定是简单相加）。最后，留心一下上界是否被疏忽，即可。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数位 DP 似乎已经脱离了 DP 的「阶段性决策问题」，但它还是可以用动态规划的思想来解决，这也更加证明了动态规划实质是一种思想。</p>
 <p>在进位制的助力下，相关问题可以通过拆分数位进行解决，这就是数位 DP 的核心所在。</p>
 <p>我们常常会看过太多太多的人生百态，始终追求着这场游戏的上界。为了上界，却常常会在上界之下踌躇，机械般地重复着大体相同的工作，而上界却依然可望而不可即。</p>
