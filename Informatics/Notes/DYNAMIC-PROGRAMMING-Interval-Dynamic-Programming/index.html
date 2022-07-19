@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -354,16 +354,16 @@
 <p>这是一道区间 DP 经典例题，<del>来自 NOI1995</del> ，我们用来分析一下区间 DP 和线性 DP 的区别和联系。</p>
 <p>首先忽略环状，将石子摆成一条直线。</p>
 <p>这道题目中，我们不知从何下手，换言之，题目中没有给出特定的合并顺序，只要在区间上的子区间操作均为合法；而处理线性 DP 问题的时候，要么有事件发生的严格先后顺序，要么就如 LIS 和 LCS 般可以指定先后顺序。我们将线性 DP 的套路套用到本问题上来，发现并不能单纯用一个状态作为最优子结构的参数，而同时需要左右端点两个状态作为参数。注意，这里的状态可以表示为多个参数，但它们共同代表一个状态。</p>
-<p>分析这道题，我们用 $f_{i,j}$ 表示合并区间 $[i,j]$ 上的石子到一堆的最优解，那么根据题意，这堆石子就可以由区间 $[i,k]$ 和 $[k+1,j]$ 合并过后的两堆石子合并而来，有<br>$$<br>f_{i,j}&#x3D;\min&#x2F;\max{f_{i,k}+f_{k+1,j}+\sum_{x&#x3D;i}^ja_x|k\in[i,j)} \nonumber<br>$$<br>分析这个状态转移方程，不难得出边界条件为 $f_{i,i}&#x3D;0$ ，转移顺序按照 $j-i$ 从小到大排序。对于 $\sum_{x&#x3D;i}^ja_x$ 的处理，需要维护前缀和。时间复杂度为 $O(n^2)$ 。</p>
+<p>分析这道题，我们用 $f_{i,j}$ 表示合并区间 $[i,j]$ 上的石子到一堆的最优解，那么根据题意，这堆石子就可以由区间 $[i,k]$ 和 $[k+1,j]$ 合并过后的两堆石子合并而来，有<br>$$<br>f_{i,j}&#x3D;\min&#x2F;\max{f_{i,k}+f_{k+1,j}+\sum_{x&#x3D;i}^ja_x|k\in[i,j)} \nonumber<br>$$<br>分析这个状态转移方程，不难得出边界条件为 $f_{i,i}&#x3D;0$ ，转移顺序按照 $j-i$ 从小到大排序。对于 $\sum_{x&#x3D;i}^ja_x$ 的处理，需要维护前缀和。时间复杂度为 $\mathrm{O}(n^2)$ 。</p>
 <p>可以发现，区间 DP 和线性 DP 的联系在于 DP 思维的延续，本质上的区别仅仅在于组成最优子结构的状态含义。</p>
-<p>回到本题，再考虑环状情况。有一种思路是基于本题中总会有最有一次合并，那么就从最后一次合并处将圆环断开，转化成区间处理，如下图。由于我们并不知道最后一次在何处，因此要将每一处断开，求的结果取最优值，于是复杂度升到了 $O(n^3)$ 。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging1.png" class="" title="石子合并 解图 1">
+<p>回到本题，再考虑环状情况。有一种思路是基于本题中总会有最有一次合并，那么就从最后一次合并处将圆环断开，转化成区间处理，如下图。由于我们并不知道最后一次在何处，因此要将每一处断开，求的结果取最优值，于是复杂度升到了 $\mathrm{O}(n^3)$ 。</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging1.png" class="" alt="石子合并 解图 1">
 
-<p>我们将该方法进行优化，可以让时间复杂度降到 $O(n^2)$ 。在上述方法中，总会导致首尾断开，如果我们能在将环断开为区间的前提下保证首尾相连，那便可以解决 $n$ 次 DP 的问题。最好的方法是在断开过后在尾部复制一遍原区间，使首尾相连，而寻找最终答案时只需比较每个 $f_{i, i+n-1}$ 的大小即可。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging2.png" class="" title="石子合并 解图 2">
+<p>我们将该方法进行优化，可以让时间复杂度降到 $\mathrm{O}(n^2)$ 。在上述方法中，总会导致首尾断开，如果我们能在将环断开为区间的前提下保证首尾相连，那便可以解决 $n$ 次 DP 的问题。最好的方法是在断开过后在尾部复制一遍原区间，使首尾相连，而寻找最终答案时只需比较每个 $f_{i, i+n-1}$ 的大小即可。</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging2.png" class="" alt="石子合并 解图 2">
 
 <p>优化上述方法的方法，实际上也运用了 DP 的思想。核心要旨便是提高数据利用率，避免重复计算。如果在两次 DP 中，存在某一固定连续区间，那么这一区间在两次 DP 中的最优解都相同，直观来看</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging3.png" class="" title="石子合并 解图 3">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging3.png" class="" alt="石子合并 解图 3">
 
 <p>这是我们处理 DP 问题中环状情况的一般套路，<strong>任意选择一个位置断开，复制形成 2 倍长度的链</strong>。</p>
 <p>综上所述，代码如下。</p>
@@ -404,11 +404,11 @@
 
 <p>是不是感觉这道题神似 T2 ？猜得没错，这也是一个形似树形 DP 实则区间 DP 的 <strong>Y 货</strong>。</p>
 <p>注意， DFS 序不同于前序、中序、后序遍历的任何一种，它是从每棵子树退回根都要重新输出一次根。</p>
-<p>再注意，题目中描述<strong>节</strong>（是否是题目写错了？）<strong>点的子树之间有序</strong>，有两层意思：1.节点的两棵子树交换位置视为不同的情况；2. DFS 序严格按照节点的子树顺序安排，因此不用考虑交换子树的排列组合问题。</p>
+<p>再注意，题目中描述「节点的子树之间有序」，有两层意思：1.节点的两棵子树交换位置视为不同的情况；2. DFS 序严格按照节点的子树顺序安排，因此不用考虑交换子树的排列组合问题。</p>
 <p>那么这道题就简单了，用 $f_{i,j}$ 表示区间 $[i,j]$ 为一棵子树的 DFS 序，那么树根的颜色就是 $S_i$ 和 $S_j$ 代表的颜色。根据区间内出现的树根颜色进行划分或者不划分，可以排列出这棵子树之下可能出现所有子树排列，但是这样时间复杂度就会承受不了。</p>
 <p>再想想，若对于区间 ABABABA，可以划分为 A 下 3 个 B 的形态（如下图），但是同样是这样的形态，不仅可以划分为 |AB|AB|AB|A 的形式，也可以将第一棵子树划分出来，将后面的 ABABA 再行划分为 |AB|AB|A 。</p>
 <div style="width:50%;margin:auto">
-  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/pyramid.png" class="" title="金字塔 解图 1">
+  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/pyramid.png" class="" alt="金字塔 解图 1">
 </div>
 
 <p>总结一下，这样的优化方法实质上也是用动态规划思想的子问题递归代替了排列组合，本质也是用动态规划的转移代替搜索的盲目排列的做法。我们现在已经遇到了很多次这样的思想，譬如多重背包的二进制拆分法、本文 T2 和 T3，等等。</p>

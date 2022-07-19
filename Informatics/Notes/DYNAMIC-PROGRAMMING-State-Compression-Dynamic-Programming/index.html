@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -345,7 +345,7 @@
 
 <h2 id="逻辑运算与位运算"><a href="#逻辑运算与位运算" class="headerlink" title="逻辑运算与位运算"></a>逻辑运算与位运算</h2><p>以下属于漫无边际的大发议论，可以直接跳到<a href="#importantbegins">位运算</a>。</p>
 <p>众所周知，计算机的底层是逻辑电路。而根据初中知识，我们知道以下两种电路：</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/seriesparallel.png" class="" title="串联和并联" alt="串联和并联">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/seriesparallel.png" class="" alt="串联和并联">
 
 <p>这里我们用 $1$ 表示开关闭合，用 $0$ 表示开关断开。记第一个开关的状态为 $f_1\in\{0,1\}$，第二个开关的状态为 $f_2\in\{0,1\}$，另外两个开关总的作用效果可以用一个开关替代（等效替代法），我们记它的状态为 $f\in\{0,1\}$。</p>
 <p>那么在串联电路中，当且仅当 $f_1&#x3D;1$ 且 $f_2&#x3D;1$ 时，有 $f&#x3D;1$，否则 $f&#x3D;0$；在并联电路中，当且仅当 $f_1&#x3D;0$ 且 $f_2&#x3D;0$ 时，有 $f&#x3D;0$，否则 $f&#x3D;1$。</p>
@@ -395,7 +395,7 @@
 <p>走过了战火纷飞，才会懂得和平的弥足珍贵。当今世界人类是一个命运共同体，又因何冲突不断，和平不续？</p>
 <p>为了走独立自主的和平外交道路，和平共处五项原则显得尤为重要，当然不是下面这个</p>
 <div style="width:50%;margin:auto">
-  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/5principles.jpg" class="" title="和平共处五项原则" alt="和平共处五项原则">
+  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/5principles.jpg" class="" alt="和平共处五项原则">
 </div>
 
 <center>图源：<a target="_blank" rel="noopener" href="https://song-gan.github.io/">@Ganshin</a></center>
@@ -405,7 +405,7 @@
 <p>你大概能够迅速反应过来，一行内「和平共处」，当且仅当这一行的状态表示为 $x$ 满足 $x \ \&amp; \ (x &lt;&lt; 1) &#x3D; 0$。</p>
 <p>那么行间「和平共处」，当且仅当这两行的状态表示为 $x,y$ 满足 $x \ \&amp; \ y &#x3D; 0 \land x \ \&amp; \ (y &lt;&lt; 1) \land x \ \&amp; \ (y &gt;&gt; 1)$。</p>
 <p>状态压缩的目的，就是为了能够用 1 个整型表示出状态，而「状态」在动态规划里的含义也十分明确，无非就是 <code>f</code> 数组的一个或几个下标。</p>
-<p>整型变量再怎么说也只是 32 位的，顶多能压缩 32 个 0&#x2F;1 值，但这足够了。我们将一行压缩，同时行间作为阶段进行转移。我们已经能够快速判断一行或行间是否合法，那么转移就只需要 $O(1)$ 的时间复杂度。</p>
+<p>整型变量再怎么说也只是 32 位的，顶多能压缩 32 个 0&#x2F;1 值，但这足够了。我们将一行压缩，同时行间作为阶段进行转移。我们已经能够快速判断一行或行间是否合法，那么转移就只需要 $\marhrm{O}(1)$ 的时间复杂度。</p>
 <p>具体在这道题里，我们用 $f_{i,j}$ 表示当第 $i$ 行的状态表示为 $j$ 时，前 $i$ 行的总方案数。那么转移条件为 $j$、$k$ 合法、并且 $j$、$k$ 之间能够「和平共处」，转移就是简简单单的加法。</p>
 <p>状态转移方程可以写成</p>
 <p>$$<br>f_{i,j}&#x3D;\sum_{k\ |\ p(k,j)}f_{i-1,k}<br>$$</p>
@@ -415,7 +415,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, k;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> f[<span class="number">10</span>][<span class="number">100</span>][<span class="number">600</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bits</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!x) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bits</span>(x - (x &amp; -x)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;k);</span><br><span class="line">    <span class="type">int</span> _2n = <span class="built_in">pow</span>(<span class="number">2</span>, n);</span><br><span class="line">    f[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= k; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> a = <span class="number">0</span>; a &lt; _2n; ++a)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">bits</span>(a) &lt;= j &amp;&amp; !(a &amp; (a &lt;&lt; <span class="number">1</span>)))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> b = <span class="number">0</span>; b &lt; _2n; ++b)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span> (!(a &amp; b) &amp;&amp; !(a &amp; (b &lt;&lt; <span class="number">1</span>)) &amp;&amp; !(a &amp; (b &gt;&gt; <span class="number">1</span>)) &amp;&amp; !(b &amp; (b &lt;&lt; <span class="number">1</span>)) &amp;&amp; <span class="built_in">bits</span>(a) + <span class="built_in">bits</span>(b) &lt;= j)</span><br><span class="line">                        &#123;</span><br><span class="line">                            f[i][j][a] += f[i - <span class="number">1</span>][j - <span class="built_in">bits</span>(a)][b];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> Ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; _2n; ++i)</span><br><span class="line">        Ans += f[n][k][i];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, Ans);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>通过一道题的做题经验我们就可以发现，状压 DP 需要扫描每一行的所有合法方案，虽然有的时候可以预处理，但是这种类似于排列组合的枚举方法都已经接近搜索了。</p>
-<p>更何况所有合法方案都是 <code>f</code> 数组的一个下标，所以 <code>f</code> 数组会开得很大。并且因为枚举过程的巨大贡献，时间复杂度为 $O(2^nn)$。因此状压 DP 的题 $n$ 不可能很大，一不小心不是 <font style="color:blue">TLE</font> 就会 <font style="color:blue">MLE</font>。一般来说， $n$ 在 $10$ 左右，只比搜索好一点。所以做状压 DP 题的时候得先看一下时空复杂度能不能承受再确定此题状压 DP 解法是否为真。</p>
+<p>更何况所有合法方案都是 <code>f</code> 数组的一个下标，所以 <code>f</code> 数组会开得很大。并且因为枚举过程的巨大贡献，时间复杂度为 $\mathrm{O}(2^nn)$。因此状压 DP 的题 $n$ 不可能很大，一不小心不是 <font style="color:blue">TLE</font> 就会 <font style="color:blue">MLE</font>。一般来说， $n$ 在 $10$ 左右，只比搜索好一点。所以做状压 DP 题的时候得先看一下时空复杂度能不能承受再确定此题状压 DP 解法是否为真。</p>
 <p>如此庞大的状态转移，带来了沉重的时空消耗，但这只是状态压缩的缺点，DP 的优势仍然不时闪耀着光芒<del>（不信你用 DFS 切这道题试试）</del>。</p>
 <h2 id="T2-覆盖问题"><a href="#T2-覆盖问题" class="headerlink" title="T2 覆盖问题"></a>T2 覆盖问题</h2><p>题目来源：QZOJ<br>评测链接 1：<a target="_blank" rel="noopener" href="http://124.221.137.247/problem/383">http://124.221.137.247/problem/383</a><br>评测链接 2：<a target="_blank" rel="noopener" href="https://hydro.ac/d/sukwoj/p/QZ383">https://hydro.ac/d/sukwoj/p/QZ383</a><br>类题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/293/">https://www.acwing.com/problem/content/293/</a></p>
 <p>输出用 $1 \times 2$ 的骨牌完全覆盖 $M(\leq 10)$ 行 $N(\leq 1000)$ 列的棋盘的方案总数，答案对 $1234567$ 取模。</p>
@@ -438,7 +438,7 @@
 <h2 id="T3-平板涂色"><a href="#T3-平板涂色" class="headerlink" title="T3 平板涂色"></a>T3 平板涂色</h2><p>评测链接：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1283">https://www.luogu.com.cn/problem/P1283</a></p>
 <p>CE 数码公司开发了一种名为自动涂色机（APM）的产品。它能用预定的颜色给一块由不同尺寸且互不覆盖的矩形构成的平板涂色。</p>
 <p>为了涂色，APM 需要使用一组刷子。每个刷子涂一种不同的颜色 $C_i(1\le C_i \le 20)$ 。APM 拿起一把有颜色 $C_i$ 的刷子，并给所有颜色为 $C_i$ 且符合下面限制的矩形涂色：</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/apm.png" class="" title="平板涂色 题图">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/apm.png" class="">
 
 <p>为了避免颜料渗漏使颜色混合，一个矩形只能在所有紧靠它上方的矩形涂色后，才能涂色。例如图中矩形 $F$ 必须在 $C$ 和 $D$ 涂色后才能涂色。注意，每一个矩形必须立刻涂满，不能只涂一部分。</p>
 <p>输入矩形的个数 $N(1\le N \le 16)$，以及每个矩形的范围信息，用左上角的 $y$ 坐标和 $x$ 坐标、右下角的 $y$ 坐标和 $x$ 坐标表示，$0 \le x_i,y_i \le 99$。</p>

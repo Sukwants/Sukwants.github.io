@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="gboRIElEqH-3VpaXcOULRktwDpCoAvWGQmqX2RwYqnU">
+  <meta name="msvalidate.01" content="94748806EA0C50CFA5F4171232C6BDF7">
+  <meta name="yandex-verification" content="ef0d538c97988ac2">
+  <meta name="baidu-site-verification" content="code-r8xtrrlwFp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="时间的匆匆乘客，空间的默默过客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法基础 - 时空复杂度">
+<meta property="og:url" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/index.html">
+<meta property="og:site_name" content="Sukwog">
+<meta property="og:description" content="时间的匆匆乘客，空间的默默过客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/thetaomicronomega.png">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/5signsvenn.png">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/master-theorem-proof.svg">
+<meta property="article:published_time" content="2022-07-19T11:01:03.000Z">
+<meta property="article:modified_time" content="2022-07-19T11:01:03.000Z">
+<meta property="article:author" content="Sukwants">
+<meta property="article:tag" content="[I] 算法基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/thetaomicronomega.png">
+
+
+<link rel="canonical" href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/","path":"Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/","title":"算法基础 - 时空复杂度"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>算法基础 - 时空复杂度 | Sukwog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Sukwog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Sukwog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Sukwants's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-journey"><a href="/journey/" rel="section"><i class="fas fa-road fa-fw"></i>征途</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友人</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%89%E6%95%88%E5%BC%82%E8%80%97"><span class="nav-number">1.</span> <span class="nav-text">等效异耗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E7%A9%BA%E8%AF%84%E5%88%A4"><span class="nav-number">2.</span> <span class="nav-text">时空评判</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%90%E8%BF%9B%E8%AE%B0%E5%8F%B7"><span class="nav-number">4.</span> <span class="nav-text">渐进记号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Theta"><span class="nav-number">4.1.</span> <span class="nav-text">$\Theta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mathrm-O"><span class="nav-number">4.2.</span> <span class="nav-text">$\mathrm{O}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Omega"><span class="nav-number">4.3.</span> <span class="nav-text">$\Omega$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.4.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#o"><span class="nav-number">4.5.</span> <span class="nav-text">$o$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#omega"><span class="nav-number">4.6.</span> <span class="nav-text">$\omega$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E7%BB%93"><span class="nav-number">4.7.</span> <span class="nav-text">大结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6-PART-2"><span class="nav-number">5.</span> <span class="nav-text">时间复杂度 PART 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%AE%9A%E7%90%86-Master-Theorem"><span class="nav-number">6.</span> <span class="nav-text">主定理 Master Theorem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">6.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">6.2.</span> <span class="nav-text">证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a"><span class="nav-number">6.2.1.</span> <span class="nav-text">$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n"><span class="nav-number">6.2.2.</span> <span class="nav-text">$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n"><span class="nav-number">6.2.3.</span> <span class="nav-text">$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%BC%E4%B8%8A%E6%89%80%E8%BF%B0"><span class="nav-number">6.2.4.</span> <span class="nav-text">综上所述</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%A7%A3"><span class="nav-number">6.3.</span> <span class="nav-text">理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6-PART-3"><span class="nav-number">7.</span> <span class="nav-text">时间复杂度 PART 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%BF%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">8.</span> <span class="nav-text">势能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">9.</span> <span class="nav-text">空间复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sukwants"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Sukwants</p>
+  <div class="site-description" itemprop="description">时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sukwants" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Sukwants" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/JarRoute" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;JarRoute" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Song_Gch@163.com" title="E-Mail → mailto:Song_Gch@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2906184585" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2906184585" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/SongGch" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;SongGch" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100077727567590" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100077727567590" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCo6U1HIHvCjBC5pKninTF1A" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCo6U1HIHvCjBC5pKninTF1A" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/guanchengsong" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;guanchengsong" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:live:.cid.dcf116a1be7ec392?chat" title="Skype → skype:live:.cid.dcf116a1be7ec392?chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=3102673123&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;3102673123&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.png" title="WeChat → &#x2F;images&#x2F;wechat.png"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/0owei-ni-bian-pi-o0" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;0owei-ni-bian-pi-o0" rel="noopener" target="_blank"><i class="fab fa-zhihusingle fa-fw"></i>Zhihu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.luogu.com.cn/user/193684" title="Luogu → https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;193684" rel="noopener" target="_blank"><i class="fab fa-luogu fa-fw"></i>Luogu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/Song_Gch" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;Song_Gch" rel="noopener" target="_blank"><i class="fab fa-codeforces fa-fw"></i>CodeForces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/1382869983?spm_id_from=333.1007.0.0" title="Bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;1382869983?spm_id_from&#x3D;333.1007.0.0" rel="noopener" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://loj.ac/u/SongGuancheng" title="LibreOJ → https:&#x2F;&#x2F;loj.ac&#x2F;u&#x2F;SongGuancheng" rel="noopener" target="_blank"><i class="fab fa-libreoj fa-fw"></i>LibreOJ</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sukwants">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sukwog">
+      <meta itemprop="description" content="时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="算法基础 - 时空复杂度 | Sukwog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法基础 - 时空复杂度
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-19 19:01:03" itemprop="dateCreated datePublished" datetime="2022-07-19T19:01:03+08:00">2022-07-19</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>时间的匆匆乘客，空间的默默过客</p>
+<span id="more"></span>
+
+<h2 id="等效异耗"><a href="#等效异耗" class="headerlink" title="等效异耗"></a>等效异耗</h2><p>请看。</p>
+<p>菲波那契数列是指这样的数列: 数列的第一个和第二个数都为 $1$，接下来每个数都等于前面 $2$ 个数之和。</p>
+<p>给出一个正整数 $a$，要求菲波那契数列中第 $a$ 个数是多少。</p>
+<p>我们对此已经积累出了三种解法，递归法、递推法、矩阵快速幂优化递推。效果相同，但有时，你会发现，在不合适的地方用了不合适的解法可能会 <font style="color:orange"><i class="fa-solid fa-clock"></i> Time Limit Exceeded</font>。</p>
+<p>再看。</p>
+<p>我们存储图，有两种流行的方式，邻接表和邻接矩阵。效果相同，但有时，你会发现，用邻接矩阵的解法可能会 <font style="color:orange"><i class="fa-solid fa-microchip"></i> Memory Limit Exceeded</font>。</p>
+<p>一定是我们打开方式有点不对。</p>
+<p>在算法竞赛中，我们写出的程序不仅要解决问题，还要高效地解决问题，具体说，在限定时间限定空间内解决问题。诸如以上超时间、超空间的情况，就是超出了题目允许的时空限制。</p>
+<p>为了能够评判程序的时间和空间消耗，时空复杂度应运而生。</p>
+<h2 id="时空评判"><a href="#时空评判" class="headerlink" title="时空评判"></a>时空评判</h2><p>一般来说，时间评判以 $\mathrm{s}$ 作为单位，空间评判以 $\mathrm{MB}$ 作为单位，事实上在评测的时候也确实按这样的实际数据进行限制。但这样，我们只能写出一个程序在特定数据下测量其时空消耗。</p>
+<p>而更多时候，我们关心的是能否根据算法结构评估它在不同数据下的时空消耗，或者说它的时空消耗随数据规模增长的大致趋势。这样计算出的时空消耗才有预判性，才能对程序设计产生引导作用。</p>
+<p>我们习惯用时间复杂度表示用时随数据规模的增长，用空间复杂度表示占用内存随数据规模的增长。</p>
+<p>$T(n)$ 表示数据规模为 $n$ 的时间复杂度，$S(n)$ 表示数据规模为 $n$ 的空间复杂度。</p>
+<p>接下来问题就是时空复杂度该如何表示，由于空间复杂度一般来说比较简单，我们先以时间复杂度为例探讨。</p>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>时间复杂度用 基本操作* 的次数进行衡量，在此规则下，假设我们有算法 A 运行时间表达式为 $T_A(n)&#x3D;30n^4+20n^3+40n^2+48n+100$，同样有算法 B 运行时间表达式为 $T_B(n)&#x3D;100n^3+50n^2+78n+10$。</p>
+<p>*加减乘除、访问、赋值等操作可以视为基本操作。</p>
+<p>当 $n&#x3D;1$ 时，$T_A(n)&#x3D;T_B(n)&#x3D;238$；当 $n&#x3D;100$ 时，$T_A(n)\approx 3\times 10^9&gt;T_B(n)\approx 1\times 10^8$；当 $n&#x3D;10^{100}$ 时，$T_A(n)\approx 3\times 10^{401}&gt;&gt;T_B(n)\approx 10^{302}$。</p>
+<p>可以发现，对于不同的时间表达式，运行时间随数据规模的增长是大相径庭的。我们仔细观察上面的多项式表达式，比如 $T_A(n)&#x3D;30n^4+20n^3+40n^2+48n+100$，当 $n$ 增长时，$T_A(n)$ 表达式除了常数项的每一项都在增长，而其中增长最快的无疑是高次项 $30n^4$，而常数项 $100$ 根本不增长。当 $n$ 增长到一定规模时，低次项相较于高次项对整体的影响微乎其微，同样每一项的系数对整体也造成不了大的影响。</p>
+<p>所以在更关心规模增长的条件下，这里我们舍弃增长较慢或不增长的项，以及每一项的系数，只留下对整体增长影响较大的部分。也就是 $T_A(n)&#x3D;30n^4+20n^3+40n^2+48n+100\approx n^4$, $T_B(n)&#x3D;100n^3+50n^2+78n+10\approx n^3$，我们可以记为 $T_A(n)&#x3D;\Theta(n^4)$,$ T_B(n)&#x3D;\Theta(n^3)$。</p>
+<p>为什么可以这么干呢？请看，如果有 $T_C(n)&#x3D;1000n^3&#x3D;\Theta(n^3)$, $T_D(n)&#x3D;n^3&#x3D;\Theta(n^3)$，即使系数相差甚远，但无论 $n$ 取何值，$T_C(n)$ 只会永远是 $T_D(n)$ 的 $100$ 倍，这个比值永远不会扩大。我们将 $T_C(n)$ 与 $T_D(n)$ 之间这样的关系称为两者同级。在只关心数据规模增长的情况下，这就足够描述时间的增长趋势了，在 $n$ 越来越大的情况下，不同级的数据差距越来越大，而同级的数据差距基本保持恒定。于是，我们就可以按照“级别”来评估时间随数据规模增长的趋势。</p>
+<p>然而算法中的情况千千万万，光有一个 $\Theta$ 记号还不够。</p>
+<h2 id="渐进记号"><a href="#渐进记号" class="headerlink" title="渐进记号"></a>渐进记号</h2><p>渐进记号有 $\Theta$, $\mathrm{O}$, $o$, $\Omega$, $\omega$，各自表达的意思大同小异，共同点就在于「渐进」二字。所谓渐进，就不能用一般的比大小手段，因为根据以上描述，我们是舍弃了增长慢的项和系数的，因此不能以数的手段来比较大小。</p>
+<h3 id="Theta"><a href="#Theta" class="headerlink" title="$\Theta$"></a>$\Theta$</h3><p>$\Theta$ 是「渐进紧确界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\Theta(g(n))$，当且仅当 $\exists c_1,c_2,n_0&gt;0,\forall n\geq n_0,0\leq c_1\cdot g(n)\leq f(n)\leq c_2\cdot g(n)$。</p>
+<p>之所以要有一个 $n\geq n_0$，是因为此时 $f(n)$ 和 $g(n)$ 均为函数，比较大小还需要考虑系数，如果 $n$ 过小，也有可能产生不满足后面条件的情况。而如果对于一个足够大的 $n$，$f(n)$ 能够被 $c_1\cdot g(n)$ 和 $c_2\cdot g(n)$ 夹在中间（$c_1,c_2$ 为与 $n$ 无关的定值），那么说明随着 $n$ 的增长，$g(n)$ 不会偏离 $f(n)$ 太多，也就是我们上面所说的同级的含义，增长速率相同，比值基本一定。</p>
+<p>不要试图简单用数的思维去理解 $c_1,c_2$ 以及 $f(n)$ 被夹在中间，可以用函数图像增长的思路去理解，<a href="#%E5%B0%8F%E7%BB%93">后面</a>我们会去看看 $\Theta,\mathrm{O},\Omega$ 三个记号与 $f(n)$ 增长的关系。</p>
+<p>$\Theta$ 记号为我们提供了一个能够限制 $f(n)$ 上下界的条件，也为我们找到了 $f(n)$ 在渐进意义上可以视为相等的一个式子。</p>
+<p>p.s. 刚开始接触渐进记号，注意不要搞错，$f(n)$ 是原式，而 $g(n)$ 是渐进式。</p>
+<h3 id="mathrm-O"><a href="#mathrm-O" class="headerlink" title="$\mathrm{O}$"></a>$\mathrm{O}$</h3><p>$\mathrm{O}$ 是「渐进上界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq f(n)\leq c\cdot g(n)$。</p>
+<p>用 $c$ 的原因和 $\Theta$ 一样。</p>
+<p>如果说 $\Theta$ 提供了原式的上下界，那么这个 $\mathrm{O}$ 就是提供了原式的下界，这可以看作渐进意义上的小于等于，也就是低级或同级。</p>
+<p>一般来说，我们计算时间复杂度都是要看极限数据是否能够通过，因此我们用 $\mathrm{O}$ 的时候会比较多。</p>
+<h3 id="Omega"><a href="#Omega" class="headerlink" title="$\Omega$"></a>$\Omega$</h3><p>$\Omega$ 是「渐进下界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq c\cdot g(n)\leq f(n)$。</p>
+<p>同样，这就是渐进意义上的大于等于，也就是高级或同级。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>$\Theta$ 提供了一个更加准确的渐进式，而 $\mathrm{O}$ 和 $\Omega$ 分别提供了上界和下界。显然，如果有 $f(n)&#x3D;\Theta(g(n))$，那么一定有 $f(n)&#x3D;\mathrm{O}(g(n))$, $f(n)&#x3D;\Omega(g(n))$。这个时候你聪明的大脑袋就要说话了，我以为每个 $f(n)$ 都同时有 $\Theta,\mathrm{O},\Omega$ 的呢，事实上，我们的 $f(n)$ 只是一个函数，不一定能够被解析式表示出来，但此时如果我们能算出渐进上界或者下界，那么就可以有 $\mathrm{O}$ 或者 $\Omega$。</p>
+<p>$f(n)&#x3D;\Theta(g(n))$, $f(n)&#x3D;\mathrm{O}(g(n))$, $f(n)&#x3D;\Omega(g(n))$ 三种情况下 $f(n)$ 与 $c\cdot g(n)$ 的增长变化可以看一下下面这张图（来自《算法导论》）。</p>
+<img src="/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/thetaomicronomega.png" class="" alt="渐进记号增长">
+
+<p>注意，这里函数高低并非由 $c_1,c_2$ 或者 $c$ 的取值决定，更重要的是增长速度，$f(n)&#x3D;\Theta(g(n))$ 时 $f(n)$ 与 $c\cdot g(n)$ 增长速度相当，$f(n)&#x3D;\mathrm{O}(g(n))$ 时较慢，$f(n)&#x3D;\Omega(g(n))$ 时较快。这一点可以通过 $\forall n\geq n_0$ 看出，在 $n_0$ 以后的部分，$f(n)$ 与 $c\cdot g(n)$ 的大小关系不会变化，也就是函数图像不会再产生交叉。</p>
+<p>这样的定义 $n\geq n_0$，似乎和极限差不多诶，都是对于足够大的 $n$，始终满足条件。</p>
+<p>有一些性质。</p>
+<ul>
+<li>$f(n)&#x3D;\Theta(g(n))\iff f(n)&#x3D;\mathrm{O}(g(n))\land f(n)&#x3D;\Omega(g(n))$<del>（根据定义，这不显然吗）</del>。</li>
+<li>$f_1(n)+f_2(n)&#x3D;\Theta&#x2F;\mathrm{O}&#x2F;\Omega(\max\{f_1(n),f_2(n)\})$，哪个符号有就是哪个符号，这个根据我们刚开始引入渐进的方法（舍弃低次）可以知道。</li>
+<li>$f_1(n)\times f_2(n)&#x3D;\Theta&#x2F;\mathrm{O}&#x2F;\Omega(f_1(n)\times f_2(n))$，也是上面那个方法。</li>
+</ul>
+<h3 id="o"><a href="#o" class="headerlink" title="$o$"></a>$o$</h3><p>$o$ 是「非渐进紧确上界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq f(n)&lt; c\cdot g(n)$。</p>
+<p>也就是说，$\mathrm{O}$ 表示的是渐进意义上的小于等于，低级或同级，而 $o$ 表示的是渐进意义上的小于，低级。</p>
+<h3 id="omega"><a href="#omega" class="headerlink" title="$\omega$"></a>$\omega$</h3><p>$\omega$ 是「非渐进紧确下界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq c\cdot g(n)&lt; f(n)$。</p>
+<p>显然，$\Omega$ 表示的是渐进意义上的大于等于，高级或同级，而 $o$ 表示的是渐进意义上的大于，高级。</p>
+<h3 id="大结"><a href="#大结" class="headerlink" title="大结"></a>大结</h3><p>$\Theta$ 是比较精确的渐进式；$\mathrm{O}$ 和 $o$ 给定了上界，其中一个上界不可取一个上界可取（可以类比闭区间和开区间）；$\Omega$ 和 $\omega$ 给定了下界，其中一个下界不可取一个下界可取。</p>
+<p>理解来就是，渐进意义上，将同级的都看成相等的。<br>$f(n)&#x3D;\Theta(g(n))$ 就是 $f(n)&#x3D;g(n)$。<br>$f(n)&#x3D;\mathrm{O}(g(n))$ 就是 $f(n)\leq g(n)$ 或者 $f(n)\in[0,g(n)]$。<br>$f(n)&#x3D;o(g(n))$ 就是 $f(n)&lt;g(n)$ 或者 $f(n)\in [0,g(n))$。<br>$f(n)&#x3D;\Omega(g(n))$ 就是 $f(n)\geq g(n)$ 或者 $f(n)\in[g(n),+\infty)$。<br>$f(n)&#x3D;\omega(f(n))$ 就是 $f(n)&gt;g(n)$ 或者 $f(n)\in(g(n),+\infty)$。</p>
+<img src="/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/5signsvenn.png" class="" alt="渐进记号 Venn 图">
+
+<h2 id="时间复杂度-PART-2"><a href="#时间复杂度-PART-2" class="headerlink" title="时间复杂度 PART 2"></a>时间复杂度 PART 2</h2><p>一般我们关心的是程序运行耗时的上限，所以一般我们用的渐进记号是 $\mathrm{O}$，$\mathrm{O}(1)$, $\mathrm{O}(\log n)$, $\mathrm{O}(n)$, $\mathrm{O}(n+m)$, $\mathrm{O}(n\log n)$, $\mathrm{O}(n^2)$, $\mathrm{O}(n!)$, $\mathrm{O}(2^n)$ 这些让人眼花缭乱的时间复杂度你应该异常熟悉。</p>
+<p>那么什么样的时间复杂度在 1s 内可以承受什么样的数据规模，请看。</p>
+<table>
+<thead>
+<tr>
+<th align="center">时间复杂度</th>
+<th align="center">稳过的数据规模</th>
+<th align="center">最大的数据规模</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$\mathrm{O}(1)$</td>
+<td align="center">$+\infty$</td>
+<td align="center">$+\infty$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(\log n)$</td>
+<td align="center">$2^{5\times 10^7}$</td>
+<td align="center">$2^{1\times 10^{8}}$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n)$</td>
+<td align="center">$5\times 10^7$</td>
+<td align="center">$1\times 10^8$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n\log n)$</td>
+<td align="center">$5\times 10^5$</td>
+<td align="center">$1\times 10^6$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^2)$</td>
+<td align="center">$5000$</td>
+<td align="center">$10000$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^3)$</td>
+<td align="center">$300$</td>
+<td align="center">$500$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(2^n)$</td>
+<td align="center">$25$</td>
+<td align="center">$27$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n!)$</td>
+<td align="center">$11$</td>
+<td align="center">$11$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^n)$</td>
+<td align="center">$8$</td>
+<td align="center">$8$</td>
+</tr>
+</tbody></table>
+<p>看看一些简单的时间复杂度计算。</p>
+<ul>
+<li>一般的循环嵌套——各层循环次数乘积。</li>
+<li><code>while</code> 内指针扫描数组——数组长度。</li>
+<li>DFS 遍历图——$\mathrm{O}(n+m)$。</li>
+<li>一般的递归，递归 $k$ 层，每层从 $a$ 个子节点统计——$O(a^k)$。</li>
+<li>基于二分的排序——$\mathrm{O}(n\log n)$</li>
+</ul>
+<p>有时候，时间复杂度不仅与数据规模有关，还与数据特点有关，此时我们不能算出一以贯之的时间复杂度，于是就有了最坏时间复杂度、平均（期望）时间复杂度之分。比如二分快排，平均（期望）时间复杂度是 $\mathrm{O}(n\log n)$ 而最坏情况下能够被卡到 $\mathrm{O}(n^2)$。</p>
+<p>下面介绍一个针对更普遍的递归算法时间复杂度计算的定理。</p>
+<h2 id="主定理-Master-Theorem"><a href="#主定理-Master-Theorem" class="headerlink" title="主定理 Master Theorem"></a>主定理 Master Theorem</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>主定理或者 Master Theorem 通过 $T(n)$ 的递推式来计算 $T(n)$，但不是哈戳戳地去展开一个一个计算，有技巧的。</p>
+<p>主定理要求的递推关系式为</p>
+<p>$$<br>T(n)&#x3D;aT(\frac{n}{b})+f(n),\qquad T(1)&#x3D;\Theta(1)<br>$$</p>
+<p>表示当前状态下问题规模为 $n$，分成 $a$ 个等效的规模为 $\frac{n}{b}$ 的子问题计算，合并答案需要的时间为 $f(n)$。</p>
+<p>那么</p>
+<p>$$<br>T(n) &#x3D; \begin{cases}\Theta(n^{\log_b a}) &amp; f(n) &#x3D; \mathrm{O}(n^{\log_b a-\epsilon})\\<br>\Theta(n^{\log_b a}\log^{k+1} n) &amp; f(n)&#x3D;\Theta(n^{\log_b a}\log^k n),k\ge 0\\<br>\Theta(f(n)) &amp; f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})\end{cases}<br>$$</p>
+<p>对于第三种情况，还需满足条件，对于一个常数 $c&lt;1$ 和所有足够大的 $n$，有 $af(\frac{n}{b})\leq cf(n)$，也就是 $af(\frac{n}{b})&lt;f(n)$，这里大概是为了方便证明。</p>
+<p>对于第一种和第三种情况，$\epsilon&gt;0$ 是一个常数。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>以下是主定理的证明，看一看能加深理解，不看也没关系<del>（主定理不学都没关系）</del>，可以直接去<a href="#%E7%90%86%E8%A7%A3">下面</a>理解的部分。网上的证明可能由于 Sukwants 太蒻了，单拎着一篇看一定会如听天书。</p>
+<p>但无论如何，证明主定理首先都要画出问题的递归树。</p>
+<img src="/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/master-theorem-proof.svg" class="" alt="主定理递归树">
+
+<p>由于我们每次递归，将规模为 $n$ 的问题分为 $a$ 个规模为 $\frac{n}{b}$ 的子问题，因此每一个非叶结点都会有 $a$ 个子结点。</p>
+<p>而 $n$ 规模在 $\log_bn$ 次分割过后就会归于 $1$，因此整棵递归树的深度为 $h&#x3D;\log_bn$。</p>
+<p>所以这棵递归树的叶结点有 $a^{\log_bn}$ 个，诶，跟图上的不一样？别慌，$a^{\log_bn}&#x3D;(b^{\log_ba})^{\log_bn}&#x3D;(b^{\log_bn})^{\log_bn}&#x3D;n^{\log_ba}$，之所以这么变是因为之后要用。</p>
+<p>右边一列 $\text{Cost}$ 表示每一层的结点合并答案所用时 $f(n)$ 的总和。显然，从第 $0$ 层到第 $\log_bn-1$ 层，第 $i$ 层就是 $a^if(\frac{n}{b^i})$。最后一层，因为 $T(1)&#x3D;\Theta(1)$，所以耗时为叶结点个数，$\Theta(n^{\log_ba})$。因此总用时即为 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$。</p>
+<p>我们记 $g(n)&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$，那么 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)$。</p>
+<h4 id="1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a"><a href="#1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a" class="headerlink" title="$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$"></a>$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$</h4><p>干就完了！</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum_{i&#x3D;0}^{\log_bn-1}a^if\left(\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\left(\frac{n}{b^i}\right)^{\log_ba-\epsilon}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\frac{n^{\log_ba-\epsilon}}{\left(b^i\right)^{\log_ba-\epsilon}}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(b^i\right)^{\log_ba-\epsilon}}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(b^{\log_ba-\epsilon}\right)^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(\frac{a}{b^\epsilon}\right)^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i\right)<br>\end{align}<br>$$</p>
+<p>而 $\sum\limits_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i$ 可以用等比数列求和的方法搞一通，不知你忘记了没有。</p>
+<p>设 $S&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i$，则 $b^\epsilon S&#x3D;\sum\limits_{i&#x3D;1}^{\log_bn}\left(b^\epsilon\right)^i$，那么 $(b^\epsilon-1)S&#x3D;\left(b^\epsilon\right)^{\log_bn}-\left(b^\epsilon\right)^0&#x3D;n^\epsilon-1$，于是 $S&#x3D;\frac{n^\epsilon-1}{b^\epsilon-1}$。</p>
+<p>那么继续</p>
+<p>$$<br>\begin{align}g(n)&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i\right)\\&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\frac{n^\epsilon-1}{b^\epsilon-1}\right)\\\end{align}<br>$$</p>
+<p>我们一筹莫展了，这里回顾一下 $b,\epsilon$ 的定义<del>（做到不忘初心牢记使命）</del>，它们是常数，而这里又用上了渐进符号 $\mathrm{O}$，所以……</p>
+<p>$$<br>\begin{align}g(n)&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\frac{n^\epsilon-1}{b^\epsilon-1}\right)\\&amp;&#x3D;\mathrm{O}(n^{\log_ba-\epsilon}n^\epsilon)\\&amp;&#x3D;\mathrm{O}(n^{\log_ba})\\\end{align}<br>$$</p>
+<p>那么 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)&#x3D;\Theta(n^{\log_ba})+\mathrm{O}(n^{\log_ba})&#x3D;\Theta(n^{\log_ba})$。这很明显，因为 $\Theta$ 表示「$&#x3D;$」而 $\mathrm{O}$ 表示「$\leq$」。</p>
+<p>以上，证得当 $f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})$ 时有 $T(n)&#x3D;\Theta(n^{\log_b a})$。</p>
+<h4 id="2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n"><a href="#2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n" class="headerlink" title="$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$"></a>$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$</h4><p>这里我表示和上面一样的套路——干就完了！</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum_{i&#x3D;0}^{\log_bn-1}a^if\left(\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\left(\frac{n}{b^i}\right)^{\log_ba}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^in^{\log_ba}}{\left(b^i\right)^{\log_ba}}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}n^{\log_ba}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\sum_{i&#x3D;0}^{\log_bn-1}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\sum_{i&#x3D;0}^{\log_bn-1}\left(\log n-\log b^i\right)^k\right)<br>\end{align}<br>$$</p>
+<p>而接下来又需要践行初心使命。</p>
+<p>记 $h(n)&#x3D;\left(\log n-\log b^i\right)^k&#x3D;\sum_{j&#x3D;0}^{k}\binom{k}{j}\left(\log n\right)^j\left(-\log b^i\right)^{k+1-j}$，因为 $i\leq\log_bn-1$，因此 $b^i&lt;b^{\log_bn}&#x3D;n$，进而得到 $\log b^i&lt;\log n$，所以 $h(n)$ 的展开式中最高次即为 $\log^kn$。</p>
+<p>既然我们这里是渐进意义，那么何不只留下最高次呢？</p>
+<p>那么</p>
+<p>$$<br>g(n)&#x3D;\Theta\left(n^{\log_ba}\log_bn\log^kn\right)<br>$$</p>
+<p>注意，我们现在先解释一个奇妙的变换。</p>
+<p>$$<br>\Theta \left(\log_bn\right)&#x3D;\Theta \left(\frac{\log n}{\log b}\right)&#x3D;\Theta \left(\log n\right)<br>$$</p>
+<p>（额，$\log b$ 是常数诶，当然可以这么干）</p>
+<p>于是</p>
+<p>$$<br>\begin{align}g(n)<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\log_bn\log^kn\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\log n\log^kn\right)\\&amp;&#x3D;\Theta\left(n^{\log_ba}\log^{k+1}n\right)<br>\end{align}<br>$$</p>
+<p>最终 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)&#x3D;\Theta(n^{\log_ba})+\Theta(n^{\log_ba}\log^{k+1}n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$。</p>
+<p>以上，证得当 $f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0$ 时有 $T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$。</p>
+<p>这第二种情况大多数时候是一种特殊情况，就是 $k&#x3D;0$ 的时候，那么此时就成为了 $f(n)&#x3D;\Theta(n^{\log_ba}),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log n)$。</p>
+<h4 id="3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n"><a href="#3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n" class="headerlink" title="$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$"></a>$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$</h4><p>$p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$</p>
+<p>这个情况有些特殊，虽然大部分是干，但是还是有巧劲的。</p>
+<p>首先，根据 $g(n)$ 的定义 $g(n)&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$，很明显</p>
+<p>$$<br>g(n)&#x3D;\Omega(f(n))<br>$$</p>
+<p>然后，我们从条件 $p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 入手。</p>
+<p>$$<br>a^if\left(\frac{n}{b^i}\right)\leq c\cdot a^{i-1}f\left(\frac{n}{b^{i-1}}\right)\leq c^2\cdot a^{i-2}f\left(\frac{n}{b^{i-2}}\right)\leq …\leq c^if\left(n\right)<br>$$</p>
+<p>其实，也可以理解为，$f(n)$ 表示递归树的第 $0$ 层的合并用时，$af\left(\frac{n}{b}\right)$ 表示下一层的合并用时。递归 $i$ 层，第 $i$ 层的合并用时即为 $a^if\left(\frac{n}{b^i}\right)$，那么就有 $a^if\left(\frac{n}{b^i}\right)\leq c^if\left(n\right)$。</p>
+<p>这样的话</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{\log_bn-1}c^if(n)\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{+\infty}c^if(n)<br>\end{align}<br>$$</p>
+<p>大概是为了更方便证明。</p>
+<p>自然</p>
+<p>$$<br>\sum\limits_{i&#x3D;0}^{+\infty}c^if(n)&#x3D;\left[\sum\limits_{i&#x3D;0}^{+\infty}c^i\right]f(n)&#x3D;\frac{1}{1-c}f(n)<br>$$</p>
+<p>根据定义</p>
+<p>$$<br>g(n)&#x3D;\mathrm{O}(f(n))<br>$$</p>
+<p>因为 $g(n)&#x3D;\mathrm{0}(f(n))\land g(n)&#x3D;\Omega(f(n))$，两侧夹逼，得到 $g(n)&#x3D;\Theta(f(n))$。</p>
+<p>以上，证得在满足条件 $p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 的前提下，当 $f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})$ 时有 $T(n)&#x3D;\Theta(f(n))$。</p>
+<h4 id="综上所述"><a href="#综上所述" class="headerlink" title="综上所述"></a>综上所述</h4><p>$$<br>T(n) &#x3D; \begin{cases}\Theta(n^{\log_b a}) &amp; f(n) &#x3D; \mathrm{O}(n^{\log_b a-\epsilon})\\<br>\Theta(n^{\log_b a}\log^{k+1} n) &amp; f(n)&#x3D;\Theta(n^{\log_b a}\log^k n),k\ge 0\\<br>\Theta(f(n)) &amp; f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})\land p\end{cases}\\<br>$$</p>
+<p>$$<br>p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)<br>$$</p>
+<h3 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h3><p>对于第 1 种情况，其实就是 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$ 中两部分哪部分在渐进意义上更大的问题，这种情况反映的是叶结点的计算更大，所以时间复杂度由叶结点的计算决定。</p>
+<p>对于第 3 种情况，条件 $\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 反映的是 $T(n)&#x3D;aT(\frac{n}{b})+f(n)$ 中当前层合并代价高于下一层合并代价，条件 $f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})$ 反映的是 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$ 合并的代价高于叶结点计算的代价。两者同时满足，决定时间复杂度的就是第 $0$ 层的合并代价。</p>
+<p>对于第 2 种情况，反映的是在特殊条件下对性质的进一步发掘。</p>
+<p>伟大的 Master Theorem，就这么被我们干完了。</p>
+<h2 id="时间复杂度-PART-3"><a href="#时间复杂度-PART-3" class="headerlink" title="时间复杂度 PART 3"></a>时间复杂度 PART 3</h2><p>有时候，单个操作的时间复杂度各不相同，而总的时间复杂度却是一定的，单个操作取决于数据特点。此时，我们如果考虑每个操作都以最坏时间复杂度计算，那么算出来总的时间复杂度会远远大于事实上的时间复杂度。此时我们定义一种均摊时间复杂度，它是总时间复杂度与操作次数的比值。</p>
+<p>比如单调队列，看起来单次操作的最坏时间复杂度是 $\mathrm{O}(n)$ 的，事实上均摊过后单次操作的时间复杂度为 $\mathrm{O}(1)$。</p>
+<p>总的时间复杂度难以计算，我们可以用势能分析。</p>
+<h2 id="势能分析"><a href="#势能分析" class="headerlink" title="势能分析"></a>势能分析</h2><p>事实上势能分析我也不太懂，<del>也感觉没大用</del>。</p>
+<p>按照物理上重力势能的定义，想象过山车上坡的过程，消耗的电能除了提供给过山车必要的动能以外，还积累重力势能，而重力势能在下坡的时候再释放，下坡的时候就不必用电能提供动能。我们将这样将能量以势能的形式预先存储下来的做法叫做预付代价。</p>
+<p>假设第 $i$ 次操作的时间复杂度为 $c_i$，要求 $\sum\limits_{i&#x3D;1}^{n}c_i$ 或者其与 $n$ 的比值。</p>
+<p>假设问题中第 $i$ 次操作过后的状态为 $S_i$，初始状态为 $S_0$。</p>
+<p>定义只与状态相关的势能函数 $\Phi(S)$，表示 $S$ 的「势能」，要求 $\Phi(S)\geq \Phi(S_0)$。</p>
+<p>设 $c_i&#x3D;\hat c_i+\Phi(S_i)-\Phi(S_{i-1})$，其中 $c_i$ 是本次实际消耗的代价，$\hat c_i$ 是本次就用掉的代价，$\Phi(S_i)-\Phi(S_{i-1})$ 是预付代价。</p>
+<p>加起来，正负抵消，那么就有</p>
+<p>$$<br>\sum_{i&#x3D;1}^{n}c_i&#x3D;\sum_{i&#x3D;1}^{n}\hat c_i+\Phi(S_n)-\Phi(S_i)<br>$$</p>
+<p>也就是总代价等于消耗代价加上预付代价。</p>
+<p>应用到单调队列中，定义 $\Phi(S)$ 表示状态为 $S$ 的时候单调队列里元素的个数。那么 $c_i$ 的组成是 $\mathrm{O}(\text{弹出元素})+1$。显然，$\mathrm{O}(\text{弹出元素})&#x3D;\Phi(S_{i-1})-\Phi(S_i)$。那么可以计算出 $\hat c&#x3D;1$。</p>
+<p>于是</p>
+<p>$$<br>\sum_{i&#x3D;1}^{n}c_i&#x3D;\sum_{i&#x3D;1}^{n}\hat c_i+\Phi(S_n)-\Phi(S_i)&#x3D;\sum_{i&#x3D;1}^{n}\hat c_i&#x3D;n<br>$$</p>
+<p>这也说明了为什么单调队列单次操作的均摊复杂度为 $\mathrm{O}(1)$。</p>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>其实，空间复杂度没有什么好说的……</p>
+<p>定义与时间复杂度大同小异，但更简单，影响因素也更少。因为在算法竞赛中，我们常常是实现定义好变量的，不会中途去申请太多空间，因此我们只需要对定义的几个数组算一下占多少空间即可。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>时间与空间是算法竞赛中永恒的话题，而复杂度是评判时空消耗的一把标尺。处处皆学问，不知将时空复杂度研究得更加透彻的你，又有何体悟？</p>
+<p>爱因斯坦的相对论打破了牛顿力学的绝对时空观，时间与空间、时空与参考系紧密联系在一起。我们不过是时间流过的渺茫一瞥，也不过是空间角落的沧海一粟。</p>
+<p>而一名时间的匆匆乘客，空间的默默过客，也会说</p>
+<p>「我不过是时空的一粒微尘，但我有我们，足矣。」</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Sukwants
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/" title="算法基础 - 时空复杂度">https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/I-%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> [I] 算法基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/" rel="prev" title="动态规划 - 数位动态规划">
+                  <i class="fa fa-chevron-left"></i> 动态规划 - 数位动态规划
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sukwants</span>
+</div>
+<div class="running-time">
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("02/11/2022 13:14:21");//此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.1/es5/tex-mml-chtml.js","integrity":"sha256-hlC2uSQYTmPsrzGZTEQEg9PZ1a/+SV6VBCTclohf2og="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"79ad55bc7eb5397fe52f4d6a73db36a2"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

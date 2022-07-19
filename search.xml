@@ -1,6 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>算法基础 - 时空复杂度</title>
+    <url>/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>时间的匆匆乘客，空间的默默过客</p>
+<span id="more"></span>
+
+<h2 id="等效异耗"><a href="#等效异耗" class="headerlink" title="等效异耗"></a>等效异耗</h2><p>请看。</p>
+<p>菲波那契数列是指这样的数列: 数列的第一个和第二个数都为 $1$，接下来每个数都等于前面 $2$ 个数之和。</p>
+<p>给出一个正整数 $a$，要求菲波那契数列中第 $a$ 个数是多少。</p>
+<p>我们对此已经积累出了三种解法，递归法、递推法、矩阵快速幂优化递推。效果相同，但有时，你会发现，在不合适的地方用了不合适的解法可能会 <font style="color:orange"><i class="fa-solid fa-clock"></i> Time Limit Exceeded</font>。</p>
+<p>再看。</p>
+<p>我们存储图，有两种流行的方式，邻接表和邻接矩阵。效果相同，但有时，你会发现，用邻接矩阵的解法可能会 <font style="color:orange"><i class="fa-solid fa-microchip"></i> Memory Limit Exceeded</font>。</p>
+<p>一定是我们打开方式有点不对。</p>
+<p>在算法竞赛中，我们写出的程序不仅要解决问题，还要高效地解决问题，具体说，在限定时间限定空间内解决问题。诸如以上超时间、超空间的情况，就是超出了题目允许的时空限制。</p>
+<p>为了能够评判程序的时间和空间消耗，时空复杂度应运而生。</p>
+<h2 id="时空评判"><a href="#时空评判" class="headerlink" title="时空评判"></a>时空评判</h2><p>一般来说，时间评判以 $\mathrm{s}$ 作为单位，空间评判以 $\mathrm{MB}$ 作为单位，事实上在评测的时候也确实按这样的实际数据进行限制。但这样，我们只能写出一个程序在特定数据下测量其时空消耗。</p>
+<p>而更多时候，我们关心的是能否根据算法结构评估它在不同数据下的时空消耗，或者说它的时空消耗随数据规模增长的大致趋势。这样计算出的时空消耗才有预判性，才能对程序设计产生引导作用。</p>
+<p>我们习惯用时间复杂度表示用时随数据规模的增长，用空间复杂度表示占用内存随数据规模的增长。</p>
+<p>$T(n)$ 表示数据规模为 $n$ 的时间复杂度，$S(n)$ 表示数据规模为 $n$ 的空间复杂度。</p>
+<p>接下来问题就是时空复杂度该如何表示，由于空间复杂度一般来说比较简单，我们先以时间复杂度为例探讨。</p>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>时间复杂度用 基本操作* 的次数进行衡量，在此规则下，假设我们有算法 A 运行时间表达式为 $T_A(n)&#x3D;30n^4+20n^3+40n^2+48n+100$，同样有算法 B 运行时间表达式为 $T_B(n)&#x3D;100n^3+50n^2+78n+10$。</p>
+<p>*加减乘除、访问、赋值等操作可以视为基本操作。</p>
+<p>当 $n&#x3D;1$ 时，$T_A(n)&#x3D;T_B(n)&#x3D;238$；当 $n&#x3D;100$ 时，$T_A(n)\approx 3\times 10^9&gt;T_B(n)\approx 1\times 10^8$；当 $n&#x3D;10^{100}$ 时，$T_A(n)\approx 3\times 10^{401}&gt;&gt;T_B(n)\approx 10^{302}$。</p>
+<p>可以发现，对于不同的时间表达式，运行时间随数据规模的增长是大相径庭的。我们仔细观察上面的多项式表达式，比如 $T_A(n)&#x3D;30n^4+20n^3+40n^2+48n+100$，当 $n$ 增长时，$T_A(n)$ 表达式除了常数项的每一项都在增长，而其中增长最快的无疑是高次项 $30n^4$，而常数项 $100$ 根本不增长。当 $n$ 增长到一定规模时，低次项相较于高次项对整体的影响微乎其微，同样每一项的系数对整体也造成不了大的影响。</p>
+<p>所以在更关心规模增长的条件下，这里我们舍弃增长较慢或不增长的项，以及每一项的系数，只留下对整体增长影响较大的部分。也就是 $T_A(n)&#x3D;30n^4+20n^3+40n^2+48n+100\approx n^4$, $T_B(n)&#x3D;100n^3+50n^2+78n+10\approx n^3$，我们可以记为 $T_A(n)&#x3D;\Theta(n^4)$,$ T_B(n)&#x3D;\Theta(n^3)$。</p>
+<p>为什么可以这么干呢？请看，如果有 $T_C(n)&#x3D;1000n^3&#x3D;\Theta(n^3)$, $T_D(n)&#x3D;n^3&#x3D;\Theta(n^3)$，即使系数相差甚远，但无论 $n$ 取何值，$T_C(n)$ 只会永远是 $T_D(n)$ 的 $100$ 倍，这个比值永远不会扩大。我们将 $T_C(n)$ 与 $T_D(n)$ 之间这样的关系称为两者同级。在只关心数据规模增长的情况下，这就足够描述时间的增长趋势了，在 $n$ 越来越大的情况下，不同级的数据差距越来越大，而同级的数据差距基本保持恒定。于是，我们就可以按照“级别”来评估时间随数据规模增长的趋势。</p>
+<p>然而算法中的情况千千万万，光有一个 $\Theta$ 记号还不够。</p>
+<h2 id="渐进记号"><a href="#渐进记号" class="headerlink" title="渐进记号"></a>渐进记号</h2><p>渐进记号有 $\Theta$, $\mathrm{O}$, $o$, $\Omega$, $\omega$，各自表达的意思大同小异，共同点就在于「渐进」二字。所谓渐进，就不能用一般的比大小手段，因为根据以上描述，我们是舍弃了增长慢的项和系数的，因此不能以数的手段来比较大小。</p>
+<h3 id="Theta"><a href="#Theta" class="headerlink" title="$\Theta$"></a>$\Theta$</h3><p>$\Theta$ 是「渐进紧确界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\Theta(g(n))$，当且仅当 $\exists c_1,c_2,n_0&gt;0,\forall n\geq n_0,0\leq c_1\cdot g(n)\leq f(n)\leq c_2\cdot g(n)$。</p>
+<p>之所以要有一个 $n\geq n_0$，是因为此时 $f(n)$ 和 $g(n)$ 均为函数，比较大小还需要考虑系数，如果 $n$ 过小，也有可能产生不满足后面条件的情况。而如果对于一个足够大的 $n$，$f(n)$ 能够被 $c_1\cdot g(n)$ 和 $c_2\cdot g(n)$ 夹在中间（$c_1,c_2$ 为与 $n$ 无关的定值），那么说明随着 $n$ 的增长，$g(n)$ 不会偏离 $f(n)$ 太多，也就是我们上面所说的同级的含义，增长速率相同，比值基本一定。</p>
+<p>不要试图简单用数的思维去理解 $c_1,c_2$ 以及 $f(n)$ 被夹在中间，可以用函数图像增长的思路去理解，<a href="#%E5%B0%8F%E7%BB%93">后面</a>我们会去看看 $\Theta,\mathrm{O},\Omega$ 三个记号与 $f(n)$ 增长的关系。</p>
+<p>$\Theta$ 记号为我们提供了一个能够限制 $f(n)$ 上下界的条件，也为我们找到了 $f(n)$ 在渐进意义上可以视为相等的一个式子。</p>
+<p>p.s. 刚开始接触渐进记号，注意不要搞错，$f(n)$ 是原式，而 $g(n)$ 是渐进式。</p>
+<h3 id="mathrm-O"><a href="#mathrm-O" class="headerlink" title="$\mathrm{O}$"></a>$\mathrm{O}$</h3><p>$\mathrm{O}$ 是「渐进上界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq f(n)\leq c\cdot g(n)$。</p>
+<p>用 $c$ 的原因和 $\Theta$ 一样。</p>
+<p>如果说 $\Theta$ 提供了原式的上下界，那么这个 $\mathrm{O}$ 就是提供了原式的下界，这可以看作渐进意义上的小于等于，也就是低级或同级。</p>
+<p>一般来说，我们计算时间复杂度都是要看极限数据是否能够通过，因此我们用 $\mathrm{O}$ 的时候会比较多。</p>
+<h3 id="Omega"><a href="#Omega" class="headerlink" title="$\Omega$"></a>$\Omega$</h3><p>$\Omega$ 是「渐进下界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq c\cdot g(n)\leq f(n)$。</p>
+<p>同样，这就是渐进意义上的大于等于，也就是高级或同级。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>$\Theta$ 提供了一个更加准确的渐进式，而 $\mathrm{O}$ 和 $\Omega$ 分别提供了上界和下界。显然，如果有 $f(n)&#x3D;\Theta(g(n))$，那么一定有 $f(n)&#x3D;\mathrm{O}(g(n))$, $f(n)&#x3D;\Omega(g(n))$。这个时候你聪明的大脑袋就要说话了，我以为每个 $f(n)$ 都同时有 $\Theta,\mathrm{O},\Omega$ 的呢，事实上，我们的 $f(n)$ 只是一个函数，不一定能够被解析式表示出来，但此时如果我们能算出渐进上界或者下界，那么就可以有 $\mathrm{O}$ 或者 $\Omega$。</p>
+<p>$f(n)&#x3D;\Theta(g(n))$, $f(n)&#x3D;\mathrm{O}(g(n))$, $f(n)&#x3D;\Omega(g(n))$ 三种情况下 $f(n)$ 与 $c\cdot g(n)$ 的增长变化可以看一下下面这张图（来自《算法导论》）。</p>
+<img src="/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/thetaomicronomega.png" class="" alt="渐进记号增长">
+
+<p>注意，这里函数高低并非由 $c_1,c_2$ 或者 $c$ 的取值决定，更重要的是增长速度，$f(n)&#x3D;\Theta(g(n))$ 时 $f(n)$ 与 $c\cdot g(n)$ 增长速度相当，$f(n)&#x3D;\mathrm{O}(g(n))$ 时较慢，$f(n)&#x3D;\Omega(g(n))$ 时较快。这一点可以通过 $\forall n\geq n_0$ 看出，在 $n_0$ 以后的部分，$f(n)$ 与 $c\cdot g(n)$ 的大小关系不会变化，也就是函数图像不会再产生交叉。</p>
+<p>这样的定义 $n\geq n_0$，似乎和极限差不多诶，都是对于足够大的 $n$，始终满足条件。</p>
+<p>有一些性质。</p>
+<ul>
+<li>$f(n)&#x3D;\Theta(g(n))\iff f(n)&#x3D;\mathrm{O}(g(n))\land f(n)&#x3D;\Omega(g(n))$<del>（根据定义，这不显然吗）</del>。</li>
+<li>$f_1(n)+f_2(n)&#x3D;\Theta&#x2F;\mathrm{O}&#x2F;\Omega(\max\{f_1(n),f_2(n)\})$，哪个符号有就是哪个符号，这个根据我们刚开始引入渐进的方法（舍弃低次）可以知道。</li>
+<li>$f_1(n)\times f_2(n)&#x3D;\Theta&#x2F;\mathrm{O}&#x2F;\Omega(f_1(n)\times f_2(n))$，也是上面那个方法。</li>
+</ul>
+<h3 id="o"><a href="#o" class="headerlink" title="$o$"></a>$o$</h3><p>$o$ 是「非渐进紧确上界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq f(n)&lt; c\cdot g(n)$。</p>
+<p>也就是说，$\mathrm{O}$ 表示的是渐进意义上的小于等于，低级或同级，而 $o$ 表示的是渐进意义上的小于，低级。</p>
+<h3 id="omega"><a href="#omega" class="headerlink" title="$\omega$"></a>$\omega$</h3><p>$\omega$ 是「非渐进紧确下界记号」。对于函数 $f(n)$ 和 $g(n)$，有 $f(n)&#x3D;\mathrm{O}(f(n))$，当且仅当 $\exists c,n_0&gt;0,\forall n\geq n_0,0\leq c\cdot g(n)&lt; f(n)$。</p>
+<p>显然，$\Omega$ 表示的是渐进意义上的大于等于，高级或同级，而 $o$ 表示的是渐进意义上的大于，高级。</p>
+<h3 id="大结"><a href="#大结" class="headerlink" title="大结"></a>大结</h3><p>$\Theta$ 是比较精确的渐进式；$\mathrm{O}$ 和 $o$ 给定了上界，其中一个上界不可取一个上界可取（可以类比闭区间和开区间）；$\Omega$ 和 $\omega$ 给定了下界，其中一个下界不可取一个下界可取。</p>
+<p>理解来就是，渐进意义上，将同级的都看成相等的。<br>$f(n)&#x3D;\Theta(g(n))$ 就是 $f(n)&#x3D;g(n)$。<br>$f(n)&#x3D;\mathrm{O}(g(n))$ 就是 $f(n)\leq g(n)$ 或者 $f(n)\in[0,g(n)]$。<br>$f(n)&#x3D;o(g(n))$ 就是 $f(n)&lt;g(n)$ 或者 $f(n)\in [0,g(n))$。<br>$f(n)&#x3D;\Omega(g(n))$ 就是 $f(n)\geq g(n)$ 或者 $f(n)\in[g(n),+\infty)$。<br>$f(n)&#x3D;\omega(f(n))$ 就是 $f(n)&gt;g(n)$ 或者 $f(n)\in(g(n),+\infty)$。</p>
+<img src="/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/5signsvenn.png" class="" alt="渐进记号 Venn 图">
+
+<h2 id="时间复杂度-PART-2"><a href="#时间复杂度-PART-2" class="headerlink" title="时间复杂度 PART 2"></a>时间复杂度 PART 2</h2><p>一般我们关心的是程序运行耗时的上限，所以一般我们用的渐进记号是 $\mathrm{O}$，$\mathrm{O}(1)$, $\mathrm{O}(\log n)$, $\mathrm{O}(n)$, $\mathrm{O}(n+m)$, $\mathrm{O}(n\log n)$, $\mathrm{O}(n^2)$, $\mathrm{O}(n!)$, $\mathrm{O}(2^n)$ 这些让人眼花缭乱的时间复杂度你应该异常熟悉。</p>
+<p>那么什么样的时间复杂度在 1s 内可以承受什么样的数据规模，请看。</p>
+<table>
+<thead>
+<tr>
+<th align="center">时间复杂度</th>
+<th align="center">稳过的数据规模</th>
+<th align="center">最大的数据规模</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$\mathrm{O}(1)$</td>
+<td align="center">$+\infty$</td>
+<td align="center">$+\infty$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(\log n)$</td>
+<td align="center">$2^{5\times 10^7}$</td>
+<td align="center">$2^{1\times 10^{8}}$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n)$</td>
+<td align="center">$5\times 10^7$</td>
+<td align="center">$1\times 10^8$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n\log n)$</td>
+<td align="center">$5\times 10^5$</td>
+<td align="center">$1\times 10^6$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^2)$</td>
+<td align="center">$5000$</td>
+<td align="center">$10000$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^3)$</td>
+<td align="center">$300$</td>
+<td align="center">$500$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(2^n)$</td>
+<td align="center">$25$</td>
+<td align="center">$27$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n!)$</td>
+<td align="center">$11$</td>
+<td align="center">$11$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^n)$</td>
+<td align="center">$8$</td>
+<td align="center">$8$</td>
+</tr>
+</tbody></table>
+<p>看看一些简单的时间复杂度计算。</p>
+<ul>
+<li>一般的循环嵌套——各层循环次数乘积。</li>
+<li><code>while</code> 内指针扫描数组——数组长度。</li>
+<li>DFS 遍历图——$\mathrm{O}(n+m)$。</li>
+<li>一般的递归，递归 $k$ 层，每层从 $a$ 个子节点统计——$O(a^k)$。</li>
+<li>基于二分的排序——$\mathrm{O}(n\log n)$</li>
+</ul>
+<p>有时候，时间复杂度不仅与数据规模有关，还与数据特点有关，此时我们不能算出一以贯之的时间复杂度，于是就有了最坏时间复杂度、平均（期望）时间复杂度之分。比如二分快排，平均（期望）时间复杂度是 $\mathrm{O}(n\log n)$ 而最坏情况下能够被卡到 $\mathrm{O}(n^2)$。</p>
+<p>下面介绍一个针对更普遍的递归算法时间复杂度计算的定理。</p>
+<h2 id="主定理-Master-Theorem"><a href="#主定理-Master-Theorem" class="headerlink" title="主定理 Master Theorem"></a>主定理 Master Theorem</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>主定理或者 Master Theorem 通过 $T(n)$ 的递推式来计算 $T(n)$，但不是哈戳戳地去展开一个一个计算，有技巧的。</p>
+<p>主定理要求的递推关系式为</p>
+<p>$$<br>T(n)&#x3D;aT(\frac{n}{b})+f(n),\qquad T(1)&#x3D;\Theta(1)<br>$$</p>
+<p>表示当前状态下问题规模为 $n$，分成 $a$ 个等效的规模为 $\frac{n}{b}$ 的子问题计算，合并答案需要的时间为 $f(n)$。</p>
+<p>那么</p>
+<p>$$<br>T(n) &#x3D; \begin{cases}\Theta(n^{\log_b a}) &amp; f(n) &#x3D; \mathrm{O}(n^{\log_b a-\epsilon})\\<br>\Theta(n^{\log_b a}\log^{k+1} n) &amp; f(n)&#x3D;\Theta(n^{\log_b a}\log^k n),k\ge 0\\<br>\Theta(f(n)) &amp; f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})\end{cases}<br>$$</p>
+<p>对于第三种情况，还需满足条件，对于一个常数 $c&lt;1$ 和所有足够大的 $n$，有 $af(\frac{n}{b})\leq cf(n)$，也就是 $af(\frac{n}{b})&lt;f(n)$，这里大概是为了方便证明。</p>
+<p>对于第一种和第三种情况，$\epsilon&gt;0$ 是一个常数。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>以下是主定理的证明，看一看能加深理解，不看也没关系<del>（主定理不学都没关系）</del>，可以直接去<a href="#%E7%90%86%E8%A7%A3">下面</a>理解的部分。网上的证明可能由于 Sukwants 太蒻了，单拎着一篇看一定会如听天书。</p>
+<p>但无论如何，证明主定理首先都要画出问题的递归树。</p>
+<img src="/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/master-theorem-proof.svg" class="" alt="主定理递归树">
+
+<p>由于我们每次递归，将规模为 $n$ 的问题分为 $a$ 个规模为 $\frac{n}{b}$ 的子问题，因此每一个非叶结点都会有 $a$ 个子结点。</p>
+<p>而 $n$ 规模在 $\log_bn$ 次分割过后就会归于 $1$，因此整棵递归树的深度为 $h&#x3D;\log_bn$。</p>
+<p>所以这棵递归树的叶结点有 $a^{\log_bn}$ 个，诶，跟图上的不一样？别慌，$a^{\log_bn}&#x3D;(b^{\log_ba})^{\log_bn}&#x3D;(b^{\log_bn})^{\log_bn}&#x3D;n^{\log_ba}$，之所以这么变是因为之后要用。</p>
+<p>右边一列 $\text{Cost}$ 表示每一层的结点合并答案所用时 $f(n)$ 的总和。显然，从第 $0$ 层到第 $\log_bn-1$ 层，第 $i$ 层就是 $a^if(\frac{n}{b^i})$。最后一层，因为 $T(1)&#x3D;\Theta(1)$，所以耗时为叶结点个数，$\Theta(n^{\log_ba})$。因此总用时即为 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$。</p>
+<p>我们记 $g(n)&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$，那么 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)$。</p>
+<h4 id="1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a"><a href="#1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a" class="headerlink" title="$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$"></a>$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$</h4><p>干就完了！</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum_{i&#x3D;0}^{\log_bn-1}a^if\left(\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\left(\frac{n}{b^i}\right)^{\log_ba-\epsilon}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\frac{n^{\log_ba-\epsilon}}{\left(b^i\right)^{\log_ba-\epsilon}}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(b^i\right)^{\log_ba-\epsilon}}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(b^{\log_ba-\epsilon}\right)^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(\frac{a}{b^\epsilon}\right)^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i\right)<br>\end{align}<br>$$</p>
+<p>而 $\sum\limits_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i$ 可以用等比数列求和的方法搞一通，不知你忘记了没有。</p>
+<p>设 $S&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i$，则 $b^\epsilon S&#x3D;\sum\limits_{i&#x3D;1}^{\log_bn}\left(b^\epsilon\right)^i$，那么 $(b^\epsilon-1)S&#x3D;\left(b^\epsilon\right)^{\log_bn}-\left(b^\epsilon\right)^0&#x3D;n^\epsilon-1$，于是 $S&#x3D;\frac{n^\epsilon-1}{b^\epsilon-1}$。</p>
+<p>那么继续</p>
+<p>$$<br>\begin{align}g(n)&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i\right)\\&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\frac{n^\epsilon-1}{b^\epsilon-1}\right)\\\end{align}<br>$$</p>
+<p>我们一筹莫展了，这里回顾一下 $b,\epsilon$ 的定义<del>（做到不忘初心牢记使命）</del>，它们是常数，而这里又用上了渐进符号 $\mathrm{O}$，所以……</p>
+<p>$$<br>\begin{align}g(n)&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\frac{n^\epsilon-1}{b^\epsilon-1}\right)\\&amp;&#x3D;\mathrm{O}(n^{\log_ba-\epsilon}n^\epsilon)\\&amp;&#x3D;\mathrm{O}(n^{\log_ba})\\\end{align}<br>$$</p>
+<p>那么 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)&#x3D;\Theta(n^{\log_ba})+\mathrm{O}(n^{\log_ba})&#x3D;\Theta(n^{\log_ba})$。这很明显，因为 $\Theta$ 表示「$&#x3D;$」而 $\mathrm{O}$ 表示「$\leq$」。</p>
+<p>以上，证得当 $f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})$ 时有 $T(n)&#x3D;\Theta(n^{\log_b a})$。</p>
+<h4 id="2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n"><a href="#2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n" class="headerlink" title="$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$"></a>$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$</h4><p>这里我表示和上面一样的套路——干就完了！</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum_{i&#x3D;0}^{\log_bn-1}a^if\left(\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\left(\frac{n}{b^i}\right)^{\log_ba}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^in^{\log_ba}}{\left(b^i\right)^{\log_ba}}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}n^{\log_ba}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\sum_{i&#x3D;0}^{\log_bn-1}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\sum_{i&#x3D;0}^{\log_bn-1}\left(\log n-\log b^i\right)^k\right)<br>\end{align}<br>$$</p>
+<p>而接下来又需要践行初心使命。</p>
+<p>记 $h(n)&#x3D;\left(\log n-\log b^i\right)^k&#x3D;\sum_{j&#x3D;0}^{k}\binom{k}{j}\left(\log n\right)^j\left(-\log b^i\right)^{k+1-j}$，因为 $i\leq\log_bn-1$，因此 $b^i&lt;b^{\log_bn}&#x3D;n$，进而得到 $\log b^i&lt;\log n$，所以 $h(n)$ 的展开式中最高次即为 $\log^kn$。</p>
+<p>既然我们这里是渐进意义，那么何不只留下最高次呢？</p>
+<p>那么</p>
+<p>$$<br>g(n)&#x3D;\Theta\left(n^{\log_ba}\log_bn\log^kn\right)<br>$$</p>
+<p>注意，我们现在先解释一个奇妙的变换。</p>
+<p>$$<br>\Theta \left(\log_bn\right)&#x3D;\Theta \left(\frac{\log n}{\log b}\right)&#x3D;\Theta \left(\log n\right)<br>$$</p>
+<p>（额，$\log b$ 是常数诶，当然可以这么干）</p>
+<p>于是</p>
+<p>$$<br>\begin{align}g(n)<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\log_bn\log^kn\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\log n\log^kn\right)\\&amp;&#x3D;\Theta\left(n^{\log_ba}\log^{k+1}n\right)<br>\end{align}<br>$$</p>
+<p>最终 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)&#x3D;\Theta(n^{\log_ba})+\Theta(n^{\log_ba}\log^{k+1}n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$。</p>
+<p>以上，证得当 $f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0$ 时有 $T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$。</p>
+<p>这第二种情况大多数时候是一种特殊情况，就是 $k&#x3D;0$ 的时候，那么此时就成为了 $f(n)&#x3D;\Theta(n^{\log_ba}),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log n)$。</p>
+<h4 id="3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n"><a href="#3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n" class="headerlink" title="$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$"></a>$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$</h4><p>$p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$</p>
+<p>这个情况有些特殊，虽然大部分是干，但是还是有巧劲的。</p>
+<p>首先，根据 $g(n)$ 的定义 $g(n)&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$，很明显</p>
+<p>$$<br>g(n)&#x3D;\Omega(f(n))<br>$$</p>
+<p>然后，我们从条件 $p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 入手。</p>
+<p>$$<br>a^if\left(\frac{n}{b^i}\right)\leq c\cdot a^{i-1}f\left(\frac{n}{b^{i-1}}\right)\leq c^2\cdot a^{i-2}f\left(\frac{n}{b^{i-2}}\right)\leq …\leq c^if\left(n\right)<br>$$</p>
+<p>其实，也可以理解为，$f(n)$ 表示递归树的第 $0$ 层的合并用时，$af\left(\frac{n}{b}\right)$ 表示下一层的合并用时。递归 $i$ 层，第 $i$ 层的合并用时即为 $a^if\left(\frac{n}{b^i}\right)$，那么就有 $a^if\left(\frac{n}{b^i}\right)\leq c^if\left(n\right)$。</p>
+<p>这样的话</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{\log_bn-1}c^if(n)\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{+\infty}c^if(n)<br>\end{align}<br>$$</p>
+<p>大概是为了更方便证明。</p>
+<p>自然</p>
+<p>$$<br>\sum\limits_{i&#x3D;0}^{+\infty}c^if(n)&#x3D;\left[\sum\limits_{i&#x3D;0}^{+\infty}c^i\right]f(n)&#x3D;\frac{1}{1-c}f(n)<br>$$</p>
+<p>根据定义</p>
+<p>$$<br>g(n)&#x3D;\mathrm{O}(f(n))<br>$$</p>
+<p>因为 $g(n)&#x3D;\mathrm{0}(f(n))\land g(n)&#x3D;\Omega(f(n))$，两侧夹逼，得到 $g(n)&#x3D;\Theta(f(n))$。</p>
+<p>以上，证得在满足条件 $p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 的前提下，当 $f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})$ 时有 $T(n)&#x3D;\Theta(f(n))$。</p>
+<h4 id="综上所述"><a href="#综上所述" class="headerlink" title="综上所述"></a>综上所述</h4><p>$$<br>T(n) &#x3D; \begin{cases}\Theta(n^{\log_b a}) &amp; f(n) &#x3D; \mathrm{O}(n^{\log_b a-\epsilon})\\<br>\Theta(n^{\log_b a}\log^{k+1} n) &amp; f(n)&#x3D;\Theta(n^{\log_b a}\log^k n),k\ge 0\\<br>\Theta(f(n)) &amp; f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})\land p\end{cases}\\<br>$$</p>
+<p>$$<br>p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)<br>$$</p>
+<h3 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h3><p>对于第 1 种情况，其实就是 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$ 中两部分哪部分在渐进意义上更大的问题，这种情况反映的是叶结点的计算更大，所以时间复杂度由叶结点的计算决定。</p>
+<p>对于第 3 种情况，条件 $\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 反映的是 $T(n)&#x3D;aT(\frac{n}{b})+f(n)$ 中当前层合并代价高于下一层合并代价，条件 $f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})$ 反映的是 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$ 合并的代价高于叶结点计算的代价。两者同时满足，决定时间复杂度的就是第 $0$ 层的合并代价。</p>
+<p>对于第 2 种情况，反映的是在特殊条件下对性质的进一步发掘。</p>
+<p>伟大的 Master Theorem，就这么被我们干完了。</p>
+<h2 id="时间复杂度-PART-3"><a href="#时间复杂度-PART-3" class="headerlink" title="时间复杂度 PART 3"></a>时间复杂度 PART 3</h2><p>有时候，单个操作的时间复杂度各不相同，而总的时间复杂度却是一定的，单个操作取决于数据特点。此时，我们如果考虑每个操作都以最坏时间复杂度计算，那么算出来总的时间复杂度会远远大于事实上的时间复杂度。此时我们定义一种均摊时间复杂度，它是总时间复杂度与操作次数的比值。</p>
+<p>比如单调队列，看起来单次操作的最坏时间复杂度是 $\mathrm{O}(n)$ 的，事实上均摊过后单次操作的时间复杂度为 $\mathrm{O}(1)$。</p>
+<p>总的时间复杂度难以计算，我们可以用势能分析。</p>
+<h2 id="势能分析"><a href="#势能分析" class="headerlink" title="势能分析"></a>势能分析</h2><p>事实上势能分析我也不太懂，<del>也感觉没大用</del>。</p>
+<p>按照物理上重力势能的定义，想象过山车上坡的过程，消耗的电能除了提供给过山车必要的动能以外，还积累重力势能，而重力势能在下坡的时候再释放，下坡的时候就不必用电能提供动能。我们将这样将能量以势能的形式预先存储下来的做法叫做预付代价。</p>
+<p>假设第 $i$ 次操作的时间复杂度为 $c_i$，要求 $\sum\limits_{i&#x3D;1}^{n}c_i$ 或者其与 $n$ 的比值。</p>
+<p>假设问题中第 $i$ 次操作过后的状态为 $S_i$，初始状态为 $S_0$。</p>
+<p>定义只与状态相关的势能函数 $\Phi(S)$，表示 $S$ 的「势能」，要求 $\Phi(S)\geq \Phi(S_0)$。</p>
+<p>设 $c_i&#x3D;\hat c_i+\Phi(S_i)-\Phi(S_{i-1})$，其中 $c_i$ 是本次实际消耗的代价，$\hat c_i$ 是本次就用掉的代价，$\Phi(S_i)-\Phi(S_{i-1})$ 是预付代价。</p>
+<p>加起来，正负抵消，那么就有</p>
+<p>$$<br>\sum_{i&#x3D;1}^{n}c_i&#x3D;\sum_{i&#x3D;1}^{n}\hat c_i+\Phi(S_n)-\Phi(S_i)<br>$$</p>
+<p>也就是总代价等于消耗代价加上预付代价。</p>
+<p>应用到单调队列中，定义 $\Phi(S)$ 表示状态为 $S$ 的时候单调队列里元素的个数。那么 $c_i$ 的组成是 $\mathrm{O}(\text{弹出元素})+1$。显然，$\mathrm{O}(\text{弹出元素})&#x3D;\Phi(S_{i-1})-\Phi(S_i)$。那么可以计算出 $\hat c&#x3D;1$。</p>
+<p>于是</p>
+<p>$$<br>\sum_{i&#x3D;1}^{n}c_i&#x3D;\sum_{i&#x3D;1}^{n}\hat c_i+\Phi(S_n)-\Phi(S_i)&#x3D;\sum_{i&#x3D;1}^{n}\hat c_i&#x3D;n<br>$$</p>
+<p>这也说明了为什么单调队列单次操作的均摊复杂度为 $\mathrm{O}(1)$。</p>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>其实，空间复杂度没有什么好说的……</p>
+<p>定义与时间复杂度大同小异，但更简单，影响因素也更少。因为在算法竞赛中，我们常常是实现定义好变量的，不会中途去申请太多空间，因此我们只需要对定义的几个数组算一下占多少空间即可。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>时间与空间是算法竞赛中永恒的话题，而复杂度是评判时空消耗的一把标尺。处处皆学问，不知将时空复杂度研究得更加透彻的你，又有何体悟？</p>
+<p>爱因斯坦的相对论打破了牛顿力学的绝对时空观，时间与空间、时空与参考系紧密联系在一起。我们不过是时间流过的渺茫一瞥，也不过是空间角落的沧海一粟。</p>
+<p>而一名时间的匆匆乘客，空间的默默过客，也会说</p>
+<p>「我不过是时空的一粒微尘，但我有我们，足矣。」</p>
+]]></content>
+      <tags>
+        <tag>[I] 算法基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>动态规划 - 数位动态规划</title>
     <url>/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>古老的十进位制，新生的数位 DP</p>
@@ -61,7 +277,7 @@
 
 <h2 id="统计答案"><a href="#统计答案" class="headerlink" title="统计答案"></a>统计答案</h2><p>这里用图来解释一下数位 DP 统计答案的过程。</p>
 <p>我们能够用树形结构表示出指定位数的指定进制数，下图以二进制为例。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/count.png" class="" title="数位 DP 统计答案" alt="数位 DP 统计答案">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/count.png" class="" alt="数位 DP 统计答案">
 
 <p>红色部分就是我们的上界。</p>
 <p>显而易见，红色部分为一条路径，而紫色和绿色部分则均为一棵满（二叉）树。</p>
@@ -100,7 +316,7 @@
 
 <p>这可是一道货真价实的树形 DP 。概括问题，给出一棵结点带权的二叉树，在保留一定数量的枝条的情况下求能保留的结点权值的最大值。</p>
 <p>由于树形结构自身就是递归结构，因此对于每一棵子树都可以适用于上述问题，并且，可以将限制（保留枝条数量）传递给子问题，再从子问题递归回来答案并合并成当前问题的答案——即，DP 思想。</p>
-<p>在一般的树形 DP 中，由于结构的特殊，转移方程要求先求解子树再求出本树，安排一种具体的求解顺序比较麻烦。又因为，树形结构上 DFS 最多只会遍历每个点 1 遍，时间复杂度为 $O(n)$ ，而我们在每个结点上都必定要求解一遍，因此不会提高时间复杂度。树形结构这样不同于一般 DP 搜索产生的拓扑图那样可能出度 &gt; 1 ，就决定了树形结构可以递归的模板来写。而一般来说，树形 DP 都是以递归形式写出的。</p>
+<p>在一般的树形 DP 中，由于结构的特殊，转移方程要求先求解子树再求出本树，安排一种具体的求解顺序比较麻烦。又因为，树形结构上 DFS 最多只会遍历每个点 1 遍，时间复杂度为 $\mathrm{O}(n)$ ，而我们在每个结点上都必定要求解一遍，因此不会提高时间复杂度。树形结构这样不同于一般 DP 搜索产生的拓扑图那样可能出度 &gt; 1 ，就决定了树形结构可以递归的模板来写。而一般来说，树形 DP 都是以递归形式写出的。</p>
 <p>具体在本题中，首先 DFS 一遍整棵树，统计出每棵子树的枝条数 $b_i$ 。然后再 DFS 一遍，这次 DFS 就是 DP 的过程。</p>
 <p>定义 $f_{i,j}$ 表示在以 $i$ 为根的子树上保留 $j$ 根枝条所得到的最大权值和，那么就有</p>
 <p>$$<br>f_{i,j}&#x3D;max{a_i,f_{l_i,j-1}+a_i,f_{r_i,j-1}+a_i,f_{l_i,k}+f_{r_i,j-2-k}+a_i|k\in[j-2-b_{r_i},b_{l_i}]}<br>$$</p>
@@ -113,7 +329,7 @@
 <p>有 N 个物品和一个容量是 V 的背包。</p>
 <p>物品之间具有依赖关系，且依赖关系组成一棵树的形状。如果选择一个物品，则必须选择它的父节点。</p>
 <p>如下图所示：</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Dynamic-Programming-on-Trees/dependenceknapsack.png" class="" title="有依赖的背包问题 题图" alt="有依赖的背包问题 题图">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Dynamic-Programming-on-Trees/dependenceknapsack.png" class="" alt="有依赖的背包问题 题图">
 
 <p>如果选择物品 $5$，则必须选择物品 $1$ 和 $2$。这是因为 $2$ 是 $5$ 的父节点，$1$ 是 $2$ 的父节点。</p>
 <p>每件物品的编号是 $i$，体积是 $v_i$，价值是 $w_i$，依赖的父节点编号是 $p_i$。物品的下标范围是 $1…N$。</p>
@@ -124,7 +340,7 @@
 <p>有依赖的背包问题，亦或树上背包，就是根据依赖关系作为父子关系建立一棵树，然后树上 DP。<del>（说清楚了吧）</del></p>
 <p>因为物品有依赖关系，因此不方便确定线性的 DP 顺序，并且这样做反而会产生后效性。我们就可以把后效性放在递归结构里暗中处理，也就是具象化为树枝，即建树，消除不合法的转移。</p>
 <p>于是就可以用树形 DP 的一般性套路和背包问题的一般性套路结合解答。</p>
-<p>本题的难点在于多儿子的管理。我们可以借鉴分组背包的思路，因为分组背包同样也是同一组在不同的体积限制之下获得不同的收益，也就是同一组不是简单的一样物品。我们处理分组背包的问题时，将每一组的物品打包，内部决策过后再进行背包决策；同样的，我们对于一个父结点和多个子结点，可以将每个子结点打包，内部决策（由于 树形 DP 的递归性质，内部决策又是一个外部决策的子问题），再通过 0&#x2F;1 背包决策出父结点。时间复杂度为 $O(n^2V^2)$ 。</p>
+<p>本题的难点在于多儿子的管理。我们可以借鉴分组背包的思路，因为分组背包同样也是同一组在不同的体积限制之下获得不同的收益，也就是同一组不是简单的一样物品。我们处理分组背包的问题时，将每一组的物品打包，内部决策过后再进行背包决策；同样的，我们对于一个父结点和多个子结点，可以将每个子结点打包，内部决策（由于 树形 DP 的递归性质，内部决策又是一个外部决策的子问题），再通过 0&#x2F;1 背包决策出父结点。时间复杂度为 $\mathrm{O}(n^2V^2)$ 。</p>
 <p>事实上，树上背包退化成只有一级依赖关系后，就成为了变形的分组背包。这也与树上背包与分组背包解决方法本质上一致相符合。</p>
 <p>代码如下，以下代码在由子问题推导的时候采取了 0&#x2F;1 背包的<strong>滚动数组</strong>空间压缩技巧。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T x, T y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &gt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N, V, v[<span class="number">101</span>], w[<span class="number">101</span>], p[<span class="number">101</span>];</span><br><span class="line"><span class="type">int</span> h[<span class="number">101</span>], to[<span class="number">101</span>], nxt[<span class="number">101</span>], t = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> f[<span class="number">101</span>][<span class="number">101</span>], rt;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++t;</span><br><span class="line">	to[t] = y;</span><br><span class="line">	nxt[t] = h[x];</span><br><span class="line">	h[x] = t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dp</span><span class="params">(<span class="type">int</span> x)</span>         <span class="comment">// DP 核心，采用 DFS 模式递归到叶子结点</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = v[x]; i &lt;= V; ++i)      <span class="comment">// 该子树的根节点一定要选</span></span><br><span class="line">		f[x][i] = w[x];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = h[x]; i; i = nxt[i])    <span class="comment">// 遍历子结点，之所以把它安排到外层循环是因为 0/1 背包的要求</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="meta">#<span class="keyword">define</span> y to[i]</span></span><br><span class="line">		<span class="built_in">dp</span>(y);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = V; j &gt;= v[x]; --j)  <span class="comment">// 这一层是滚动数组优化技巧要求要特别注意遍历顺序的一层</span></span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> k = v[y]; k &lt;= j - v[x]; ++k)     <span class="comment">// 这一层是寻找当前最优决策</span></span><br><span class="line">				f[x][j] = <span class="built_in">max</span>(f[x][j], f[x][j - k] + f[y][k]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	以上三层循环均结束过后，f[x][y]|y∈N 才同时最终确定，循环过程中均为过程量。</span></span><br><span class="line"><span class="comment">	外两层循环为 0/1 背包的模板结构。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;N, &amp;V);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, v + i, w + i, p + i);</span><br><span class="line">		<span class="built_in">build</span>(p[i], i);</span><br><span class="line">		<span class="keyword">if</span> (p[i] == <span class="number">-1</span>) rt = i; </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">dp</span>(rt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, f[rt][V]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -151,11 +367,11 @@
 <br>
 
 <p>这道题就给我们描绘了一棵无根树，那么就要用换根 DP。</p>
-<p>大概思路就是首先 DFS 一遍整棵树（DP），接着再遍历每个结点，通过先前的 DP 结果在 $O(1)$ 的时间内计算出以该结点为根的情况下问题的答案，通过比较得出最优解。</p>
+<p>大概思路就是首先 DFS 一遍整棵树（DP），接着再遍历每个结点，通过先前的 DP 结果在 $\mathrm{O}(1)$ 的时间内计算出以该结点为根的情况下问题的答案，通过比较得出最优解。</p>
 <p>假设我们指定一个结点为根，构建了一棵有根树，如下图。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Dynamic-Programming-on-Trees/accumulationdegree.jpg" class="" title="积蓄程度 解图" alt="积蓄程度 解图">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Dynamic-Programming-on-Trees/accumulationdegree.jpg" class="" alt="积蓄程度 解图">
 
-<p>当前我们要对红色结点进行统计，一部分流量来自于以它为根的子树，可以直接统计；而另一部分流量来自于它的父结点，显然可以在第二次 DFS 的时候根据 DP 结果计算出来，就是将非该路径*上的子树流量统计传递下去。</p>
+<p>当前我们要对红色结点进行统计，一部分流量来自于以它为根的子树，可以直接统计；而另一部分流量来自于它的父结点，显然可以在第二次 DFS 的时候根据 DP 结果计算出来，就是将非 该路径* 上的子树流量统计传递下去。</p>
 <p>*该路径指的是当前节点到根节点的路径。</p>
 <p>总之，第 1 次 DFS 进行 DP 并明确父子关系，第 2 次 DFS 进行计算统计。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">min</span><span class="params">(T x, T y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &lt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T x, T y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &gt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> T;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, x, y, z;</span><br><span class="line"><span class="type">int</span> h[<span class="number">400005</span>], to[<span class="number">400005</span>], nxt[<span class="number">400005</span>], we[<span class="number">400005</span>], fa[<span class="number">400005</span>], t;</span><br><span class="line"><span class="type">int</span> f[<span class="number">400005</span>], Ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++t;</span><br><span class="line">	to[t] = y;</span><br><span class="line">	nxt[t] = h[x];</span><br><span class="line">	we[t] = z;</span><br><span class="line">	h[x] = t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dp</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!nxt[h[x]] &amp;&amp; to[h[x]] == fa[x]) <span class="keyword">return</span> f[x] = <span class="number">0</span>, <span class="number">0x7fffffff</span>;</span><br><span class="line">        	<span class="comment">// f[x] = 0是为了避免源点在海边而出现结果无穷大的情况，返回 0x7fffffff 是因为大海能吸收无限水。</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = h[x]; i; i = nxt[i])</span><br><span class="line">		<span class="keyword">if</span> (to[i] != fa[x])</span><br><span class="line">		&#123;</span><br><span class="line">			fa[to[i]] = x;</span><br><span class="line">			f[x] += <span class="built_in">min</span>(<span class="built_in">dp</span>(to[i]), we[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">return</span> f[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">cnt</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> up)</span>          <span class="comment">// up 表示水倒流回父结点的最大流量</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Ans = <span class="built_in">max</span>(Ans, up + f[x]);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = h[x]; i; i = nxt[i])</span><br><span class="line">		<span class="keyword">if</span> (to[i] != fa[x])</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nxt[h[x]]) <span class="built_in">cnt</span>(to[i], <span class="built_in">min</span>(up + f[x] - <span class="built_in">min</span>(f[to[i]], we[i]), we[i]));</span><br><span class="line">			<span class="keyword">else</span> <span class="built_in">cnt</span>(to[i], we[i]);     <span class="comment">// 若根节点恰好就在海边，应下传的最大流量为该边容量。</span></span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;T);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> test = <span class="number">0</span>; test &lt; T; ++test)</span><br><span class="line">	&#123;</span><br><span class="line">		t = <span class="number">0</span>;                            <span class="comment">//</span></span><br><span class="line">		<span class="built_in">memset</span>(h, <span class="number">0</span>, <span class="keyword">sizeof</span> h);           <span class="comment">// 多组数据，清空操作</span></span><br><span class="line">		<span class="built_in">memset</span>(f, <span class="number">0</span>, <span class="keyword">sizeof</span> f);           <span class="comment">//</span></span><br><span class="line">		Ans = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;x, &amp;y, &amp;z);</span><br><span class="line">			<span class="built_in">build</span>(x, y, z);</span><br><span class="line">			<span class="built_in">build</span>(y, x, z);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">dp</span>(<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">cnt</span>(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, Ans);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -189,16 +405,16 @@
 <p>这是一道区间 DP 经典例题，<del>来自 NOI1995</del> ，我们用来分析一下区间 DP 和线性 DP 的区别和联系。</p>
 <p>首先忽略环状，将石子摆成一条直线。</p>
 <p>这道题目中，我们不知从何下手，换言之，题目中没有给出特定的合并顺序，只要在区间上的子区间操作均为合法；而处理线性 DP 问题的时候，要么有事件发生的严格先后顺序，要么就如 LIS 和 LCS 般可以指定先后顺序。我们将线性 DP 的套路套用到本问题上来，发现并不能单纯用一个状态作为最优子结构的参数，而同时需要左右端点两个状态作为参数。注意，这里的状态可以表示为多个参数，但它们共同代表一个状态。</p>
-<p>分析这道题，我们用 $f_{i,j}$ 表示合并区间 $[i,j]$ 上的石子到一堆的最优解，那么根据题意，这堆石子就可以由区间 $[i,k]$ 和 $[k+1,j]$ 合并过后的两堆石子合并而来，有<br>$$<br>f_{i,j}&#x3D;\min&#x2F;\max{f_{i,k}+f_{k+1,j}+\sum_{x&#x3D;i}^ja_x|k\in[i,j)} \nonumber<br>$$<br>分析这个状态转移方程，不难得出边界条件为 $f_{i,i}&#x3D;0$ ，转移顺序按照 $j-i$ 从小到大排序。对于 $\sum_{x&#x3D;i}^ja_x$ 的处理，需要维护前缀和。时间复杂度为 $O(n^2)$ 。</p>
+<p>分析这道题，我们用 $f_{i,j}$ 表示合并区间 $[i,j]$ 上的石子到一堆的最优解，那么根据题意，这堆石子就可以由区间 $[i,k]$ 和 $[k+1,j]$ 合并过后的两堆石子合并而来，有<br>$$<br>f_{i,j}&#x3D;\min&#x2F;\max{f_{i,k}+f_{k+1,j}+\sum_{x&#x3D;i}^ja_x|k\in[i,j)} \nonumber<br>$$<br>分析这个状态转移方程，不难得出边界条件为 $f_{i,i}&#x3D;0$ ，转移顺序按照 $j-i$ 从小到大排序。对于 $\sum_{x&#x3D;i}^ja_x$ 的处理，需要维护前缀和。时间复杂度为 $\mathrm{O}(n^2)$ 。</p>
 <p>可以发现，区间 DP 和线性 DP 的联系在于 DP 思维的延续，本质上的区别仅仅在于组成最优子结构的状态含义。</p>
-<p>回到本题，再考虑环状情况。有一种思路是基于本题中总会有最有一次合并，那么就从最后一次合并处将圆环断开，转化成区间处理，如下图。由于我们并不知道最后一次在何处，因此要将每一处断开，求的结果取最优值，于是复杂度升到了 $O(n^3)$ 。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging1.png" class="" title="石子合并 解图 1">
+<p>回到本题，再考虑环状情况。有一种思路是基于本题中总会有最有一次合并，那么就从最后一次合并处将圆环断开，转化成区间处理，如下图。由于我们并不知道最后一次在何处，因此要将每一处断开，求的结果取最优值，于是复杂度升到了 $\mathrm{O}(n^3)$ 。</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging1.png" class="" alt="石子合并 解图 1">
 
-<p>我们将该方法进行优化，可以让时间复杂度降到 $O(n^2)$ 。在上述方法中，总会导致首尾断开，如果我们能在将环断开为区间的前提下保证首尾相连，那便可以解决 $n$ 次 DP 的问题。最好的方法是在断开过后在尾部复制一遍原区间，使首尾相连，而寻找最终答案时只需比较每个 $f_{i, i+n-1}$ 的大小即可。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging2.png" class="" title="石子合并 解图 2">
+<p>我们将该方法进行优化，可以让时间复杂度降到 $\mathrm{O}(n^2)$ 。在上述方法中，总会导致首尾断开，如果我们能在将环断开为区间的前提下保证首尾相连，那便可以解决 $n$ 次 DP 的问题。最好的方法是在断开过后在尾部复制一遍原区间，使首尾相连，而寻找最终答案时只需比较每个 $f_{i, i+n-1}$ 的大小即可。</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging2.png" class="" alt="石子合并 解图 2">
 
 <p>优化上述方法的方法，实际上也运用了 DP 的思想。核心要旨便是提高数据利用率，避免重复计算。如果在两次 DP 中，存在某一固定连续区间，那么这一区间在两次 DP 中的最优解都相同，直观来看</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging3.png" class="" title="石子合并 解图 3">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/stonemerging3.png" class="" alt="石子合并 解图 3">
 
 <p>这是我们处理 DP 问题中环状情况的一般套路，<strong>任意选择一个位置断开，复制形成 2 倍长度的链</strong>。</p>
 <p>综上所述，代码如下。</p>
@@ -239,11 +455,11 @@
 
 <p>是不是感觉这道题神似 T2 ？猜得没错，这也是一个形似树形 DP 实则区间 DP 的 <strong>Y 货</strong>。</p>
 <p>注意， DFS 序不同于前序、中序、后序遍历的任何一种，它是从每棵子树退回根都要重新输出一次根。</p>
-<p>再注意，题目中描述<strong>节</strong>（是否是题目写错了？）<strong>点的子树之间有序</strong>，有两层意思：1.节点的两棵子树交换位置视为不同的情况；2. DFS 序严格按照节点的子树顺序安排，因此不用考虑交换子树的排列组合问题。</p>
+<p>再注意，题目中描述「节点的子树之间有序」，有两层意思：1.节点的两棵子树交换位置视为不同的情况；2. DFS 序严格按照节点的子树顺序安排，因此不用考虑交换子树的排列组合问题。</p>
 <p>那么这道题就简单了，用 $f_{i,j}$ 表示区间 $[i,j]$ 为一棵子树的 DFS 序，那么树根的颜色就是 $S_i$ 和 $S_j$ 代表的颜色。根据区间内出现的树根颜色进行划分或者不划分，可以排列出这棵子树之下可能出现所有子树排列，但是这样时间复杂度就会承受不了。</p>
 <p>再想想，若对于区间 ABABABA，可以划分为 A 下 3 个 B 的形态（如下图），但是同样是这样的形态，不仅可以划分为 |AB|AB|AB|A 的形式，也可以将第一棵子树划分出来，将后面的 ABABA 再行划分为 |AB|AB|A 。</p>
 <div style="width:50%;margin:auto">
-  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/pyramid.png" class="" title="金字塔 解图 1">
+  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/pyramid.png" class="" alt="金字塔 解图 1">
 </div>
 
 <p>总结一下，这样的优化方法实质上也是用动态规划思想的子问题递归代替了排列组合，本质也是用动态规划的转移代替搜索的盲目排列的做法。我们现在已经遇到了很多次这样的思想，譬如多重背包的二进制拆分法、本文 T2 和 T3，等等。</p>
@@ -319,7 +535,7 @@
 <p>地里每个道路的交叉点上都有种着一株花生苗，上面有若干颗花生，经过一株花生苗就能摘走该它上面所有的花生。</p>
 <p>Hello Kitty 只能向东或向南走，不能向西或向北走。</p>
 <p>问 Hello Kitty 最多能够摘到多少颗花生。</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Linear-Dynamic-Programming/pickpeanuts.jpg" class="" title="摘花生 题图">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Linear-Dynamic-Programming/pickpeanuts.jpg" class="" alt="摘花生 题图">
 
 <br>
 
@@ -343,7 +559,7 @@
 <p>略去代码。</p>
 <h3 id="T6-方格取数"><a href="#T6-方格取数" class="headerlink" title="T6 方格取数"></a>T6 方格取数</h3><p>评测链接：<a href="http://ybt.ssoier.cn:8088/problem_show.php?pid=1287">http://ybt.ssoier.cn:8088/problem_show.php?pid&#x3D;1287</a></p>
 <p>设有 $N \times N$ 的方格图，我们在其中的某些方格中填入正整数，而其它的方格中则放入数字 $0$ 。如下图所示：</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Linear-Dynamic-Programming/number.jpg" class="" title="方格取数 题图">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Linear-Dynamic-Programming/number.jpg" class="" alt="方格取数 题图">
 
 <p>某人从图中的左上角 $A$ 出发，可以向下行走，也可以向右行走，直到到达右下角的 $B$ 点。</p>
 <p>在走过的路上，他可以取走方格中的数（取走后的方格中将变为数字 $0$ ）。</p>
@@ -401,7 +617,7 @@
 <p>每件物品的体积是 $v_{i,j}$ ，价值是 $w_{i,j} $，其中 $i$ 是组号，$j$ 是组内编号。求解将哪些物品装入背包，可使物品总体积不超过背包容量，且总价值最大。输出最大价值。</p>
 <br>
 
-<p>将同一组的物品打包，额外进行内部决策，决策出每一组的最优子结构。剩下部分用普通的背包问题解决，时间复杂度为 $O(n^3)$。</p>
+<p>将同一组的物品打包，额外进行内部决策，决策出每一组的最优子结构。剩下部分用普通的背包问题解决，时间复杂度为 $\mathrm{O}(n^3)$。</p>
 <h3 id="有依赖的背包问题"><a href="#有依赖的背包问题" class="headerlink" title="有依赖的背包问题"></a>有依赖的背包问题</h3><p>见树形动态规划。</p>
 <h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>背包问题的模型都万变不离其宗，很容易可以转化出背包问题的一般模型——在限制中进行取与不取的策略组合，尽量拿到最大价值。</p>
 <p>背包问题中，基本上都用线性动态规划解决，只有有依赖的背包问题用了树状动态规划<del>（其实只是顶个名头）</del>。物品的的两个属性——费用与价值的对立，人生的两个属性——现实与欲望的对立，让我们不得不在物品中做出取舍，在背包承受的范围内，尽量满足人性的欲望。</p>
@@ -427,7 +643,7 @@
 
 <h2 id="逻辑运算与位运算"><a href="#逻辑运算与位运算" class="headerlink" title="逻辑运算与位运算"></a>逻辑运算与位运算</h2><p>以下属于漫无边际的大发议论，可以直接跳到<a href="#importantbegins">位运算</a>。</p>
 <p>众所周知，计算机的底层是逻辑电路。而根据初中知识，我们知道以下两种电路：</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/seriesparallel.png" class="" title="串联和并联" alt="串联和并联">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/seriesparallel.png" class="" alt="串联和并联">
 
 <p>这里我们用 $1$ 表示开关闭合，用 $0$ 表示开关断开。记第一个开关的状态为 $f_1\in\{0,1\}$，第二个开关的状态为 $f_2\in\{0,1\}$，另外两个开关总的作用效果可以用一个开关替代（等效替代法），我们记它的状态为 $f\in\{0,1\}$。</p>
 <p>那么在串联电路中，当且仅当 $f_1&#x3D;1$ 且 $f_2&#x3D;1$ 时，有 $f&#x3D;1$，否则 $f&#x3D;0$；在并联电路中，当且仅当 $f_1&#x3D;0$ 且 $f_2&#x3D;0$ 时，有 $f&#x3D;0$，否则 $f&#x3D;1$。</p>
@@ -477,7 +693,7 @@
 <p>走过了战火纷飞，才会懂得和平的弥足珍贵。当今世界人类是一个命运共同体，又因何冲突不断，和平不续？</p>
 <p>为了走独立自主的和平外交道路，和平共处五项原则显得尤为重要，当然不是下面这个</p>
 <div style="width:50%;margin:auto">
-  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/5principles.jpg" class="" title="和平共处五项原则" alt="和平共处五项原则">
+  <img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/5principles.jpg" class="" alt="和平共处五项原则">
 </div>
 
 <center>图源：<a target="_blank" rel="noopener" href="https://song-gan.github.io/">@Ganshin</a></center>
@@ -487,7 +703,7 @@
 <p>你大概能够迅速反应过来，一行内「和平共处」，当且仅当这一行的状态表示为 $x$ 满足 $x \ \&amp; \ (x &lt;&lt; 1) &#x3D; 0$。</p>
 <p>那么行间「和平共处」，当且仅当这两行的状态表示为 $x,y$ 满足 $x \ \&amp; \ y &#x3D; 0 \land x \ \&amp; \ (y &lt;&lt; 1) \land x \ \&amp; \ (y &gt;&gt; 1)$。</p>
 <p>状态压缩的目的，就是为了能够用 1 个整型表示出状态，而「状态」在动态规划里的含义也十分明确，无非就是 <code>f</code> 数组的一个或几个下标。</p>
-<p>整型变量再怎么说也只是 32 位的，顶多能压缩 32 个 0&#x2F;1 值，但这足够了。我们将一行压缩，同时行间作为阶段进行转移。我们已经能够快速判断一行或行间是否合法，那么转移就只需要 $O(1)$ 的时间复杂度。</p>
+<p>整型变量再怎么说也只是 32 位的，顶多能压缩 32 个 0&#x2F;1 值，但这足够了。我们将一行压缩，同时行间作为阶段进行转移。我们已经能够快速判断一行或行间是否合法，那么转移就只需要 $\marhrm{O}(1)$ 的时间复杂度。</p>
 <p>具体在这道题里，我们用 $f_{i,j}$ 表示当第 $i$ 行的状态表示为 $j$ 时，前 $i$ 行的总方案数。那么转移条件为 $j$、$k$ 合法、并且 $j$、$k$ 之间能够「和平共处」，转移就是简简单单的加法。</p>
 <p>状态转移方程可以写成</p>
 <p>$$<br>f_{i,j}&#x3D;\sum_{k\ |\ p(k,j)}f_{i-1,k}<br>$$</p>
@@ -497,7 +713,7 @@
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, k;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> f[<span class="number">10</span>][<span class="number">100</span>][<span class="number">600</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bits</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!x) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bits</span>(x - (x &amp; -x)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;k);</span><br><span class="line">    <span class="type">int</span> _2n = <span class="built_in">pow</span>(<span class="number">2</span>, n);</span><br><span class="line">    f[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= k; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> a = <span class="number">0</span>; a &lt; _2n; ++a)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">bits</span>(a) &lt;= j &amp;&amp; !(a &amp; (a &lt;&lt; <span class="number">1</span>)))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> b = <span class="number">0</span>; b &lt; _2n; ++b)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span> (!(a &amp; b) &amp;&amp; !(a &amp; (b &lt;&lt; <span class="number">1</span>)) &amp;&amp; !(a &amp; (b &gt;&gt; <span class="number">1</span>)) &amp;&amp; !(b &amp; (b &lt;&lt; <span class="number">1</span>)) &amp;&amp; <span class="built_in">bits</span>(a) + <span class="built_in">bits</span>(b) &lt;= j)</span><br><span class="line">                        &#123;</span><br><span class="line">                            f[i][j][a] += f[i - <span class="number">1</span>][j - <span class="built_in">bits</span>(a)][b];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> Ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; _2n; ++i)</span><br><span class="line">        Ans += f[n][k][i];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, Ans);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>通过一道题的做题经验我们就可以发现，状压 DP 需要扫描每一行的所有合法方案，虽然有的时候可以预处理，但是这种类似于排列组合的枚举方法都已经接近搜索了。</p>
-<p>更何况所有合法方案都是 <code>f</code> 数组的一个下标，所以 <code>f</code> 数组会开得很大。并且因为枚举过程的巨大贡献，时间复杂度为 $O(2^nn)$。因此状压 DP 的题 $n$ 不可能很大，一不小心不是 <font style="color:blue">TLE</font> 就会 <font style="color:blue">MLE</font>。一般来说， $n$ 在 $10$ 左右，只比搜索好一点。所以做状压 DP 题的时候得先看一下时空复杂度能不能承受再确定此题状压 DP 解法是否为真。</p>
+<p>更何况所有合法方案都是 <code>f</code> 数组的一个下标，所以 <code>f</code> 数组会开得很大。并且因为枚举过程的巨大贡献，时间复杂度为 $\mathrm{O}(2^nn)$。因此状压 DP 的题 $n$ 不可能很大，一不小心不是 <font style="color:blue">TLE</font> 就会 <font style="color:blue">MLE</font>。一般来说， $n$ 在 $10$ 左右，只比搜索好一点。所以做状压 DP 题的时候得先看一下时空复杂度能不能承受再确定此题状压 DP 解法是否为真。</p>
 <p>如此庞大的状态转移，带来了沉重的时空消耗，但这只是状态压缩的缺点，DP 的优势仍然不时闪耀着光芒<del>（不信你用 DFS 切这道题试试）</del>。</p>
 <h2 id="T2-覆盖问题"><a href="#T2-覆盖问题" class="headerlink" title="T2 覆盖问题"></a>T2 覆盖问题</h2><p>题目来源：QZOJ<br>评测链接 1：<a href="http://124.221.137.247/problem/383">http://124.221.137.247/problem/383</a><br>评测链接 2：<a href="https://hydro.ac/d/sukwoj/p/QZ383">https://hydro.ac/d/sukwoj/p/QZ383</a><br>类题链接：<a href="https://www.acwing.com/problem/content/293/">https://www.acwing.com/problem/content/293/</a></p>
 <p>输出用 $1 \times 2$ 的骨牌完全覆盖 $M(\leq 10)$ 行 $N(\leq 1000)$ 列的棋盘的方案总数，答案对 $1234567$ 取模。</p>
@@ -520,7 +736,7 @@
 <h2 id="T3-平板涂色"><a href="#T3-平板涂色" class="headerlink" title="T3 平板涂色"></a>T3 平板涂色</h2><p>评测链接：<a href="https://www.luogu.com.cn/problem/P1283">https://www.luogu.com.cn/problem/P1283</a></p>
 <p>CE 数码公司开发了一种名为自动涂色机（APM）的产品。它能用预定的颜色给一块由不同尺寸且互不覆盖的矩形构成的平板涂色。</p>
 <p>为了涂色，APM 需要使用一组刷子。每个刷子涂一种不同的颜色 $C_i(1\le C_i \le 20)$ 。APM 拿起一把有颜色 $C_i$ 的刷子，并给所有颜色为 $C_i$ 且符合下面限制的矩形涂色：</p>
-<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/apm.png" class="" title="平板涂色 题图">
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-State-Compression-Dynamic-Programming/apm.png" class="">
 
 <p>为了避免颜料渗漏使颜色混合，一个矩形只能在所有紧靠它上方的矩形涂色后，才能涂色。例如图中矩形 $F$ 必须在 $C$ 和 $D$ 涂色后才能涂色。注意，每一个矩形必须立刻涂满，不能只涂一部分。</p>
 <p>输入矩形的个数 $N(1\le N \le 16)$，以及每个矩形的范围信息，用左上角的 $y$ 坐标和 $x$ 坐标、右下角的 $y$ 坐标和 $x$ 坐标表示，$0 \le x_i,y_i \le 99$。</p>
@@ -664,11 +880,11 @@
 <p>东辰，我一生的骄傲。</p>
 <p>未来，梦想就在前方。</p>
 <div style="width:50%;margin:auto">
-<img src="/others/Memories/Sky-in-Mianyang-Full-of-Stars/end1.jpg" class="" title="结尾图 1" alt="结尾图 1">
+<img src="/others/Memories/Sky-in-Mianyang-Full-of-Stars/end1.jpg" class="" alt="结尾图 1">
 </div>
 
 <div style="width:50%;margin:auto">
-<img src="/others/Memories/Sky-in-Mianyang-Full-of-Stars/end2.jpg" class="" title="结尾图 2" alt="结尾图 2">
+<img src="/others/Memories/Sky-in-Mianyang-Full-of-Stars/end2.jpg" class="" alt="结尾图 2">
 </div>
 ]]></content>
       <categories>
@@ -704,14 +920,14 @@
 <h2 id="Day-184"><a href="#Day-184" class="headerlink" title="Day -184"></a>Day -184</h2><p>信息技术结业考试。</p>
 <p>监考过于不严谨，监考员：打开桌面上的「教师机」，把参考答案复制出来，用 <code>Ctrl</code> + <code>F</code> 查找，听懂了吧？</p>
 <p>初三没有微机课了。</p>
-<img src="/others/Memories/Telling-a-Dream/itresult.jpg" class="" title="信息技术结业考试结果" alt="信息结束结业考试结果 100.00分">
+<img src="/others/Memories/Telling-a-Dream/itresult.jpg" class="" alt="信息结束结业考试结果">
 
 <p>居然还有同学忘了 <code>Ctrl</code> + <code>S</code> ，然后拿了 59 分的高分，差点拿不到毕业证。</p>
 <h2 id="Day-99"><a href="#Day-99" class="headerlink" title="Day -99"></a>Day -99</h2><p>百日誓师。</p>
 <p>本以为会像上一届一样在 3 月 3 日下午 3 点 3 分开始，结果在晚上开百日誓师大会。国际部和艺术班还来招生了。</p>
 <h2 id="Day-92"><a href="#Day-92" class="headerlink" title="Day -92"></a>Day -92</h2><p>中考报名。<a href="http://my.sczkbm.com:8080/zkbm">这里是报名网站</a></p>
 <p>最后报了这些，还认真考虑了该报哪个职高。</p>
-<img src="/others/Memories/Telling-a-Dream/signup.jpg" class="" title="中考报名结果" alt="中考报名结果">
+<img src="/others/Memories/Telling-a-Dream/signup.jpg" class="" alt="中考报名结果">
 
 <h2 id="Day-90"><a href="#Day-90" class="headerlink" title="Day -90"></a>Day -90</h2><p>12 : 00 报名截止，所以学校今天把我们拉出去玩，去了两弹城，晚上就住梓潼东辰。</p>
 <h2 id="Day-89"><a href="#Day-89" class="headerlink" title="Day -89"></a>Day -89</h2><p>拉到方特去玩。</p>
@@ -783,12 +999,12 @@
 <p>考完第四节课开始观看物理实验操作考试的视频教学。</p>
 <p>这是经典的实验操作教学视频开头音乐。</p>
 
-        <div id="aplayer-RcOvxTcu" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-CPCvOFzI" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-RcOvxTcu"),
+            element: document.getElementById("aplayer-CPCvOFzI"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -900,7 +1116,7 @@
 <p>下午考科学，一如既往地简单，根本没有区分度。</p>
 <p>物理有一道题太太太太太没良心了，$\pi$ 取 $3.14$ 进行计算，而且还是作除数，更可悲的是被除数还是一个复杂的分数……</p>
 <p>但是计算题第一题简单到爆，感谢</p>
-<img src="/others/Memories/Telling-a-Dream/changhong.png" class="" title="长虹" alt="长虹">
+<img src="/others/Memories/Telling-a-Dream/changhong.png" class="" alt="长虹">
 
 <p>白送 9 分。</p>
 <p>这<strong>比大小</strong>的题目，为什么会出成中考题啊……搞得我心慌，差点都不敢写了。</p>
@@ -908,7 +1124,7 @@
 <p>于是只有脚下有路 自 · 己 · 走 了。</p>
 <p>考试的时候满脑子单曲循环出征的音乐，唉~</p>
 
-        <div id="aplayer-KAfoeONC" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-anMDBMId" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content">[ti:]
 [00:08.93]带着叮咛
 [00:10.89]带着希望
@@ -944,7 +1160,7 @@
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-KAfoeONC"),
+            element: document.getElementById("aplayer-anMDBMId"),
             narrow: false,
             autoplay: false,
             showlrc: 2,
@@ -968,7 +1184,7 @@
 <h2 id="Day-7"><a href="#Day-7" class="headerlink" title="Day 7"></a>Day 7</h2><p>去林荫中街了。</p>
 <h2 id="Day-10"><a href="#Day-10" class="headerlink" title="Day 10"></a>Day 10</h2><p>明天查成绩了，同学群里焦虑的情绪蔓延，也有假谦虚的，还<del>大言不辞</del>指责别人。</p>
 <div style="width:50%;margin:auto">
-  <img src="/others/Memories/Telling-a-Dream/5principles.jpg" class="" title="和平共处五项原则" alt="和平共处五项原则">
+  <img src="/others/Memories/Telling-a-Dream/5principles.jpg" class="" alt="和平共处五项原则">
 </div>
 
 <center>图源：<a target="_blank" rel="noopener" href="https://song-gan.github.io/">@Ganshin</a></center>
@@ -977,7 +1193,7 @@
 <p>早上 6 : 40 起来，立即登入成绩查询系统，在 <a href="https://2745518585.github.io/">@赵悦岑</a> 的注视下，缓缓输入了准考证号、报名号等信息。</p>
 <p>然后是</p>
 <div style="width:60%;margin:auto">
-  <img src="/others/Memories/Telling-a-Dream/grade.jpg" class="" title="中考成绩" alt="中考成绩">
+  <img src="/others/Memories/Telling-a-Dream/grade.jpg" class="" alt="中考成绩">
 </div>
 
 <p>我故作不动声色，心里寻思着怎么没有位次，揣测了以下今年试题的难度，参考去年状元的分数给自己心里一个定位，略有失望。</p>
@@ -991,7 +1207,7 @@
 <h2 id="Day-12"><a href="#Day-12" class="headerlink" title="Day 12"></a>Day 12</h2><p>其他人的成绩逐渐明晰，喜报也发出来了，我鸿鹄四五果然威武！<del>（欸，47 班人呢？）</del></p>
 <div style="width:60%;margin:auto">
   <a href="https://b.xiumi.us/stage/v5/5ixbD/380085751">
-    <img src="/others/Memories/Telling-a-Dream/GREAT!.png" class="" title="中考喜报" alt="中考喜报">
+    <img src="/others/Memories/Telling-a-Dream/GREAT!.png" class="" alt="中考喜报">
   </a>
 </div>
 
@@ -1018,7 +1234,7 @@
   <entry>
     <title>Hexo 主题 NexT 扩展版 byJR 使用方法</title>
     <url>/others/Technology/Hexo-theme-NexT-exbyJR/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>以下介绍基于 NexT 主题修改过后的部分用法。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>创造吧，向着未知世界！</p>
 <span id="more"></span>
 
 <h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><table>
