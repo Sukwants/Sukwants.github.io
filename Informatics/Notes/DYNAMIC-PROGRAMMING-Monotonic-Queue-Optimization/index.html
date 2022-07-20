@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="gboRIElEqH-3VpaXcOULRktwDpCoAvWGQmqX2RwYqnU">
+  <meta name="msvalidate.01" content="94748806EA0C50CFA5F4171232C6BDF7">
+  <meta name="yandex-verification" content="07138ce40b9f2a72">
+  <meta name="baidu-site-verification" content="code-r8xtrrlwFp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="保持单调，保持高效，探查意义，寻觅可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划 - 单调队列优化">
+<meta property="og:url" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/index.html">
+<meta property="og:site_name" content="Sukwog">
+<meta property="og:description" content="保持单调，保持高效，探查意义，寻觅可能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/knapsack.png">
+<meta property="article:published_time" content="2022-07-14T14:33:21.000Z">
+<meta property="article:modified_time" content="2022-07-14T14:33:21.000Z">
+<meta property="article:author" content="Sukwants">
+<meta property="article:tag" content="[I] 动态规划">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/knapsack.png">
+
+
+<link rel="canonical" href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/","path":"Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/","title":"动态规划 - 单调队列优化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>动态规划 - 单调队列优化 | Sukwog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Sukwog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Sukwog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Sukwants's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-journey"><a href="/journey/" rel="section"><i class="fas fa-road fa-fw"></i>征途</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-address-book fa-fw"></i>友人</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T1-%E8%82%A1%E7%A5%A8%E4%BA%A4%E6%98%93"><span class="nav-number">3.</span> <span class="nav-text">T1 股票交易</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T2-Watching-Fireworks-is-Fun"><span class="nav-number">4.</span> <span class="nav-text">T2 Watching Fireworks is Fun</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%E4%BC%98%E5%8C%96%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85"><span class="nav-number">5.</span> <span class="nav-text">单调队列优化多重背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">应用条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sukwants"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Sukwants</p>
+  <div class="site-description" itemprop="description">时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sukwants" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Sukwants" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/JarRoute" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;JarRoute" rel="noopener" target="_blank"><i class="fab fa-gitee fa-fw"></i>Gitee</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:Song_Gch@163.com" title="E-Mail → mailto:Song_Gch@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2906184585" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2906184585" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/SongGch" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;SongGch" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100077727567590" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100077727567590" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCo6U1HIHvCjBC5pKninTF1A" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCo6U1HIHvCjBC5pKninTF1A" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/guanchengsong" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;guanchengsong" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:live:.cid.dcf116a1be7ec392?chat" title="Skype → skype:live:.cid.dcf116a1be7ec392?chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=3102673123&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;3102673123&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/wechat.png" title="WeChat → &#x2F;images&#x2F;wechat.png"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/0owei-ni-bian-pi-o0" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;0owei-ni-bian-pi-o0" rel="noopener" target="_blank"><i class="fab fa-zhihusingle fa-fw"></i>Zhihu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.luogu.com.cn/user/193684" title="Luogu → https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;193684" rel="noopener" target="_blank"><i class="fab fa-luogu fa-fw"></i>Luogu</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/Song_Gch" title="CodeForces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;Song_Gch" rel="noopener" target="_blank"><i class="fab fa-codeforces fa-fw"></i>CodeForces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/1382869983?spm_id_from=333.1007.0.0" title="Bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;1382869983?spm_id_from&#x3D;333.1007.0.0" rel="noopener" target="_blank"><i class="fab fa-bilibili fa-fw"></i>Bilibili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://loj.ac/u/SongGuancheng" title="LibreOJ → https:&#x2F;&#x2F;loj.ac&#x2F;u&#x2F;SongGuancheng" rel="noopener" target="_blank"><i class="fab fa-libreoj fa-fw"></i>LibreOJ</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Sukwants">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sukwog">
+      <meta itemprop="description" content="时间的乘客，空间的过客<br>仰望星空，编织梦想，换大地时空">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="动态规划 - 单调队列优化 | Sukwog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态规划 - 单调队列优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-14 22:33:21" itemprop="dateCreated datePublished" datetime="2022-07-14T22:33:21+08:00">2022-07-14</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>保持单调，保持高效，探查意义，寻觅可能</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>所谓「单调队列优化动态规划」实际并不是一种动态规划，事实上，冠以「优化」二字的动态规划都并非一种专门的动态规划，而是动态规划的优化技巧。</p>
+<p>因此，这里不命名为「单调队列优化动态规划」，以将其与动态规划的分类区别。</p>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p><strong>单调队列</strong>，更多在<a target="_blank" rel="noopener" href="//%E8%BF%98%E6%B2%A1%E5%86%99%E5%91%A2">数据结构 - 单调队列</a>。</p>
+<p>单调队列是用于实现一类特殊用途的队列，其运行规则与一般队列无异，区别在于其并不是用来管理先进先出的顺序，而是利用单调的特性完成一个集合的更新和统计。</p>
+<p>实现单调队列的容器并不是普通队列，而是<strong>双端队列</strong>。双端队列与普通队列的区别在于普通队列只能尾进头出，而双端队列在首尾都可以进出，也在首尾都可以查询。</p>
+<p>既然如此，聪明如你，一定会发现这根本就违背了队列关于 FIFO 的基本原则，事实上确实如此，如果只开放尾进头出的用途，那么这就是普通队列；而如果只开放尾进尾出的用途，那么这也就是普通的栈。所以说，在 C++ 的 STL 库里，双端队列并不包含在 <code>&lt;queue&gt;</code> 库里，而是包含在单独的 <code>&lt;deque&gt;</code> 库里。</p>
+<p>单调队列，顾名思义，就是队列内部保持单增或是单减的队列。</p>
+<p>至于在无序序列加入队列的时候，如何保持队列的单调，其实也没有那么玄乎。假设当前队列内部是单调的，如果队尾元素与待加入的元素不满足当前单调关系，换言之，待加入的元素加入过后会破坏队列的单调性，那么就弹出队尾，直到队尾元素与待加入的元素相对顺序在单调队列中合法为止。</p>
+<p>此时聪明的你脑袋上又冒出了大大的问号，怎么能将队列里的元素直接扔掉不要呢？稍安勿躁，请看实际问题。</p>
+<p>这是著名的「滑动窗口」问题，一句话题意，给定数列 $x_1,x_2,x_3,…,x_n$ 和一个数 $k$，对于所有 $i\in[1,n-k+1]$，求 $\max&#x2F;\min_{j\in[i,i+k-1]}{a_j}$。</p>
+<p>朴素做法是对于每个 $i$，都用 $O(k)$ 的时间求出答案，总的时间复杂度是 $O(nk)$。</p>
+<p>可以用单调队列，窗口移动的过程中从队头剔除不在求值集合中的数，又从队尾加入新数。而在队列中如果有 $i&lt;j$ 且 $a_i&lt;a_i$，也就说明数 $a_i$ 比数 $a_j$ 更早退出队列，那么在数 $a_j$ 退出队列之前，数 $a_i$ 都不再可能成为最大值，果断舍弃。</p>
+<p>因此，我们的单调队列中如果 $i&lt;j$ 那么就有 $a_i&gt;a_j$，于是保留下来的就只有当前较大的数或者是未来有可能成为较大数的数。</p>
+<p>需要提到的是，这只是单调队列的应用，并非单调队列优化 DP<del>（这不显然吗）</del>。</p>
+<p>可以发现，当自变量的取值范围单调变化时，如果要求函数值的最值，那么就可以引入单调队列。</p>
+<h2 id="T1-股票交易"><a href="#T1-股票交易" class="headerlink" title="T1 股票交易"></a>T1 股票交易</h2><p>题目来源：SCOI2010<br>评测链接：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2569">https://www.luogu.com.cn/problem/P2569</a></p>
+<p>$\text{lxhgww}$ 预测到了未来 $T$ 天内某只股票的走势，第 $i$ 天的股票买入价为每股 $AP_i$，第 $i$ 天的股票卖出价为每股 $BP_i$（数据保证对于每个 $i$，都有 $AP_i \geq BP_i$），但是每天不能无限制地交易，于是股票交易所规定第 $i$ 天的一次买入至多只能购买 $AS_i$ 股，一次卖出至多只能卖出 $BS_i$ 股。</p>
+<p>另外，股票交易所还制定了两个规定。</p>
+<ol>
+<li>在两次交易（某一天的买入或者卖出均算是一次交易）之间，至少要间隔 $W$ 天，也就是说如果在第 $i$ 天发生了交易，那么从第 $i+1$ 天到第 $i+W$ 天，均不能发生交易。</li>
+<li>在任何时间，一个人的手里的股票数不能超过 $\mathit{MaxP}$。</li>
+</ol>
+<p>在第 $1$ 天之前，$\text{lxhgww}$ 手里有一大笔钱（可以认为钱的数目无限），但是没有任何股票，当然，$T$ 天以后，$\text{lxhgww}$ 想要赚到最多的钱。</p>
+<p>请编程求出最多可能赚到的钱。</p>
+<p>$0\leq W&lt;T\leq 2000,1\leq\mathit{MaxP}\leq2000,1\leq BP_i\leq AP_i\leq 1000,1\leq AS_i,BS_i\leq\mathit{MaxP}$</p>
+<br>
+
+<p><del>显而易见，显而易见，</del>用 $f_{i,j}$ 表示第 $i$ 天过后，$\text{lxhgww}$ 手里有 $j$ 张股票，此时他赚到钱的最大值。</p>
+<p>那么就有</p>
+<p>$$<br>f_{i,j}&#x3D;\max<br>\begin{cases}<br>  f_{i-1,j} \\<br>  \max_{k\in[j-AS_i,j)}\{f_{i-W-1,k}-AP_i\times(j-k)\} \\<br>  \max_{k\in(j,j+BS_i]}\{f_{i-W-1,k}+BP_i\times(k-j)\}<br>\end{cases}<br>$$</p>
+<p>注：状态转移方程只考虑了最重要的情况。</p>
+<p>时间复杂度为 $O(T\times \mathit{MaxP}^2)$。<del>显而易见，显而易见，</del>会超时。</p>
+<p>以第二行的状态转移方程为例，我们来研究如何优化。</p>
+<p>将该等式恒等变形。</p>
+<p>$$<br>\begin{align}f_{i,j} &amp; &#x3D; \max_{k\in[j-AS_i,j)}\{f_{i-W-1,k}-AP_i\times(j-k)\}\\<br>&amp; &#x3D; \max\{f_{i-W-1,k}-AP_i\times j+AP_i\times k\}\\<br>&amp; &#x3D; -AP_i\times j+\max\{f_{i-W-1,k}+AP_i\times k\}\end{align}<br>$$</p>
+<p>状态转移方程中有三个变量 $i,j,k$，我们将与 $k$ 无关的项移到 $\max{}$ 外面去，然后发现 $\max{}$ 里剩下的项均与 $j$ 无关。</p>
+<p>那么在外层循环的 $i$ 确定过后，随着 $j$ 的单调变化，$k$ 的取值范围 $[j-AS_i,j)$ 也随之单调变化。</p>
+<p>这是否就与滑动窗口异曲同工了呢？于是我们引入单调队列对状态转移进行优化。</p>
+<p>单调队列在只能在单一变量 $j$ 变化的情况下起作用，因此要求 $i$ 确定这一前提。在 $i$ 可以视为常量的前提下，随着 $j$ 的变化，我们从队头中剔除 $k&lt;j-AS_i$ 的元素，然后从队尾剔除不满足单调性的元素，接着加入新的 $f_{i-W-1,k}+AP_i\times k$。每次访问队头，得出最大值，即可。</p>
+<p>同样的，我们来分析，设 $g(x)&#x3D;f_{i-W-1,x}+AP_i\times x$，那么当 $x_1&lt;x_2$ 时，$x_1$ 会比 $x_2$ 更早从队头剔除，也就是接下来直到 $x_1$ 被剔除之前，$x_2$ 都会一直存在。而如若又满足 $g(x_1)&lt;g(x_2)$，那么 $x_1$ 就不再可能成为最大值，因此理应被删除。</p>
+<p>相比 $x_2$ 这种函数值更优存活时间又更长的元素，$x_1$ 的存在便显得无足轻重。</p>
+<p>同理，第三行的状态转移方程也可以这样处理。</p>
+<p>需要注意的是，由于单调队列的应用是在 $i$ 确定的前提下进行的，因此对于 $i$ 每一次变化，都需要将单调队列清空。</p>
+<p>以下使用 STL 库的 <code>deque</code> 容器实现单调队列。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;deque&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> T, MaxP, W, e;</span><br><span class="line"><span class="type">int</span> AP[<span class="number">2005</span>], BP[<span class="number">2005</span>], AS[<span class="number">2005</span>], BS[<span class="number">2005</span>];</span><br><span class="line"><span class="type">int</span> f[<span class="number">2005</span>][<span class="number">2005</span>];</span><br><span class="line"></span><br><span class="line">deque&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; &gt; dq1, dq2;    <span class="comment">// dq1处理第二行的状态转移方程，dq2处理第三行的状态转移方程</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;T, &amp;MaxP, &amp;W);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= T; ++i) <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d&quot;</span>, &amp;AP[i], &amp;BP[i], &amp;AS[i], &amp;BS[i]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= MaxP; ++j) f[<span class="number">0</span>][j] = <span class="number">-0x3f3f3f3f</span>;    <span class="comment">// 由于初始为 0 且不会有股票，因此 f[0][i] 对于任何 i != 0 都是非法的</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= T; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (!dq1.<span class="built_in">empty</span>()) dq1.<span class="built_in">pop_back</span>();    <span class="comment">// 清空</span></span><br><span class="line">        <span class="keyword">while</span> (!dq2.<span class="built_in">empty</span>()) dq2.<span class="built_in">pop_back</span>();    <span class="comment">// 队列</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= MaxP; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i][j] = f[i - <span class="number">1</span>][j];    <span class="comment">// 第一行的情况</span></span><br><span class="line">            <span class="keyword">if</span> (j &lt;= AS[i]) f[i][j] = <span class="built_in">max</span>(f[i][j], - j * AP[i]);    <span class="comment">// 当前这是第一次购买股票</span></span><br><span class="line">            <span class="keyword">if</span> (i &gt;= W + <span class="number">2</span>)    <span class="comment">// 此时才能不是第一次购买股票</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">/*** 处理dq1 ***/</span></span><br><span class="line">                <span class="keyword">while</span> (!dq1.<span class="built_in">empty</span>() &amp;&amp; dq1.<span class="built_in">front</span>().first &lt; j - AS[i]) dq1.<span class="built_in">pop_front</span>();</span><br><span class="line">                <span class="keyword">if</span> (j - <span class="number">1</span> &gt;= <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    e = f[i - W - <span class="number">1</span>][j - <span class="number">1</span>] + (j - <span class="number">1</span>) * AP[i];</span><br><span class="line">                    <span class="keyword">while</span> (!dq1.<span class="built_in">empty</span>() &amp;&amp; dq1.<span class="built_in">back</span>().second &lt;= e) dq1.<span class="built_in">pop_back</span>();</span><br><span class="line">                    dq1.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>(j - <span class="number">1</span>, e));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">/*** 处理dq2 ***/</span></span><br><span class="line">                <span class="keyword">if</span> (j == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> k = j + <span class="number">1</span>; k &lt; j + BS[i] &amp;&amp; k &lt;= MaxP; ++k)</span><br><span class="line">                    &#123;</span><br><span class="line">                        e = f[i - W - <span class="number">1</span>][k] + k * BP[i];</span><br><span class="line">                        <span class="keyword">while</span> (!dq2.<span class="built_in">empty</span>() &amp;&amp; dq2.<span class="built_in">back</span>().second &lt;= e) dq2.<span class="built_in">pop_back</span>();</span><br><span class="line">                        dq2.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>(k, e));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">while</span> (!dq2.<span class="built_in">empty</span>() &amp;&amp; dq2.<span class="built_in">front</span>().first &lt; j + <span class="number">1</span>) dq2.<span class="built_in">pop_front</span>();</span><br><span class="line">                <span class="keyword">if</span> (j + BS[i] &lt;= MaxP)</span><br><span class="line">                &#123;</span><br><span class="line">                    e = f[i - W - <span class="number">1</span>][j + BS[i]] + (j + BS[i]) * BP[i];</span><br><span class="line">                    <span class="keyword">while</span> (!dq2.<span class="built_in">empty</span>() &amp;&amp; dq2.<span class="built_in">back</span>().second &lt;= e) dq2.<span class="built_in">pop_back</span>();</span><br><span class="line">                    dq2.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>(j + BS[i], e));</span><br><span class="line">                &#125;</span><br><span class="line">            </span><br><span class="line">                <span class="comment">/*** 得出结果 ***/</span></span><br><span class="line">                <span class="keyword">if</span> (!dq1.<span class="built_in">empty</span>()) f[i][j] = <span class="built_in">max</span>(f[i][j], dq1.<span class="built_in">front</span>().second - j * AP[i]);</span><br><span class="line">                <span class="keyword">if</span> (!dq2.<span class="built_in">empty</span>()) f[i][j] = <span class="built_in">max</span>(f[i][j], dq2.<span class="built_in">front</span>().second - j * BP[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, f[T][<span class="number">0</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为对于每个 $k$，在单调队列中至多入队出队一次，因此单调队列的入队出队操作均摊时间复杂度是 $O(1)$ 的。总的时间复杂度降到了 $O(T\times \mathit{MaxP})$，降低了一维 $\mathit{MaxP}$。</p>
+<p>这里应该就能够理解单调队列这种满足特殊性质的数据结构通过取舍对动态规划的转移产生的优化效果。<del>（请给上面的句子划分节奏）</del></p>
+<h2 id="T2-Watching-Fireworks-is-Fun"><a href="#T2-Watching-Fireworks-is-Fun" class="headerlink" title="T2 Watching Fireworks is Fun"></a>T2 Watching Fireworks is Fun</h2><p>题目来源： Codeforces<br>评测链接：<a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/372/C">https://codeforces.com/problemset/problem/372/C</a></p>
+<p>街上有 $n$ 个位置，编号从 $1$ 到 $n$，相邻两个位置的距离为 $1$ 个单位距离。</p>
+<p>现在将要在特定时间 $t_i$ 特定位置 $a_i$ 放 $m$ 个烟花，注意可能同时放 $2$ 个烟花。如果放烟花的时候你在位置 $x$，那么你将获得 $b_i-|a_i-x|$ 的快乐值，注意快乐值可能为负数。</p>
+<p>你一开始可以在任何位置，接下来每个单位时间内可以移动 $d$ 个单位距离。</p>
+<p>你需要编程计算出最大可能获得的快乐值，如果你要在 C++ 中输出 64 位整型，请不要使用 <code>%lld</code>，请使用 <code>cin</code>,<code>cout</code> 流或者 <code>%I64d</code> 格式符。</p>
+<br>
+
+<p>首先可以写出以下朴素 DP 代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">        f[i][j] = <span class="number">0xc000000000000000</span>;</span><br><span class="line">        <span class="type">int</span> _l = <span class="built_in">max</span>(<span class="number">1</span>, j - d * (t[i] - t[i - <span class="number">1</span>])), _r = <span class="built_in">min</span>(n, j + d * (t[i] - t[i - <span class="number">1</span>]));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = _l; k &lt;= _r; ++k)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i][j], f[i - <span class="number">1</span>][k] + b[i] - <span class="built_in">abs</span>(a[i] - j));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仔细检查状态转移方程，按照上面的方法，将与 $k$ 无关的提到 $\max{}$外面去。</p>
+<p>$$<br>\begin{align}  f_{i,j} &amp;&#x3D; \max_{k\in[j-d(t_i-t_{i-1}),j+d(t_i-t_{i-1})]}\{f_{i-1,k}+b_i-|a_i-j|\}\\<br>&amp;&#x3D; -|a_i-j|+\max\{f_{i-1,k}+b_i\}\end{align}<br>$$</p>
+<p>好巧不巧，$\max{}$ 里留下的与 $k$ 有关的项全部与 $j$ 无关，而根据上面的经验我们知道 $i$ 又可以看作常量，因此请出我们今天的主角——单调队列。</p>
+<p>$k$ 的取值范围 $[j-d(t_i-t_{i-1}),j+d(t_i-t_{i-1})]$ 单调变化，依然可以在外层循环 $i$ 确定的条件下使用单调队列优化。</p>
+<p>以下给出手写双端队列的代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, d;</span><br><span class="line"><span class="type">int</span> a[<span class="number">305</span>], b[<span class="number">305</span>], t[<span class="number">305</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> f[<span class="number">2</span>][<span class="number">150005</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> Deque</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> q[<span class="number">150005</span>], f = <span class="number">1</span>, r = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123; q[++r] = x; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">pop_front</span><span class="params">()</span> </span>&#123; ++f; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">pop_back</span><span class="params">()</span> </span>&#123; --r; &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">front</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> q[f]; &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">back</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> q[r]; &#125;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> f &gt; r; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123; f = <span class="number">1</span>; r = <span class="number">0</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;n, &amp;m, &amp;d);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; ++i) <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;a[i], &amp;b[i], &amp;t[i]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        Deque::<span class="built_in">clear</span>();</span><br><span class="line">        <span class="type">int</span> step = <span class="built_in">min</span>((<span class="type">long</span> <span class="type">long</span>)(d) * (t[i] - t[i - <span class="number">1</span>]), (<span class="type">long</span> <span class="type">long</span>)(n));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= step; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span> (!Deque::<span class="built_in">empty</span>() &amp;&amp; f[(i &amp; <span class="number">1</span>) ^ <span class="number">1</span>][Deque::<span class="built_in">back</span>()] &lt;= f[(i &amp; <span class="number">1</span>) ^ <span class="number">1</span>][j]) Deque::<span class="built_in">pop_back</span>();</span><br><span class="line">            Deque::<span class="built_in">push</span>(j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span> (!Deque::<span class="built_in">empty</span>() &amp;&amp; Deque::<span class="built_in">front</span>() &lt; j - step) Deque::<span class="built_in">pop_front</span>();</span><br><span class="line">            <span class="keyword">if</span> (j + step &lt;= n)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">while</span> (!Deque::<span class="built_in">empty</span>() &amp;&amp; f[(i &amp; <span class="number">1</span>) ^ <span class="number">1</span>][Deque::<span class="built_in">back</span>()] &lt;= f[(i &amp; <span class="number">1</span>) ^ <span class="number">1</span>][j + step]) Deque::<span class="built_in">pop_back</span>();</span><br><span class="line">                Deque::<span class="built_in">push</span>(j + step);</span><br><span class="line">            &#125;</span><br><span class="line">            f[i &amp; <span class="number">1</span>][j] = f[(i &amp; <span class="number">1</span>) ^ <span class="number">1</span>][Deque::<span class="built_in">front</span>()] + b[i] - <span class="built_in">abs</span>(a[i] - j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> Ans = <span class="number">0xc000000000000000</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) Ans = <span class="built_in">max</span>(Ans, f[m &amp; <span class="number">1</span>][i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%I64d\n&quot;</span>, Ans);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单调队列优化多重背包"><a href="#单调队列优化多重背包" class="headerlink" title="单调队列优化多重背包"></a>单调队列优化多重背包</h2><p>回顾一下多重背包问题，有 $N$ 种物品和一个容量是 $V$ 的背包。第 $i$ 种物品最多有 $s_i$ 件，每件体积是 $v_i$ ，价值是 $w_i$ 。求解将哪些物品装入背包，可使物品体积总和不超过背包容量，且价值总和最大。</p>
+<p>观察朴素算法的状态转移模型。</p>
+<p>$$<br>f_{i,j}&#x3D;\max_{k\in[0,s_i]}\{f_{i-1,j-k\times v_i}+k\times w_i\}<br>$$</p>
+<p>应用单调队列优化的前提是决策集合单调变化，每次都有有限（即不与 $n$ 同级）个数的元素入队或者出队，且每个元素仅能入队出队一次。</p>
+<p>$f_{i,j}$ 的决策集合 $S_{i,j}$ 为 $\{f_{i-1,j-k\times v_i}+k\times w_i\ | \ k\in[0,s_i]\}$。</p>
+<p>$f_{i,j-1}$ 的决策集合 $S_{i,j-1}$ 为 $\{f_{i-1,j-1-k\times v_i}+k\times w_i\ | \ k\in[0,s_i]\}$。</p>
+<p>在从 $S_{i,j-1}$ 调整到 $S_{i,j}$ 的过程中，显而易见 $S_{i,j}\cap S_{i,j-1}&#x3D;\varnothing$，两者全无交集，并不能快速从 $S_{i,j-1}$ 转换到 $S_{i,j}$。</p>
+<p>但是，如果 $v_i&#x3D;1$ 的话，就可以了。</p>
+<p>究其原因，是因为当 $v_i&#x3D;1$ 时，$f_{i-1,j-p\times v_i}&#x3D;f_{i-1,j-1-(p-1)\times v_i}$。</p>
+<p>观察上面的等式，我们发现 $v_i$ 无特殊要求时，依然满足 $f_{i-1,j-p\times v_i}&#x3D;f_{i-1,j-v-(p-1)\times v_i}$。</p>
+<p>也就是说 $S_{i,j}\cap S_{i,j-v_i}\neq \varnothing$。</p>
+<p>下面这张图会直观一些。</p>
+<img src="/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/knapsack.png" class="" alt="多重背包余数分组 示意图">
+
+<p>既然这样的话，我们虽不能快速从 $S_{i,j-1}$ 转换到 $S_{i,j}$，但是能够快速从 $S_{i,j-v_i}$ 转换到 $S_{i,j}$。那么我们就可以通过分组，在每一组内使用单调队列的优化技巧。</p>
+<p>具体来说，将 $f_{i,j}$ 按 $j \mod v_i$ 分组，再分组进行转移。那么在外层循环 $i$ 和余数 $r$ 确定时，枚举商数 $p$，让 $j&#x3D;p\times v_i+r$。</p>
+<p>那么就有</p>
+<p>$$<br>\begin{align}f_{i,p\times v_i+r} &amp; &#x3D; f_{i,j}\\<br>&amp; &#x3D;\max_{k\in[0,s_i]}\{f_{i-1,j-k\times v_i}+k\times w_i\}\\<br>&amp; &#x3D;\max\{f_{i-1,p\times v_i +r-k\times v_i}+k\times w_i\}\\<br>&amp; &#x3D;\max\{f_{i-1,(p-k)\times v_i+r}+k\times w_i\}\\<br>&amp; &#x3D;\max_{t\in[p,p-s_i]}\{f_{i-1,t\times v_i+r}+(p-t)\times w_i\}\\<br>&amp; &#x3D;p\times w_i+\max_{t\in[p,p-s_i]}\{f_{i-1,t\times v_i+r}-t\times w_i\}\\<br>\end{align}<br>$$</p>
+<p>如果令 $g_p&#x3D;f_{i,p\times v_i+r},h_p&#x3D;f_{i-1,p\times v_i+r}$（$g,h$ 与 $i,r$ 有关），那么状态转移方程可以写得美观一些。</p>
+<p>$$<br>g_p&#x3D;p\times w_i+\max_{t\in[p,p-s_i]}\{h_t-t\times w_i\}<br>$$</p>
+<p>因此，接下来的做法就是外两层循环枚举 $i,r$，在 $i,r$ 确定的前提下，随着 $p$ 的变化进行单调队列优化决策。</p>
+<h2 id="应用条件"><a href="#应用条件" class="headerlink" title="应用条件"></a>应用条件</h2><p>在将某些变量看作常量的情况下，只余下 $i,j$ 两个变量，其中 $i$ 将参与表示最优子结构，而 $j$ 不会参与表示最优子结构。</p>
+<p>假设确定了某些变量，本次最优子结构可以看作只有一个变量的 $f_i$，将要从 $g_i$ 转移过来。</p>
+<p>如果状态转移方程可以看作 $f_i&#x3D;A+\max&#x2F;\min\{B\}$，其中，$A$ 与 $j$ 无关，$B$ 只与 $j$ 有关，那么，就可以使用单调队列优化。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在这样的 DP 问题中，如果一个值比另一个值更优，还比另一个值存活时间更长，那么可以果断舍弃另一个值。这样，我们保证了队列的单调性，也剪掉了无意义的浪费。之所以单调，就是为了让里面的元素或者更优，或者更长寿。</p>
+<p>我们在单调中寻寻觅觅，试图高效地找出队头那个最优地决策，也冷漠地遗忘了被我们从队尾弹出的曾经队列中的一员。</p>
+<p>事实上，我们不需要优解，也不需要可能，只要守护好眼下身边的每一个人，珍惜当前分分秒秒流逝的时光，便已足矣。</p>
+<p>谁说时光面前，万物软弱无力？</p>
+<p>看亲情面前，时光无能为力。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Sukwants
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/" title="动态规划 - 单调队列优化">https://sukwants.github.io/Informatics/Notes/DYNAMIC-PROGRAMMING-Monotonic-Queue-Optimization/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/I-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i> [I] 动态规划</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/" rel="prev" title="动态规划 - 数位动态规划">
+                  <i class="fa fa-chevron-left"></i> 动态规划 - 数位动态规划
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Convex-Hull-Optimization/" rel="next" title="动态规划 - 斜率优化">
+                  动态规划 - 斜率优化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sukwants</span>
+</div>
+<div class="running-time">
+  <span id="timeDate">载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+      var now = new Date();
+      function createtime() {
+          var grt= new Date("02/11/2022 13:14:21");//此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime()+250);
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+      }
+  setInterval("createtime()",250);
+  </script>
+</div>
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.1/es5/tex-mml-chtml.js","integrity":"sha256-hlC2uSQYTmPsrzGZTEQEg9PZ1a/+SV6VBCTclohf2og="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"a291f00bfb2ea6a73a40cd007e1affd3"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

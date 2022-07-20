@@ -12,7 +12,7 @@
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <meta name="google-site-verification" content="gboRIElEqH-3VpaXcOULRktwDpCoAvWGQmqX2RwYqnU">
   <meta name="msvalidate.01" content="94748806EA0C50CFA5F4171232C6BDF7">
-  <meta name="yandex-verification" content="ef0d538c97988ac2">
+  <meta name="yandex-verification" content="07138ce40b9f2a72">
   <meta name="baidu-site-verification" content="code-r8xtrrlwFp">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -300,6 +300,19 @@
       <span class="post-meta-item-text">发表于</span>
 
       <time title="创建时间：2022-07-19 19:01:03" itemprop="dateCreated datePublished" datetime="2022-07-19T19:01:03+08:00">2022-07-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Informatics/" itemprop="url" rel="index"><span itemprop="name">Informatics</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Informatics/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+        </span>
     </span>
 
   
@@ -458,12 +471,12 @@
 <p>对于第三种情况，还需满足条件，对于一个常数 $c&lt;1$ 和所有足够大的 $n$，有 $af(\frac{n}{b})\leq cf(n)$，也就是 $af(\frac{n}{b})&lt;f(n)$，这里大概是为了方便证明。</p>
 <p>对于第一种和第三种情况，$\epsilon&gt;0$ 是一个常数。</p>
 <h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>以下是主定理的证明，看一看能加深理解，不看也没关系<del>（主定理不学都没关系）</del>，可以直接去<a href="#%E7%90%86%E8%A7%A3">下面</a>理解的部分。网上的证明可能由于 Sukwants 太蒻了，单拎着一篇看一定会如听天书。</p>
-<p>但无论如何，证明主定理首先都要画出问题的递归树。</p>
+<p>古人有言：欲证明 Master，先画一棵递归树。</p>
 <img src="/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/master-theorem-proof.svg" class="" alt="主定理递归树">
 
 <p>由于我们每次递归，将规模为 $n$ 的问题分为 $a$ 个规模为 $\frac{n}{b}$ 的子问题，因此每一个非叶结点都会有 $a$ 个子结点。</p>
 <p>而 $n$ 规模在 $\log_bn$ 次分割过后就会归于 $1$，因此整棵递归树的深度为 $h&#x3D;\log_bn$。</p>
-<p>所以这棵递归树的叶结点有 $a^{\log_bn}$ 个，诶，跟图上的不一样？别慌，$a^{\log_bn}&#x3D;(b^{\log_ba})^{\log_bn}&#x3D;(b^{\log_bn})^{\log_bn}&#x3D;n^{\log_ba}$，之所以这么变是因为之后要用。</p>
+<p>所以这棵递归树的叶结点有 $a^{\log_bn}$ 个，诶，跟图上的不一样？别慌，$a^{\log_bn}&#x3D;(b^{\log_ba})^{\log_bn}&#x3D;(b^{\log_bn})^{\log_ba}&#x3D;n^{\log_ba}$，之所以这么变是因为之后要用。</p>
 <p>右边一列 $\text{Cost}$ 表示每一层的结点合并答案所用时 $f(n)$ 的总和。显然，从第 $0$ 层到第 $\log_bn-1$ 层，第 $i$ 层就是 $a^if(\frac{n}{b^i})$。最后一层，因为 $T(1)&#x3D;\Theta(1)$，所以耗时为叶结点个数，$\Theta(n^{\log_ba})$。因此总用时即为 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$。</p>
 <p>我们记 $g(n)&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$，那么 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)$。</p>
 <h4 id="1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a"><a href="#1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a" class="headerlink" title="$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$"></a>$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$</h4><p>干就完了！</p>
@@ -502,7 +515,7 @@
 <p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{\log_bn-1}c^if(n)\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{+\infty}c^if(n)<br>\end{align}<br>$$</p>
 <p>大概是为了更方便证明。</p>
 <p>自然</p>
-<p>$$<br>\sum\limits_{i&#x3D;0}^{+\infty}c^if(n)&#x3D;\left[\sum\limits_{i&#x3D;0}^{+\infty}c^i\right]f(n)&#x3D;\frac{1}{1-c}f(n)<br>$$</p>
+<p>$$<br>\sum\limits_{i&#x3D;0}^{+\infty}c^if(n)&#x3D;\left(\sum\limits_{i&#x3D;0}^{+\infty}c^i\right)f(n)&#x3D;\frac{1}{1-c}f(n)<br>$$</p>
 <p>根据定义</p>
 <p>$$<br>g(n)&#x3D;\mathrm{O}(f(n))<br>$$</p>
 <p>因为 $g(n)&#x3D;\mathrm{0}(f(n))\land g(n)&#x3D;\Omega(f(n))$，两侧夹逼，得到 $g(n)&#x3D;\Theta(f(n))$。</p>
@@ -568,8 +581,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Digit-Dynamic-Programming/" rel="prev" title="动态规划 - 数位动态规划">
-                  <i class="fa fa-chevron-left"></i> 动态规划 - 数位动态规划
+                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Convex-Hull-Optimization/" rel="prev" title="动态规划 - 斜率优化">
+                  <i class="fa fa-chevron-left"></i> 动态规划 - 斜率优化
                 </a>
             </div>
             <div class="post-nav-item">
