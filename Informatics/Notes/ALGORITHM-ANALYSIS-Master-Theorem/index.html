@@ -24,27 +24,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="创造吧，向着未知世界！">
+    <meta name="description" content="干就完了">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo 主题 NexT 扩展版 bySk 使用方法">
-<meta property="og:url" content="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/index.html">
+<meta property="og:title" content="算法分析 - 主定理">
+<meta property="og:url" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/index.html">
 <meta property="og:site_name" content="Sukwog">
-<meta property="og:description" content="创造吧，向着未知世界！">
+<meta property="og:description" content="干就完了">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-05-06T06:44:38.000Z">
-<meta property="article:modified_time" content="2022-05-06T06:44:38.000Z">
+<meta property="og:image" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/master-theorem-proof.svg">
+<meta property="article:published_time" content="2022-07-21T10:41:25.000Z">
+<meta property="article:modified_time" content="2022-07-21T10:41:25.000Z">
 <meta property="article:author" content="Sukwants">
+<meta property="article:tag" content="[I] 算法分析">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/master-theorem-proof.svg">
 
 
-<link rel="canonical" href="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/">
+<link rel="canonical" href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/","path":"others/Technology/Hexo-theme-NexT-exbySk/","title":"Hexo 主题 NexT 扩展版 bySk 使用方法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/","path":"Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/","title":"算法分析 - 主定理"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo 主题 NexT 扩展版 bySk 使用方法 | Sukwog</title>
+<title>算法分析 - 主定理 | Sukwog</title>
   
 
 
@@ -148,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Front-matter"><span class="nav-number">1.</span> <span class="nav-text">Front-matter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">站点配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">主题配置文件</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a"><span class="nav-number">2.1.</span> <span class="nav-text">$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n"><span class="nav-number">2.2.</span> <span class="nav-text">$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n"><span class="nav-number">2.3.</span> <span class="nav-text">$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%BC%E4%B8%8A%E6%89%80%E8%BF%B0"><span class="nav-number">2.3.1.</span> <span class="nav-text">综上所述</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -265,7 +268,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/">
+    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -278,12 +281,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hexo 主题 NexT 扩展版 bySk 使用方法 | Sukwog">
+      <meta itemprop="name" content="算法分析 - 主定理 | Sukwog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo 主题 NexT 扩展版 bySk 使用方法
+          算法分析 - 主定理
         </h1>
 
         <div class="post-meta-container">
@@ -294,7 +297,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-05-06 14:44:38" itemprop="dateCreated datePublished" datetime="2022-05-06T14:44:38+08:00">2022-05-06</time>
+      <time title="创建时间：2022-07-21 18:41:25" itemprop="dateCreated datePublished" datetime="2022-07-21T18:41:25+08:00">2022-07-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -302,11 +305,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/others/" itemprop="url" rel="index"><span itemprop="name">others</span></a>
+          <a href="/categories/Informatics/" itemprop="url" rel="index"><span itemprop="name">Informatics</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/others/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+          <a href="/categories/Informatics/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
         </span>
     </span>
 
@@ -317,14 +320,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>975</span>
+      <span>7.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>7 分钟</span>
     </span>
 </div>
 
@@ -335,34 +338,74 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>创造吧，向着未知世界！</p>
+        <p>干就完了</p>
 <span id="more"></span>
 
-<h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th align="left">描述</th>
-<th align="left">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>unshow</code></td>
-<td align="left">文章不在主页显示</td>
-<td align="left">false</td>
-</tr>
-</tbody></table>
-<h2 id="站点配置文件"><a href="#站点配置文件" class="headerlink" title="站点配置文件"></a>站点配置文件</h2><p>&#x2F;_config.yml</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置博客单词统计</span></span><br><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="comment"># 文章字数统计</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 文章阅读时间统计</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 站点总字数统计</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># 站点总阅读时间统计</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">exclude_codeblock:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>主定理或者 Master Theorem 通过 $T(n)$ 的递推式来计算 $T(n)$，但不是哈戳戳地去展开一个一个计算，有技巧的。</p>
+<p>主定理要求的递推关系式为</p>
+<p>$$<br>T(n)&#x3D;aT(\frac{n}{b})+f(n),\qquad T(1)&#x3D;\Theta(1)<br>$$</p>
+<p>表示当前状态下问题规模为 $n$，分成 $a$ 个等效的规模为 $\frac{n}{b}$ 的子问题计算，合并答案需要的时间为 $f(n)$。</p>
+<p>那么</p>
+<p>$$<br>T(n) &#x3D; \begin{cases}\Theta(n^{\log_b a}) &amp; f(n) &#x3D; \mathrm{O}(n^{\log_b a-\epsilon})\\<br>\Theta(n^{\log_b a}\log^{k+1} n) &amp; f(n)&#x3D;\Theta(n^{\log_b a}\log^k n),k\ge 0\\<br>\Theta(f(n)) &amp; f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})\end{cases}<br>$$</p>
+<p>对于第三种情况，还需满足条件，对于一个常数 $c&lt;1$ 和所有足够大的 $n$，有 $af(\frac{n}{b})\leq cf(n)$，也就是 $af(\frac{n}{b})&lt;f(n)$，这里大概是为了方便证明。</p>
+<p>对于第一种和第三种情况，$\epsilon&gt;0$ 是一个常数。</p>
+<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><p>以下是主定理的证明，看一看能加深理解，不看也没关系<del>（主定理不学都没关系）</del>，可以直接去<a href="#%E7%90%86%E8%A7%A3">下面</a>理解的部分。网上的证明可能由于 Sukwants 太蒻了，单拎着一篇看一定会如听天书。</p>
+<p>古人有言：欲证明 Master，先画一棵递归树。</p>
+<img src="/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/master-theorem-proof.svg" class="" alt="主定理递归树">
 
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Security 文章加密，需要插件 hexo-blog-encrypt</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="comment">#abstract: 有东西被加密了, 请输入密码查看. # 设置文章摘要显示内容</span></span><br><span class="line">  <span class="comment">#message: 您好, 这里需要密码. # 设置密码框提示信息</span></span><br><span class="line">  <span class="comment">#tags: # 设置标签，包含以下标签的文章全部被加密</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码A&#125;</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码B&#125;</span></span><br><span class="line">  <span class="attr">theme:</span> <span class="string">shrink</span></span><br><span class="line">  <span class="comment">#wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试. # 设置错误密码提示</span></span><br><span class="line">  <span class="comment">#wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容. # 设置错误哈希提示</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># APlayer 音乐播放器</span></span><br><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span> <span class="comment"># 开启 Meting 功能</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="主题配置文件"><a href="#主题配置文件" class="headerlink" title="主题配置文件"></a>主题配置文件</h2><p>&#x2F;themes&#x2F;next&#x2F;_config.yml</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="comment"># Website running time 在页面脚部显示的本站已安全运行……天……小时……分钟……秒</span></span><br><span class="line">  <span class="attr">running:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启功能</span></span><br><span class="line">    <span class="attr">set_up_time:</span> <span class="number">02</span><span class="string">/11/2022</span> <span class="number">13</span><span class="string">:14:21</span> <span class="comment"># 设置建站时间</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Read more button 主页文章的「阅读更多」按钮</span></span><br><span class="line"><span class="attr">read_more_btn:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># If true, the read more button will be displayed in excerpt section. 设置是否加入该按钮</span></span><br><span class="line">  <span class="attr">scroll_to_more:</span> <span class="literal">false</span> <span class="comment"># 默认为 true ，如果为 true 则点击按钮会滑到文章 #more 标签以下。</span></span><br></pre></td></tr></table></figure>
+<p>由于我们每次递归，将规模为 $n$ 的问题分为 $a$ 个规模为 $\frac{n}{b}$ 的子问题，因此每一个非叶结点都会有 $a$ 个子结点。</p>
+<p>而 $n$ 规模在 $\log_bn$ 次分割过后就会归于 $1$，因此整棵递归树的深度为 $h&#x3D;\log_bn$。</p>
+<p>所以这棵递归树的叶结点有 $a^{\log_bn}$ 个，诶，跟图上的不一样？别慌，$a^{\log_bn}&#x3D;(b^{\log_ba})^{\log_bn}&#x3D;(b^{\log_bn})^{\log_ba}&#x3D;n^{\log_ba}$，之所以这么变是因为之后要用。</p>
+<p>右边一列 $\text{Cost}$ 表示每一层的结点合并答案所用时 $f(n)$ 的总和。显然，从第 $0$ 层到第 $\log_bn-1$ 层，第 $i$ 层就是 $a^if(\frac{n}{b^i})$。最后一层，因为 $T(1)&#x3D;\Theta(1)$，所以耗时为叶结点个数，$\Theta(n^{\log_ba})$。因此总用时即为 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$。</p>
+<p>我们记 $g(n)&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$，那么 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)$。</p>
+<h3 id="1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a"><a href="#1-circ-f-n-x3D-mathrm-O-n-log-b-a-epsilon-Rightarrow-T-n-x3D-Theta-n-log-b-a" class="headerlink" title="$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$"></a>$1^{\circ}\ f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})\Rightarrow T(n)&#x3D;\Theta(n^{\log_b a})$</h3><p>干就完了！</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum_{i&#x3D;0}^{\log_bn-1}a^if\left(\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\left(\frac{n}{b^i}\right)^{\log_ba-\epsilon}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\frac{n^{\log_ba-\epsilon}}{\left(b^i\right)^{\log_ba-\epsilon}}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(b^i\right)^{\log_ba-\epsilon}}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(b^{\log_ba-\epsilon}\right)^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^i}{\left(\frac{a}{b^\epsilon}\right)^i}\right)\\<br>&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i\right)<br>\end{align}<br>$$</p>
+<p>而 $\sum\limits_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i$ 可以用等比数列求和的方法搞一通，不知你忘记了没有。</p>
+<p>设 $S&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i$，则 $b^\epsilon S&#x3D;\sum\limits_{i&#x3D;1}^{\log_bn}\left(b^\epsilon\right)^i$，那么 $(b^\epsilon-1)S&#x3D;\left(b^\epsilon\right)^{\log_bn}-\left(b^\epsilon\right)^0&#x3D;n^\epsilon-1$，于是 $S&#x3D;\frac{n^\epsilon-1}{b^\epsilon-1}$。</p>
+<p>那么继续</p>
+<p>$$<br>\begin{align}g(n)&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\sum_{i&#x3D;0}^{\log_bn-1}\left(b^\epsilon\right)^i\right)\\&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\frac{n^\epsilon-1}{b^\epsilon-1}\right)\\\end{align}<br>$$</p>
+<p>我们一筹莫展了，这里回顾一下 $b,\epsilon$ 的定义<del>（做到不忘初心牢记使命）</del>，它们是常数，而这里又用上了渐进符号 $\mathrm{O}$，所以……</p>
+<p>$$<br>\begin{align}g(n)&amp;&#x3D;\mathrm{O}\left(n^{\log_ba-\epsilon}\frac{n^\epsilon-1}{b^\epsilon-1}\right)\\&amp;&#x3D;\mathrm{O}(n^{\log_ba-\epsilon}n^\epsilon)\\&amp;&#x3D;\mathrm{O}(n^{\log_ba})\\\end{align}<br>$$</p>
+<p>那么 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)&#x3D;\Theta(n^{\log_ba})+\mathrm{O}(n^{\log_ba})&#x3D;\Theta(n^{\log_ba})$。这很明显，因为 $\Theta$ 表示「$&#x3D;$」而 $\mathrm{O}$ 表示「$\leq$」。</p>
+<p>以上，证得当 $f(n)&#x3D;\mathrm{O}(n^{\log_b a-\epsilon})$ 时有 $T(n)&#x3D;\Theta(n^{\log_b a})$。</p>
+<h3 id="2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n"><a href="#2-circ-f-n-x3D-Theta-n-log-ba-log-kn-k-geq-0-Rightarrow-T-n-x3D-Theta-n-log-ba-log-k-1-n" class="headerlink" title="$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$"></a>$2^{\circ}\ f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$</h3><p>这里我表示和上面一样的套路——干就完了！</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum_{i&#x3D;0}^{\log_bn-1}a^if\left(\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}a^i\left(\frac{n}{b^i}\right)^{\log_ba}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}\frac{a^in^{\log_ba}}{\left(b^i\right)^{\log_ba}}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(\sum_{i&#x3D;0}^{\log_bn-1}n^{\log_ba}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\sum_{i&#x3D;0}^{\log_bn-1}\log^k\frac{n}{b^i}\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\sum_{i&#x3D;0}^{\log_bn-1}\left(\log n-\log b^i\right)^k\right)<br>\end{align}<br>$$</p>
+<p>而接下来又需要践行初心使命。</p>
+<p>记 $h(n)&#x3D;\left(\log n-\log b^i\right)^k&#x3D;\sum_{j&#x3D;0}^{k}\binom{k}{j}\left(\log n\right)^j\left(-\log b^i\right)^{k+1-j}$，因为 $i\leq\log_bn-1$，因此 $b^i&lt;b^{\log_bn}&#x3D;n$，进而得到 $\log b^i&lt;\log n$，所以 $h(n)$ 的展开式中最高次即为 $\log^kn$。</p>
+<p>既然我们这里是渐进意义，那么何不只留下最高次呢？</p>
+<p>那么</p>
+<p>$$<br>g(n)&#x3D;\Theta\left(n^{\log_ba}\log_bn\log^kn\right)<br>$$</p>
+<p>注意，我们现在先解释一个奇妙的变换。</p>
+<p>$$<br>\Theta \left(\log_bn\right)&#x3D;\Theta \left(\frac{\log n}{\log b}\right)&#x3D;\Theta \left(\log n\right)<br>$$</p>
+<p>（额，$\log b$ 是常数诶，当然可以这么干）</p>
+<p>于是</p>
+<p>$$<br>\begin{align}g(n)<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\log_bn\log^kn\right)\\<br>&amp;&#x3D;\Theta\left(n^{\log_ba}\log n\log^kn\right)\\&amp;&#x3D;\Theta\left(n^{\log_ba}\log^{k+1}n\right)<br>\end{align}<br>$$</p>
+<p>最终 $T(n)&#x3D;\Theta(n^{\log_ba})+g(n)&#x3D;\Theta(n^{\log_ba})+\Theta(n^{\log_ba}\log^{k+1}n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$。</p>
+<p>以上，证得当 $f(n)&#x3D;\Theta(n^{\log_ba}\log^kn),k\geq 0$ 时有 $T(n)&#x3D;\Theta(n^{\log_ba}\log^{k+1}n)$。</p>
+<p>这第二种情况大多数时候是一种特殊情况，就是 $k&#x3D;0$ 的时候，那么此时就成为了 $f(n)&#x3D;\Theta(n^{\log_ba}),k\geq 0\Rightarrow T(n)&#x3D;\Theta(n^{\log_ba}\log n)$。</p>
+<h3 id="3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n"><a href="#3-circ-f-n-x3D-Omega-n-log-ba-epsilon-land-p-Rightarrow-T-n-x3D-Theta-f-n" class="headerlink" title="$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$"></a>$3^{\circ}\ f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})\land p\Rightarrow T(n)&#x3D;\Theta(f(n))$</h3><p>$p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$</p>
+<p>这个情况有些特殊，虽然大部分是干，但是还是有巧劲的。</p>
+<p>首先，根据 $g(n)$ 的定义 $g(n)&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$，很明显</p>
+<p>$$<br>g(n)&#x3D;\Omega(f(n))<br>$$</p>
+<p>然后，我们从条件 $p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 入手。</p>
+<p>$$<br>a^if\left(\frac{n}{b^i}\right)\leq c\cdot a^{i-1}f\left(\frac{n}{b^{i-1}}\right)\leq c^2\cdot a^{i-2}f\left(\frac{n}{b^{i-2}}\right)\leq …\leq c^if\left(n\right)<br>$$</p>
+<p>其实，也可以理解为，$f(n)$ 表示递归树的第 $0$ 层的合并用时，$af\left(\frac{n}{b}\right)$ 表示下一层的合并用时。递归 $i$ 层，第 $i$ 层的合并用时即为 $a^if\left(\frac{n}{b^i}\right)$，那么就有 $a^if\left(\frac{n}{b^i}\right)\leq c^if\left(n\right)$。</p>
+<p>这样的话</p>
+<p>$$<br>\begin{align}<br>g(n)&amp;&#x3D;\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{\log_bn-1}c^if(n)\\<br>&amp;\leq \sum\limits_{i&#x3D;0}^{+\infty}c^if(n)<br>\end{align}<br>$$</p>
+<p>大概是为了更方便证明。</p>
+<p>自然</p>
+<p>$$<br>\sum\limits_{i&#x3D;0}^{+\infty}c^if(n)&#x3D;\left(\sum\limits_{i&#x3D;0}^{+\infty}c^i\right)f(n)&#x3D;\frac{1}{1-c}f(n)<br>$$</p>
+<p>根据定义</p>
+<p>$$<br>g(n)&#x3D;\mathrm{O}(f(n))<br>$$</p>
+<p>因为 $g(n)&#x3D;\mathrm{0}(f(n))\land g(n)&#x3D;\Omega(f(n))$，两侧夹逼，得到 $g(n)&#x3D;\Theta(f(n))$。</p>
+<p>以上，证得在满足条件 $p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 的前提下，当 $f(n)&#x3D;\Omega(n^{\log_ba+\epsilon})$ 时有 $T(n)&#x3D;\Theta(f(n))$。</p>
+<h4 id="综上所述"><a href="#综上所述" class="headerlink" title="综上所述"></a>综上所述</h4><p>$$<br>T(n) &#x3D; \begin{cases}\Theta(n^{\log_b a}) &amp; f(n) &#x3D; \mathrm{O}(n^{\log_b a-\epsilon})\\<br>\Theta(n^{\log_b a}\log^{k+1} n) &amp; f(n)&#x3D;\Theta(n^{\log_b a}\log^k n),k\ge 0\\<br>\Theta(f(n)) &amp; f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})\land p\end{cases}\\<br>$$</p>
+<p>$$<br>p:\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)<br>$$</p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>对于第 1 种情况，其实就是 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$ 中两部分哪部分在渐进意义上更大的问题，这种情况反映的是叶结点的计算更大，所以时间复杂度由叶结点的计算决定。</p>
+<p>对于第 3 种情况，条件 $\exists 0&lt;c&lt;1,n_0&gt;0,\forall n\geq n_0,af(\frac{n}{b})\leq cf(n)$ 反映的是 $T(n)&#x3D;aT(\frac{n}{b})+f(n)$ 中当前层合并代价高于下一层合并代价，条件 $f(n) &#x3D; \Omega(n^{\log_b a+\epsilon})$ 反映的是 $T(n)&#x3D;\Theta(n^{\log_ba})+\sum\limits_{i&#x3D;0}^{\log_bn-1}a^if(\frac{n}{b^i})$ 合并的代价高于叶结点计算的代价。两者同时满足，决定时间复杂度的就是第 $0$ 层的合并代价。</p>
+<p>对于第 2 种情况，反映的是在特殊条件下对性质的进一步发掘。</p>
+<p>伟大的 Master Theorem，就这么被我们干完了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>干就完了。</p>
 
     </div>
 
@@ -380,7 +423,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/" title="Hexo 主题 NexT 扩展版 bySk 使用方法">https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/</a>
+      <a href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/" title="算法分析 - 主定理">https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -388,19 +431,19 @@
 </ul>
 </div>
 
+          <div class="post-tags">
+              <a href="/tags/I-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" rel="tag"><i class="fa fa-tag"></i> [I] 算法分析</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/" rel="prev" title="动态规划 - 区间动态规划">
-                  <i class="fa fa-chevron-left"></i> 动态规划 - 区间动态规划
+                <a href="/Informatics/Notes/ALGORITHM-ANALYSIS-Asymptotics/" rel="prev" title="算法分析 - 渐进式">
+                  <i class="fa fa-chevron-left"></i> 算法分析 - 渐进式
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Dynamic-Programming-on-Trees/" rel="next" title="动态规划 - 树形动态规划">
-                  动态规划 - 树形动态规划 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -475,7 +518,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"ad6422525b51b674377301dfe0b8e111"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"0f842bc308db2c9b1a3b117dc65a263e"}</script>
 <script src="/js/third-party/comments/gitalk.js"></script>
 
 </body>

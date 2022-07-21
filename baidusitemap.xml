@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sukwants.github.io/Informatics/Notes/ALGORITHM-BASIC-Time-and-Space-Complexity/</loc>
+    <loc>https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem/</loc>
+    <lastmod>2022-07-21</lastmod>
+  </url>
+  <url>
+    <loc>https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Asymptotics/</loc>
+    <lastmod>2022-07-21</lastmod>
+  </url>
+  <url>
+    <loc>https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/</loc>
     <lastmod>2022-07-19</lastmod>
   </url>
   <url>

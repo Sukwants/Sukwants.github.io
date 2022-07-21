@@ -24,27 +24,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sukwants.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":true,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":{"gitalk":null}},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="创造吧，向着未知世界！">
+    <meta name="description" content="时间的匆匆乘客，空间的默默过客">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo 主题 NexT 扩展版 bySk 使用方法">
-<meta property="og:url" content="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/index.html">
+<meta property="og:title" content="算法分析 - 时空复杂度">
+<meta property="og:url" content="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/index.html">
 <meta property="og:site_name" content="Sukwog">
-<meta property="og:description" content="创造吧，向着未知世界！">
+<meta property="og:description" content="时间的匆匆乘客，空间的默默过客">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-05-06T06:44:38.000Z">
-<meta property="article:modified_time" content="2022-05-06T06:44:38.000Z">
+<meta property="article:published_time" content="2022-07-19T11:01:03.000Z">
+<meta property="article:modified_time" content="2022-07-19T11:01:03.000Z">
 <meta property="article:author" content="Sukwants">
+<meta property="article:tag" content="[I] 算法分析">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/">
+<link rel="canonical" href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/","path":"others/Technology/Hexo-theme-NexT-exbySk/","title":"Hexo 主题 NexT 扩展版 bySk 使用方法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/","path":"Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/","title":"算法分析 - 时空复杂度"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo 主题 NexT 扩展版 bySk 使用方法 | Sukwog</title>
+<title>算法分析 - 时空复杂度 | Sukwog</title>
   
 
 
@@ -148,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Front-matter"><span class="nav-number">1.</span> <span class="nav-text">Front-matter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">站点配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">主题配置文件</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%89%E6%95%88%E5%BC%82%E8%80%97"><span class="nav-number">1.</span> <span class="nav-text">等效异耗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E7%A9%BA%E8%AF%84%E5%88%A4"><span class="nav-number">2.</span> <span class="nav-text">时空评判</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%A1%E5%B8%B8"><span class="nav-number">4.</span> <span class="nav-text">卡常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">5.</span> <span class="nav-text">空间复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -265,7 +266,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/">
+    <link itemprop="mainEntityOfPage" href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -278,12 +279,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hexo 主题 NexT 扩展版 bySk 使用方法 | Sukwog">
+      <meta itemprop="name" content="算法分析 - 时空复杂度 | Sukwog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo 主题 NexT 扩展版 bySk 使用方法
+          算法分析 - 时空复杂度
         </h1>
 
         <div class="post-meta-container">
@@ -294,7 +295,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-05-06 14:44:38" itemprop="dateCreated datePublished" datetime="2022-05-06T14:44:38+08:00">2022-05-06</time>
+      <time title="创建时间：2022-07-19 19:01:03" itemprop="dateCreated datePublished" datetime="2022-07-19T19:01:03+08:00">2022-07-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -302,11 +303,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/others/" itemprop="url" rel="index"><span itemprop="name">others</span></a>
+          <a href="/categories/Informatics/" itemprop="url" rel="index"><span itemprop="name">Informatics</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/others/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+          <a href="/categories/Informatics/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
         </span>
     </span>
 
@@ -317,14 +318,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>975</span>
+      <span>3.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -335,34 +336,112 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>创造吧，向着未知世界！</p>
+        <p>时间的匆匆乘客，空间的默默过客</p>
 <span id="more"></span>
 
-<h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><table>
+<h2 id="等效异耗"><a href="#等效异耗" class="headerlink" title="等效异耗"></a>等效异耗</h2><p>请看。</p>
+<p>菲波那契数列是指这样的数列: 数列的第一个和第二个数都为 $1$，接下来每个数都等于前面 $2$ 个数之和。</p>
+<p>给出一个正整数 $a$，要求菲波那契数列中第 $a$ 个数是多少。</p>
+<p>我们对此已经积累出了三种解法，递归法、递推法、矩阵快速幂优化递推。效果相同，但有时，你会发现，在不合适的地方用了不合适的解法可能会 <font style="color:orange"><i class="fa-solid fa-clock"></i> Time Limit Exceeded</font>。</p>
+<p>再看。</p>
+<p>我们存储图，有两种流行的方式，邻接表和邻接矩阵。效果相同，但有时，你会发现，用邻接矩阵的解法可能会 <font style="color:orange"><i class="fa-solid fa-microchip"></i> Memory Limit Exceeded</font>。</p>
+<p>一定是我们打开方式有点不对。</p>
+<p>在算法竞赛中，我们写出的程序不仅要解决问题，还要高效地解决问题，具体说，在限定时间限定空间内解决问题。诸如以上超时间、超空间的情况，就是超出了题目允许的时空限制。</p>
+<p>算法不仅要正确地解决问题，还要高效地解决问题。计算机不是无限快的，存储器也不是无限大的，在时空资源有限的情况下，耗时短、内存小的算法显然更受欢迎。这也是算法研究的一个主题。</p>
+<p>为了能够评判程序的时间和空间消耗，时空复杂度应运而生。</p>
+<h2 id="时空评判"><a href="#时空评判" class="headerlink" title="时空评判"></a>时空评判</h2><p>一般来说，时间评判以 $\mathrm{s}$ 作为单位，空间评判以 $\mathrm{MB}$ 作为单位，事实上在评测的时候也确实按这样的实际数据进行限制。但这样，我们只能写出一个程序在特定数据下测量其时空消耗。</p>
+<p>而更多时候，我们关心的是能否根据算法结构评估它在不同数据下的时空消耗，或者说它的时空消耗随数据规模增长的大致趋势。这样计算出的时空消耗才有预判性，才能对程序设计产生引导作用。</p>
+<p>我们习惯用时间复杂度表示用时随数据规模的增长，用空间复杂度表示占用内存随数据规模的增长。</p>
+<p>$T(n)$ 表示数据规模为 $n$ 的时间复杂度，$S(n)$ 表示数据规模为 $n$ 的空间复杂度。</p>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>时间复杂度用基本操作的次数进行衡量，加减乘除、访问、赋值等操作可以视为基本操作。</p>
+<p>在此规则下，假设我们有算法 A 运行时间表达式为 $T_A(n)&#x3D;2n^2$，同样有算法 B 运行时间表达式为 $T_B(n)&#x3D;50n\lg n$。当 $n&#x3D;10$ 时，$T_A(n)&#x3D;2,T_B(n)&#x3D;500$，算法 A 运行得更快，并且此时两种算法相差无几；而当 $n&#x3D;10^7$ 时，$T_A(n)&#x3D;2\times 10^{14},T_B(n)&#x3D;3.5\times 10^9$，即使执行算法 A 的计算机每秒处理 $10^{10}$ 条指令而执行算法 B 的计算机每秒处理 $10^7$ 条指令，算法 A 需要运行超过 5.5 个小时而算法 B 需要运行不到 20 分钟。</p>
+<p>可以发现，对于不同的时间表达式，运行时间随数据规模的增长是大相径庭的。我们仔细观察下面一个多项式表达式，比如 $T(n)&#x3D;30n^4+20n^3+40n^2+48n+100$，当 $n$ 增长时，$T(n)$ 表达式除了常数项的每一项都在增长，而其中增长最快的无疑是高次项 $30n^4$，而常数项 $100$ 根本不增长。当 $n$ 增长到一定规模时，低次项相较于高次项对整体的影响微乎其微，同样每一项的系数对整体也造成不了大的影响。</p>
+<p>所以在更关心规模增长的条件下，这里我们舍弃增长较慢或不增长的项，以及每一项的系数，只留下对整体增长影响较大的部分。也就是 $T_1(n)&#x3D;30n^4+20n^3+40n^2+48n+100\approx n^4$, $T_2(n)&#x3D;100n^3+50n^2+78n+10\approx n^3$，我们可以记为 $T_1(n)&#x3D;\Theta(n^4)$,$ T_2(n)&#x3D;\Theta(n^3)$。</p>
+<p>为什么可以这么干呢？请看，如果有 $T_3(n)&#x3D;1000n^3&#x3D;\Theta(n^3)$, $T_4(n)&#x3D;n^3&#x3D;\Theta(n^3)$，即使系数相差甚远，但无论 $n$ 取何值，$T_3(n)$ 只会永远是 $T_4(n)$ 的 $100$ 倍，这个比值永远不会扩大。我们将 $T_3(n)$ 与 $T_4(n)$ 之间这样的关系称为两者同级。在只关心数据规模增长的情况下，这就足够描述时间的增长趋势了，在 $n$ 越来越大的情况下，不同级的数据差距越来越大，而同级的数据差距基本保持恒定。于是，我们就可以按照“级别”来评估时间随数据规模增长的趋势。</p>
+<p>一般我们关心的是程序运行耗时的上限，所以一般我们用的渐进记号是 $\mathrm{O}$ 而不是 $\Theta$，$\mathrm{O}(1)$, $\mathrm{O}(\log n)$, $\mathrm{O}(n)$, $\mathrm{O}(n+m)$, $\mathrm{O}(n\log n)$, $\mathrm{O}(n^2)$, $\mathrm{O}(n!)$, $\mathrm{O}(2^n)$ 这些让人眼花缭乱的时间复杂度你应该异常熟悉。</p>
+<p>$\Theta,\mathrm{O},\Omega$ 这些渐进记号的讲解请移步<a href="/Informatics/Notes/ALGORITHM-ANALYSIS-Asymptotics/">算法分析 - 渐进式</a>。</p>
+<p>那么什么样的时间复杂度在 1s 内可以承受什么样的数据规模，请看。</p>
+<table>
 <thead>
 <tr>
-<th align="left">参数</th>
-<th align="left">描述</th>
-<th align="left">默认值</th>
+<th align="center">时间复杂度</th>
+<th align="center">稳过的数据规模</th>
+<th align="center">最大的数据规模</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left"><code>unshow</code></td>
-<td align="left">文章不在主页显示</td>
-<td align="left">false</td>
+<td align="center">$\mathrm{O}(1)$</td>
+<td align="center">$+\infty$</td>
+<td align="center">$+\infty$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(\log n)$</td>
+<td align="center">$2^{5\times 10^7}$</td>
+<td align="center">$2^{1\times 10^{8}}$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n)$</td>
+<td align="center">$5\times 10^7$</td>
+<td align="center">$1\times 10^8$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n\log n)$</td>
+<td align="center">$5\times 10^5$</td>
+<td align="center">$1\times 10^6$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^2)$</td>
+<td align="center">$5000$</td>
+<td align="center">$10000$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^3)$</td>
+<td align="center">$300$</td>
+<td align="center">$500$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(2^n)$</td>
+<td align="center">$25$</td>
+<td align="center">$27$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n!)$</td>
+<td align="center">$11$</td>
+<td align="center">$11$</td>
+</tr>
+<tr>
+<td align="center">$\mathrm{O}(n^n)$</td>
+<td align="center">$8$</td>
+<td align="center">$8$</td>
 </tr>
 </tbody></table>
-<h2 id="站点配置文件"><a href="#站点配置文件" class="headerlink" title="站点配置文件"></a>站点配置文件</h2><p>&#x2F;_config.yml</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置博客单词统计</span></span><br><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="comment"># 文章字数统计</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 文章阅读时间统计</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 站点总字数统计</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># 站点总阅读时间统计</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">exclude_codeblock:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Security 文章加密，需要插件 hexo-blog-encrypt</span></span><br><span class="line"><span class="attr">encrypt:</span> <span class="comment"># hexo-blog-encrypt</span></span><br><span class="line">  <span class="comment">#abstract: 有东西被加密了, 请输入密码查看. # 设置文章摘要显示内容</span></span><br><span class="line">  <span class="comment">#message: 您好, 这里需要密码. # 设置密码框提示信息</span></span><br><span class="line">  <span class="comment">#tags: # 设置标签，包含以下标签的文章全部被加密</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码A&#125;</span></span><br><span class="line">  <span class="comment">#- &#123;name: tagName, password: 密码B&#125;</span></span><br><span class="line">  <span class="attr">theme:</span> <span class="string">shrink</span></span><br><span class="line">  <span class="comment">#wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试. # 设置错误密码提示</span></span><br><span class="line">  <span class="comment">#wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容. # 设置错误哈希提示</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># APlayer 音乐播放器</span></span><br><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span> <span class="comment"># 开启 Meting 功能</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="主题配置文件"><a href="#主题配置文件" class="headerlink" title="主题配置文件"></a>主题配置文件</h2><p>&#x2F;themes&#x2F;next&#x2F;_config.yml</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="comment"># Website running time 在页面脚部显示的本站已安全运行……天……小时……分钟……秒</span></span><br><span class="line">  <span class="attr">running:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启功能</span></span><br><span class="line">    <span class="attr">set_up_time:</span> <span class="number">02</span><span class="string">/11/2022</span> <span class="number">13</span><span class="string">:14:21</span> <span class="comment"># 设置建站时间</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Read more button 主页文章的「阅读更多」按钮</span></span><br><span class="line"><span class="attr">read_more_btn:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># If true, the read more button will be displayed in excerpt section. 设置是否加入该按钮</span></span><br><span class="line">  <span class="attr">scroll_to_more:</span> <span class="literal">false</span> <span class="comment"># 默认为 true ，如果为 true 则点击按钮会滑到文章 #more 标签以下。</span></span><br></pre></td></tr></table></figure>
+<p>看看一些简单的时间复杂度计算。</p>
+<ul>
+<li>一般的循环嵌套——各层循环次数乘积。</li>
+<li><code>while</code> 内指针扫描数组——数组长度。</li>
+<li>DFS 遍历图——$\mathrm{O}(n+m)$。</li>
+<li>一般的递归，递归 $k$ 层，每层从 $a$ 个子节点统计——$O(a^k)$。</li>
+<li>基于二分的排序——$\mathrm{O}(n\log n)$</li>
+</ul>
+<p>一些比较麻烦的又呈现出规律性的递归，计算时间复杂度可以用主定理，请移步<a href="/Informatics/Notes/ALGORITHM-ANALYSIS-Master-Theorem">算法分析 - 主定理</a>。</p>
+<p>通常情况下，时间复杂度不仅与数据规模有关，还与数据特点有关，此时我们不能算出一以贯之的时间复杂度，于是就有了最坏时间复杂度、平均（期望）时间复杂度之分。比如二分快排，平均（期望）时间复杂度是 $\mathrm{O}(n\log n)$ 而最坏情况下能够被卡到 $\mathrm{O}(n^2)$。</p>
+<p>但有时候，对事件复杂度友好和不友好的情况会在一道题的反复操作中都出现，如果这些操作总的时间复杂度是可以确定的，那么便可以均摊到各个操作中，这里叫做均摊复杂度，请移步<a target="_blank" rel="noopener" href="//%E8%BF%98%E6%B2%A1%E5%86%99%E5%91%A2">算法分析 - 摊还分析</a>。</p>
+<h2 id="卡常"><a href="#卡常" class="headerlink" title="卡常"></a>卡常</h2><p>时间复杂度是在量级上对时间消耗的预估，事实上，由于每一次循环操作次数，或者是低次项的影响，时间复杂度并不能说明一切。比如说树状数组和线段树，单次操作时间复杂度都是 $\mathrm{O}(\log n)$ 的，但是由于线段树的常数比树状数组大，所以很可能被某些毒瘤的出题人卡掉。</p>
+<p>此时就需要一些奇奇怪怪的编程技巧来优化常数了。</p>
+<p>能用循环，就避免递归，压栈弹栈是一个挺麻烦的操作，搞不好还会爆栈。</p>
+<p>输入数据过大时建议写快读。</p>
+<p>多重循环对应多维数组的时候，如果可以，建议如果要访问 <code>f[i][j]</code>，那么外层循环 <code>i</code> 内层循环 <code>j</code>，以增加内存访问的连续性。</p>
+<p>不要随时定义局部变量，申请变量也比较耗时。</p>
+<p>循环条件不要出现算式，尤其是 <code>strlen(s)</code> 这样的。</p>
+<p>循环体或者分支结构里只有一个语句就将其压行到判断条件同一行。</p>
+<p>……</p>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>其实，空间复杂度没有什么好说的……</p>
+<p>定义与时间复杂度大同小异，但更简单，影响因素也更少。因为在算法竞赛中，我们常常是实现定义好变量的，不会中途去申请太多空间，因此我们只需要对定义的几个数组算一下占多少空间即可。</p>
+<p>比如说你只用看我们开了一个数组 <code>a[1000000]</code>，你就知道这里会用大约 $4\mathrm{MB}$ 的内存。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>时间与空间是算法竞赛中永恒的话题，而复杂度是评判时空消耗的一把标尺。处处皆学问，不知将时空复杂度研究得更加透彻的你，又有何体悟？</p>
+<p>爱因斯坦的相对论打破了牛顿力学的绝对时空观，时间与空间、时空与参考系紧密联系在一起。我们不过是时间流过的渺茫一瞥，也不过是空间角落的沧海一粟。</p>
+<p>而一名时间的匆匆乘客，空间的默默过客，也会说</p>
+<p>「我不过是时空的一粒微尘，但我有我们，足矣。」</p>
 
     </div>
 
@@ -380,7 +459,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/" title="Hexo 主题 NexT 扩展版 bySk 使用方法">https://sukwants.github.io/others/Technology/Hexo-theme-NexT-exbySk/</a>
+      <a href="https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/" title="算法分析 - 时空复杂度">https://sukwants.github.io/Informatics/Notes/ALGORITHM-ANALYSIS-Time-and-Space-Complexity/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -388,18 +467,21 @@
 </ul>
 </div>
 
+          <div class="post-tags">
+              <a href="/tags/I-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" rel="tag"><i class="fa fa-tag"></i> [I] 算法分析</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Interval-Dynamic-Programming/" rel="prev" title="动态规划 - 区间动态规划">
-                  <i class="fa fa-chevron-left"></i> 动态规划 - 区间动态规划
+                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Convex-Hull-Optimization/" rel="prev" title="动态规划 - 斜率优化">
+                  <i class="fa fa-chevron-left"></i> 动态规划 - 斜率优化
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/Informatics/Notes/DYNAMIC-PROGRAMMING-Dynamic-Programming-on-Trees/" rel="next" title="动态规划 - 树形动态规划">
-                  动态规划 - 树形动态规划 <i class="fa fa-chevron-right"></i>
+                <a href="/Informatics/Notes/ALGORITHM-ANALYSIS-Asymptotics/" rel="next" title="算法分析 - 渐进式">
+                  算法分析 - 渐进式 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -475,7 +557,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"ad6422525b51b674377301dfe0b8e111"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"Sukwants","repo":"Sukwants.github.io","client_id":"3447efc4daf6a4009f4c","client_secret":"36dc806a25f18873e08f48dd30f9a5302262a213","admin_user":"Sukwants","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"15a799f5c5aca09889cff29c577f4baa"}</script>
 <script src="/js/third-party/comments/gitalk.js"></script>
 
 </body>
